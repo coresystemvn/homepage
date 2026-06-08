@@ -3,7 +3,7 @@ layout: '../../layouts/BlogPost.astro'
 title: 'OSDCloud - Cài Win như bạn từng biết?'
 date: '2026-06-08'
 description: ''
-tags: ['osdlcoud','windows','automation']
+tags: ['osdcloud','windows','automation']
 ---
 
 Không một nhân viên nào có thể khước từ chuyện cài Windows, điều đã thành cơ bản trong cái nghề IT mà số đông từng nghĩ. Vậy, bạn đã thử tính tổng thời gian cho cài đặt Windows, cài ứng dụng, cập nhật các phiên bản update mới nhất, tùy biến tinh chỉnh để máy chạy một cách hoàn hảo nhất hay chưa?
@@ -14,6 +14,6 @@ Nếu CoreSystem tạo ra công cụ giúp bạn kéo thời gian cho cái công
 
 Nếu có hãy theo dõi thêm nhé, hệ thống đang được thử nghiệm giới hạn trên đa nền tảng nhằm tối đa tránh rủi ro sự cố khi chạy thực tế cho mọi người. Xem thêm tại [Github](https://github.com/coresystemvn/OSDCloud)
 
-![Minh họa](/public/images/blog/0608-osdcloud.webp)
+![Minh họa](/src/img/blog/0608-osdcloud.webp)
 
 
