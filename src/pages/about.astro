@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import { SITE_DATA } from '../constants';
+import portraitImage from '../assets/portrait.png';
+
+import '../styles/about.css';
+---
+
+<Layout pageTitle="About">
+    <div class="page-container">
+        <!--<h1>About me</h1>-->
+
+        <div class="about-content">
+            <div class="about-intro-wrapper centered-column">
+                <div class="about-header centered-column">
+                    <Image src={portraitImage} alt={SITE_DATA.name} class="about-portrait" />
+                    <h2 class="about-name">{SITE_DATA.name}</h2>
+                </div>
+
+                <p class="intro-text">
+                    Mình là <b>Trực</b>, chủ nhân của site này </br></br>
+
+                    Khởi đầu với công việc kỹ thuật viên tại đại học Bách Khoa TpHCM cuối 2010 là bước đà vững chắc khi được làm việc với các phòng lab đào tạo hiện đại, tiếp cận các công nghệ mạng thú vị khi làm việc với lượng máy tính quy mô lớn và nhu cầu đặc thù cho ngành giáo dục. Tiếp cận hệ thống máy chủ Linux và hệ thống đào tạo trực tuyến có thể nói hiện đại bậc nhất bấy giờ giúp cho góc nhìn quản trị mở rộng khi được làm việc với nền tảng xử lý video Opencast, nền tảng lớp học online BigBlueButton, nền tảng quản lý học liệu Moodle, hệ thống audio visual từ  Polycom và Epiphan...</br></br>
+                
+                    Sáu năm tiếp theo trong hành trình sự nghiệp tại tập đoàn sản xuất Nhật lại là một trang mới của cuộc đời khi đa nhiệm hơn, chu đáo hơn vì mỗi hành động bộc phát thiếu hoạch định sẽ có thể  gây ra sự cố, mang đến thiệt hại khó lòng đo đếm được cho doanh nghiệp về cả tài chính, danh tiếng. Các công nghệ tầm Enterprise thời bấy giờ như cũng đã được vận dụng nhiều như Symantec Backup Exec, Endpoint Protection, firewall Astaro, hệ máy chủ từ HPE/Lenvo cũng như giải pháp lưu trữ & sao lưu dữ liệu chuẩn chỉnh đa lớp. Việc tiếp cận công nghệ đào tạo ở giai đoạn trước ở Bách Khoa cũng giúp ích rất nhiều trong đào tạo người dùng mảng nhận thức bảo mật, tất cả để có thể tự hào trong nhiều năm với sự chỉn chu trong hoạch định, cẩn thận trong công việc và thấu đáo trong đào tạo, gần như không có sự cố lớn nào xảy đến với nền tảng CNTT của công ty </br></br>
+
+                    Lại sáu năm tiếp theo trải nghiệm kinh doanh, kết nối giao thương để hiểu được cái nhìn rộng hơn về chữ rủi ro, không còn là rủi ro kỹ thuật riêng bộ phận CNTT mà bao quát ở tầm doanh nghiệp, chuỗi cung ứng liên quan. Để nhìn những giải pháp công nghệ một cách thấu đáo hơn - từ trên xuống và phổ rộng </br></br>
+
+                    Và cuối cùng là gần một năm trong công ty dịch vụ outsourcing giải pháp CNTT, thăm khách hàng doanh nghiệp sản xuất nhiều để  thấy một giải pháp CNTT hoàn chỉnh không chỉ có tiền mua giải pháp, thiết bị là đủ mà còn là chiến lược, nhân lực vận hành phù hợp cùng một kế  hoạch đào tạo bài bản để đích đến cuối cùng giải quyết hiệu quả bài toán kinh doanh trong doanh nghiệp một cách chu toàn nhất
+                </p>
+            </div>
+        <!-- 
+            <section>
+                <h2>Research Statement</h2>
+                <div class="info-card">
+                    <p>
+                        "Magic is just biology we haven't calculated the fluff-density for. Yet."
+                    </p>
+                </div>
+            </section>
+        -->
+            <section>
+                <h2>Dự án cộng đồng đã và đang triển khai</h2>
+                <ul class="custom-list">
+                    <li>
+                        <span class="list-item-title">Blog chia sẻ tri thức công nghệ</span>
+                        <span class="list-item-description">Vận hành từ 2014-2018 trên nền tảng máy chủ Linux, vừa vận hành hệ thống vừa viết bài chia sẻ các nền tảng công nghệ cho cộng đồng IT System [<a href="https://vmblogs.pages.dev"target='blank'>Link</a>]</span>
+                    </li>
+                    <li>
+                        <span class="list-item-title">Dự án đặt hàng không chạm</span>
+                        <span class="list-item-description">Hệ thống đặt hàng không chạm (contactless) là một giải pháp tình thế hữu ích hỗ trợ cộng đồng trong giai đoạn giãn cách dịch Covid-19. Dù chi phí bỏ ra cho vận hành hệ thống là không nhỏ nhưng là niềm vui lớn khi hỗ trợ được đồng bào trong giai đoạn khó khăn.</span>
+                    </li>
+                    <li>
+                        <span class="list-item-title">Hỗ trợ cộng đồng farm/farmstay</span>
+                        <span class="list-item-description">Khác với cộng đồng CNTT nơi những từ khóa, những sự kiện ra mắt sản phẩm là cơ hội tốt để  trau dồi thì với cộng đồng chủ farm, đặc thù vị trí địa lý rất khó để ứng dụng giải pháp CNTT chu toàn một cách rập khuôn như ở những nơi phát triển. Hỗ trợ cộng đồng cũng mang đến những kiến thức bổ ích, rộng mở hơn cho việc đề xuất, tư vấn các giải pháp CNTT cho khối doanh nghiệp nhỏ sau này.</span>
+                    </li>
+                    <li>
+                        <span class="list-item-title"><b>CoreSystem</b></span>
+                        <span class="list-item-description">Không như khối doanh nghiệp enterprise thì nhóm SMB lại chịu khá nhiều rào cản khi xây dựng một giải pháp CNTT phù hợp. Nó liên quan đến rất nhiều yếu tố như khu vực địa lý, nhân lực, kinh phí hữu hạn, dòng tiền không mạnh và trên hết, do các rào cản đó mà chính sách và hoạch định thực thi ảnh hưởng rất nhiều. </br></br>
+                        CoreSystem hình thành ngoài chia sẻ kiến thức kỹ thuật thì cũng song hành cung ứng dịch vụ tư vấn về các nền tảng CNTT phù hợp xoay quanh các nhân tố cơ bản của mọi hệ thống gồm compute (năng lực xử lý), storage (lưu trữ và backup), network (phần kết nối) và một phần không kém quan trọng an toàn thông tin cho doanh nghiệp </span>
+                    </li>
+                </ul>
+            </section>
+
+                        
+
+           
+        </div>
+    </div>
+</Layout>

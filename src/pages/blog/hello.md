@@ -1,0 +1,20 @@
+---
+layout: '../../layouts/BlogPost.astro'
+title: 'Hello'
+date: '2026-06-08'
+description: ''
+tags: ['others',]
+---
+
+## Viết gì cho 2026?
+
+Thực tình mà nói, ở cái giai đoạn mà AI len lỏi vào từng ngõ ngách và hơi thở cuộc sống, khi người ta mở ứng dụng chat hay thậm chí nhờ agent tìm kiếm thông tin thì quyết định viết nó có chút gì đó lưỡng lự. Sự nhiệt huyết còn đó chỉ là cái lực cản vô hình nó kéo lại
+
+Thôi thì...
+
+Cứ viết đai gì đó xoay quanh những điều mình yêu, lĩnh vực mình quan tâm và những điều nho nhỏ nhưng tác động lớn là cách ra quyết định trong những hoàn cảnh đặc biệt, điều mà bộ não máy móc không thể  quyết giúp
+
+Là bởi
+
+Nhiều anh em ngoài kia còn chưa đủ sự trải để có thể làm tốt thứ công việc vốn có quá nhiều cái mới, rộng lớn như CNTT, một sự sẻ chia đúng thời điểm, tốt lắm lắm
+
