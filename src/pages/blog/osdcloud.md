@@ -14,6 +14,6 @@ Nếu CoreSystem tạo ra công cụ giúp bạn kéo thời gian cho cái công
 
 Nếu có hãy theo dõi thêm nhé, hệ thống đang được thử nghiệm giới hạn trên đa nền tảng nhằm tối đa tránh rủi ro sự cố khi chạy thực tế cho mọi người. Xem thêm tại [Github](https://github.com/coresystemvn/OSDCloud)
 
-![Minh họa](/src/images/0608-osdcloud.webp)
+![Minh họa](/images/blog/0608-osdcloud.webp)
 
 
