@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-site: 'https://coresystem.vn',
+site: 'https://blog.ngantrambh.workers.dev',
 base: '/',
 trailingSlash: "always"
  
