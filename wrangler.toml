@@ -1,3 +1,5 @@
 kv_namespaces = [
   { binding = "blog-session", id = "95251ed136ad4918b23988c470ff2435" }
 ]
+
+compatibility_date = "2026-06-11"
