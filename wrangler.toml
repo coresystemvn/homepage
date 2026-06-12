@@ -7,3 +7,6 @@ compatibility_date = "2026-06-11"
 #preview_id = "preview_id"
 binding = "blog-session"
 id = "79d0182e6d2a403490c657e5f9bb87d3"
+
+[assets]
+directory = "./dist"
