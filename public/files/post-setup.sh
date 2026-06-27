@@ -8,7 +8,7 @@ cat << 'EOF' > /etc/opt/chrome/policies/managed/enterprise_policy.json
   "HomepageLocation": "https://www.google.com", 
   "RestoreOnStartup": 4,
   "RestoreOnStartupURLs": ["https://www.google.com"],
-  "NewTabPageLocation": ["https://www.google.com"],
+  "NewTabPageLocation": "https://www.google.com",
   "HomepageIsNewTabPage": false,
   "ShowHomeButton": true,
   "BookmarkBarEnabled": false,
