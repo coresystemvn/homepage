@@ -1,7 +1,10 @@
 #!/bin/bash
 echo "=== Cấu hình Fedora Desktop tự động ==="
 
-# 1. Cấu hình policy chuẩn cho Google Chrome
+# =========================================================================
+# 1. Cấu hình policy cơ bản cho Google Chrome
+# =========================================================================
+
 mkdir -p /etc/opt/chrome/policies/managed/
 cat << 'EOF' > /etc/opt/chrome/policies/managed/enterprise_policy.json
 {
@@ -21,10 +24,11 @@ cat << 'EOF' > /etc/opt/chrome/policies/managed/enterprise_policy.json
   "ClearBrowsingDataOnExitList": ["cached_images_and_files"]
 }
 EOF
+
 chmod 644 /etc/opt/chrome/policies/managed/enterprise_policy.json
 
 # =========================================================================
-# 2. Tạo script first boot - chạy khi đăng nhập desktop lần đầu
+# 2. Tạo script first boot - chạy sau lần reboot đầu tiên - Anaconda
 # =========================================================================
 mkdir -p /usr/local/bin/
 
@@ -64,9 +68,10 @@ done
 echo "--- Đang cài đặt các công cụ tải file cơ bản ---"
 dnf install wget curl -y
 
-echo "========================================================================="
+# =========================================================================
 # Cấu hình giao diện và hình nền desktop
 # =========================================================================
+
 echo "--- Đang cấu hình giao diện cho desktop---"
 mkdir -p /etc/skel/.config/
 mkdir -p /usr/share/backgrounds/custom/
@@ -104,8 +109,19 @@ Autolock=false
 Timeout=0
 LCKEON
 
+cat << 'PLSHLL' > /etc/skel/.config/plasmashellrc
+[PlasmaViews][Panel 2]
+floating=0
+shell=org.kde.plasma.desktop
+
+[PlasmaViews][Panel 2][Defaults]
+thickness=38
+
+PLSHLL
+
 # Phân quyền /etc/skel
 chmod 644 /etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
+chmod 644 /etc/skel/.config/plasmashellrc
 chmod 644 /etc/skel/.config/powermanagementprofilesrc
 chmod 644 /etc/skel/.config/kscreenlockerrc
 
@@ -184,7 +200,7 @@ systemctl start packagekit.service 2>/dev/null
 echo "--- Thiết lập định danh alias cho hệ thống ---"
 
 cat << 'ALIASEON' > /etc/profile.d/system-alias.sh
-alias hc='history -c'
+alias hc='history -c && clear'
 alias hce='history -c && exit'
 alias system-update='sudo dnf update'
 alias system-upgrade='sudo dnf upgrade'
@@ -197,6 +213,7 @@ echo "=== Hoàn thành cài đặt. Khởi động lại hệ thống ==
 systemctl disable fedora-firstboot.service
 rm -f /etc/systemd/system/fedora-firstboot.service
 rm -f /usr/local/bin/fedora-firstboot.sh
+
 reboot
 EOF
 

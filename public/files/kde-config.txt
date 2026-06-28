@@ -5,9 +5,7 @@ RightButton;NoModifier=org.kde.contextmenu
 RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
-ItemGeometries-1280x800=
 ItemGeometriesHorizontal=
-activityId=81438ecc-6d38-42ca-a045-24e247d54bd6
 formfactor=0
 immutability=1
 lastScreen=0
@@ -56,9 +54,11 @@ DialogWidth=810
 
 [Containments][2][Applets][25][Configuration][General]
 alphaSort=true
-favoritesPortedToKAstats=true
+favoriteApps=applications:org.kde.discover.desktop,applications:org.kde.khelpcenter.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/org.onlyoffice.desktopeditors.desktop,applications:google-chrome.desktop
+favoritesPortedToKAstats=false
 highlightNewlyInstalledApps=false
-icon=start-here
+icon=yast-addon
+showIconsRootLevel=true
 showRecentApps=false
 showRecentDocs=false
 useExtraRunners=false
