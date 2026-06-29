@@ -68,5 +68,5 @@ fontconfig
 curl -s https://coresystem.vn/files/post-setup.sh -o /tmp/post-setup.sh
 chmod +x /tmp/post-setup.sh
 /bin/bash /tmp/post-setup.sh
-systemctl enable initial-setup
+
 %end

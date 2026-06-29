@@ -1,8 +1,8 @@
 #!/bin/bash
 echo "=== Cấu hình Fedora Desktop tự động ==="
 
-# =========================================================================
-# 1. Cấu hình policy cơ bản cho Google Chrome
+# ========================= [ www.coresystem.vn ] =============================
+# 1. Cấu hình policy cơ bản cho Google Chrome 
 # =========================================================================
 
 mkdir -p /etc/opt/chrome/policies/managed/
@@ -24,11 +24,18 @@ cat << 'EOF' > /etc/opt/chrome/policies/managed/enterprise_policy.json
   "ClearBrowsingDataOnExitList": ["cached_images_and_files"]
 }
 EOF
-
 chmod 644 /etc/opt/chrome/policies/managed/enterprise_policy.json
 
+# ========================= [ www.coresystem.vn ] =============================
+# 2. Tạo plasma-setup-done tại /etc => bypass Plasma-Setup-Wizard
 # =========================================================================
-# 2. Tạo script first boot - chạy sau lần reboot đầu tiên - Anaconda
+
+cat << 'BYPASS' > /etc/plasma-setup-done
+Init unattended setup by CoreSystem
+BYPASS
+
+# ========================= [ www.coresystem.vn ] =============================
+# 3. Tạo script first boot - chạy khi đăng nhập desktop lần đầu
 # =========================================================================
 mkdir -p /usr/local/bin/
 
@@ -71,7 +78,6 @@ dnf install wget curl -y
 # =========================================================================
 # Cấu hình giao diện và hình nền desktop
 # =========================================================================
-
 echo "--- Đang cấu hình giao diện cho desktop---"
 mkdir -p /etc/skel/.config/
 mkdir -p /usr/share/backgrounds/custom/
@@ -209,6 +215,13 @@ ALIASEON
 
 chmod 644 /etc/profile.d/system-alias.sh
 
+# Thiết lập tuned profile
+tuned-adm profile throughput-performance
+systemctl enable tuned
+
+# Xóa plasma-setup-done
+rm /etc/plasma-setup-done
+
 echo "=== Hoàn thành cài đặt. Khởi động lại hệ thống ==="
 systemctl disable fedora-firstboot.service
 rm -f /etc/systemd/system/fedora-firstboot.service
@@ -219,8 +232,8 @@ EOF
 
 chmod +x /usr/local/bin/fedora-firstboot.sh
 
-# =========================================================================
-# 3. Đăng ký systemd cho lần chạy cài đặt tự động
+# ========================= [ www.coresystem.vn ] =============================
+# 4. Đăng ký systemd cho lần chạy cài đặt tự động
 # =========================================================================
 
 cat << 'EOF' > /etc/systemd/system/fedora-firstboot.service
