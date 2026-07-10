@@ -1,0 +1,15 @@
+Cảm ơn bạn đã sử dụng hệ thống cài đặt Windows tự động. Một số ứng dụng miễn phí được cài đặt sẵn, nếu nhu cầu phát sinh, bạn có thể tùy ý bổ sung nhé
+
+- OnlyOffice (ứng dụng văn phòng thay thế MS office)
+- VLC (phần mềm nghe nhạc, video)
+- Treesize (kiểm tra dung lượng ổ đĩa, dễ khắc phục lỗi khi ổ cứng đầy)
+- ShareX (công cụ chụp hình màn hình chuyên nghiệp)
+- 7Zip (công cụ nén và giải nén miễn phí)
+- XnView (phần mềm quản lý và xem ảnh chuyên nghiệp)
+- Foxit PDF Reader (phần mềm đọc file PDF miễn phí)
+
+1. Unikey đã có sẵn tại ổ đĩa C
+2. Máy tính đang chạy quyền admin và chưa đặt mật khẩu. Hãy đổi mật khẩu để đảm bảo an toàn
+3. Tính năng Bitlocker của Windows là tính năng hữu ích đảm bảo dữ liệu nếu máy tính bị thất lạc. Cân nhắc sử dụng tính năng này và luôn nhớ sao lưu dãy recovery code 48 ký tự để có thể sử dụng lúc cần thiết
+
+===/ OSD project by CORESYSTEM [www.coresystem.vn] /===
