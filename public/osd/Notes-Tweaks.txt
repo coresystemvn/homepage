@@ -3,4 +3,4 @@ Cảm ơn bạn đã sử dụng hệ thống cài đặt Windows tự động.
 1. Máy tính đang chạy quyền admin và chưa đặt mật khẩu. Hãy đổi mật khẩu để đảm bảo an toàn
 2. Tính năng Bitlocker của Windows là tính năng hữu ích đảm bảo dữ liệu nếu máy tính bị thất lạc. Cân nhắc sử dụng tính năng này và luôn nhớ sao lưu dãy recovery code 48 ký tự để có thể sử dụng lúc cần thiết
 
-===/ OSD project by CORESYSTEM [www.coresystem.vn] /===
+===/ EasyDeploy by CORESYSTEM [www.coresystem.vn] /===

@@ -8,6 +8,6 @@ export default defineConfig({
 //site: 'https://blog.ngantrambh.workers.dev',
 site: 'https://coresystem.vn',
 base: '/',
-trailingSlash: "always"
+trailingSlash: "ignore"
  
 });

@@ -22,7 +22,7 @@ export const SITE_DATA = {
 
     // Bluesky handle (without the @)
     bluesky: "",
-    facebook: "coresystemvn",
+    facebook: "truct.coresystemvn",
     github: "coresystemvn",
     
 
