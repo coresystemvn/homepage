@@ -18,12 +18,12 @@ export const SITE_DATA = {
     // Social media handles (username only, not full URL)
     // Set to empty string "" to hide an icon
     twitter: "",  // bird logo → twitter.com
-    x: "coresystemvn",             // X logo → x.com
+    x: "withcoresystem",             // X logo → x.com
 
     // Bluesky handle (without the @)
     bluesky: "",
-    facebook: "truct.coresystemvn",
-    github: "coresystemvn",
+    facebook: "withcoresystem",
+    github: "withcoresystem",
     
 
     // Google Scholar ID (found in your Scholar profile URL)

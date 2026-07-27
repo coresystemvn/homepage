@@ -1,5 +1,5 @@
 # wrangler.toml
-name = "coresystem-blog"
+name = "blog"
 pages_build_output_dir = "./dist"
 compatibility_date = "2026-06-11"
 
