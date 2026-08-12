@@ -21,7 +21,6 @@ Tài liệu này cung cấp danh mục các sự cố thường gặp trong quá
 Bên cạnh tệp nhật ký của engine triển khai, EASYDEPLOY còn hỗ trợ xuất 3 tệp tin chẩn đoán nâng cao tại ổ đĩa ảo RAM disk `X:\` (lưu ý các tệp tin này sẽ tự động xóa sạch khi thiết bị khởi động lại):
 
 | Tệp tin chẩn đoán | Nội dung thông tin ghi nhận |
-:::
 |------|----------|
 | `X:\easydeploy-app.log` | Nhật ký hoạt động của ứng dụng C# (quá trình xác thực, nạp cấu hình và khởi chạy). |
 | `X:\deploy-launch.txt` | Thông tin chẩn đoán chi tiết trong quá trình khởi tạo engine triển khai. |
