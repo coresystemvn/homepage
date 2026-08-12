@@ -22,22 +22,19 @@ const title = `${SITE_DATA.name}${pageTitle ? ` | ${pageTitle}` : ""}`;
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<script is:inline>
-			const theme = (() => {
-				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-					return localStorage.getItem('theme');
-				}
-				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-					return 'dark';
-				}
-				return 'light';
+			// Đồng bộ theme với docs site (Starlight): dùng chung key 'starlight-theme'
+			// và luôn set data-theme='light'|'dark' (không xoá attribute).
+			const stored = (() => {
+				if (typeof localStorage === 'undefined') return null;
+				return localStorage.getItem('starlight-theme') || localStorage.getItem('theme');
 			})();
-		
-			if (theme === 'light') {
-				document.documentElement.removeAttribute('data-theme');
-			} else {
-				document.documentElement.setAttribute('data-theme', 'dark');
-			}
-			window.localStorage.setItem('theme', theme);
+			const theme =
+				stored === 'light' || stored === 'dark'
+					? stored
+					: window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
+			document.documentElement.setAttribute('data-theme', theme);
 		</script>
 	</head>
 	<body>

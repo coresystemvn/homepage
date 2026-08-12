@@ -1,5 +1,8 @@
 ---
+// Override Starlight ThemeSelect: nút light/dark (hình mặt trăng) giống homepage.
+// Dùng chung key localStorage 'starlight-theme' và attribute data-theme='light'|'dark' của Starlight.
 ---
+
 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
   <svg class="sun" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="5"></circle>
@@ -18,19 +21,45 @@
 </button>
 
 <script>
-  const handleToggleClick = () => {
-    const element = document.documentElement;
-    const isDark = element.getAttribute('data-theme') === 'dark';
-    const newTheme = isDark ? 'light' : 'dark';
-    
-    if (newTheme === 'light') {
-      element.removeAttribute('data-theme');
-    } else {
-      element.setAttribute('data-theme', 'dark');
-    }
-    
-    localStorage.setItem('theme', newTheme);
+  const toggle = document.getElementById('theme-toggle');
+
+  const applyIcon = () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    document.querySelectorAll('.sun').forEach((s) => (s.style.display = isDark ? 'block' : 'none'));
+    document.querySelectorAll('.moon').forEach((s) => (s.style.display = isDark ? 'none' : 'block'));
   };
 
-  document.getElementById('theme-toggle')?.addEventListener('click', handleToggleClick);
+  applyIcon();
+
+  toggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('starlight-theme', next);
+    applyIcon();
+  });
 </script>
+
+<style>
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--sl-color-text-accent, var(--color-text-muted));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--sl-transition-fast, 0.2s ease), color var(--sl-transition-fast, 0.2s ease);
+  }
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    color: var(--sl-color-accent, var(--color-accent));
+  }
+  .sun {
+    display: none;
+  }
+  .moon {
+    display: block;
+  }
+</style>

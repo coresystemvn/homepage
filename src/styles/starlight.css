@@ -1,0 +1,97 @@
+/* Starlight custom CSS — override palette để đồng bộ với trang chủ/blog (teal #0d9488 + Inter).
+   File customCss được Starlight load unlayered → chiếu cao nhất so với cascade layer starlight. */
+
+/* Đồng bộ font Inter (trang chủ cũng dùng Inter qua Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+	/* ===== Dark mode (data-theme="dark") — sync với palette dark hiện tại ===== */
+	/* Teal nhạt trên nền đậm (~ color-mix(#0d9488 80%, white) của trang cũ) */
+	--sl-color-accent: hsl(174 82% 62%);
+	--sl-color-accent-high: hsl(174 82% 72%);
+	--sl-color-accent-low: hsl(174 82% 26%);
+
+	--sl-color-text: #e9e9e9;                 /* ~ #f0f0f0 trang cũ */
+	--sl-color-bg: #181818;                   /* giống --color-bg dark */
+	--sl-color-bg-nav: #181818;
+	--sl-color-bg-sidebar: #181818;
+	--sl-color-bg-inline-code: #1e1e1e;       /* ~ --color-bg-alt dark */
+	--sl-color-hairline: #333;                /* ~ --color-border dark */
+	--sl-color-hairline-light: #2a2a2a;
+
+	/* Font */
+	--sl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+	--sl-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+[data-theme='light'] {
+	/* ===== Light mode — sync trang chủ (text #1a1a1a, teal #0d9488 link) ===== */
+	--sl-color-accent: #0d9488;               /* teal-700 — giống hệt trang chủ */
+	--sl-color-accent-high: #99f6e4;          /* tint light teal (hover/active bg) */
+	--sl-color-accent-low: #115e59;           /* text trên nền accent */
+
+	--sl-color-text: #1a1a1a;                 /* giống --color-text/--color-primary */
+	--sl-color-bg: #fff;                      /* giống --color-bg */
+	--sl-color-bg-nav: #fff;                  /* header trong suốt trên nền trắng */
+	--sl-color-bg-sidebar: #fff;
+	--sl-color-bg-inline-code: #f4f4f4;       /* ~ --color-bg-alt */
+	--sl-color-hairline: #e6e6e6;             /* ~ --color-border #eee */
+	--sl-color-hairline-light: #e6e6e6;
+}
+
+/* ===== Admonitions ([!NOTE]/[!TIP]/[!WARNING]/[!IMPORTANT]) — đồng bộ & dễ đọc ===== */
+.starlight-aside {
+	border-radius: 0 0.5rem 0.5rem 0;         /* bo góc phải, giữ vạch màu trái */
+	margin: 1.25rem 0;                        /* thở hơn giữa các đoạn */
+}
+.starlight-aside__content {
+	font-size: var(--sl-text-sm);
+	line-height: 1.7;
+}
+.starlight-aside__title {
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	font-size: 0.75rem !important;            /* nhỏ gọn, không át nội dung */
+}
+.starlight-aside__title + .starlight-aside__content {
+	margin-top: 0.65rem !important;
+}
+
+/* ===== Ẩn "On this page" (right TOC) để đọc chế độ rộng =====
+   Khi user bấm nút trong PageSidebar.astro, <html> có data-toc-hidden.
+   - Thu cột right sidebar về 0 để content mở rộng (giống trang không có toc).
+   - Riêng nút toggle biến thành "nút nổi" cố định góc phải (fixed) để user
+     luôn có chỗ hiện lại mục lục. */
+:root[data-toc-hidden] .right-sidebar-container {
+	width: 0;
+	overflow: visible;
+}
+:root[data-toc-hidden] .right-sidebar-panel {
+	position: fixed;
+	top: calc(var(--sl-nav-height) + 1rem);
+	right: 1rem;
+	z-index: var(--sl-z-index-navbar, 20);
+	width: auto;
+	padding: 0.4rem;
+	background-color: var(--sl-color-bg-nav, var(--sl-color-bg));
+	border: 1px solid var(--sl-color-hairline);
+	border-radius: 0.5rem;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	display: block;
+}
+:root[data-toc-hidden] .right-sidebar-panel .sl-container,
+:root[data-toc-hidden] .right-sidebar-panel h2 {
+	display: none;
+}
+:root[data-toc-hidden] .right-sidebar-topbar {
+	margin-bottom: 0;
+}
+:root[data-toc-hidden] {
+	--sl-content-width: 67.5rem;
+}
+@media (min-width: 72rem) {
+	:root[data-toc-hidden] .main-pane {
+		--sl-content-margin-inline: auto;
+		width: 100%;
+	}
+}
