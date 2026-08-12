@@ -18,7 +18,8 @@ Tài liệu này cung cấp danh mục các sự cố thường gặp trong quá
 | Lặp chu kỳ khởi động (Reboot Loop) hoặc không thể truy cập màn hình OOBE | Kiểm tra lại cấu hình phân vùng khởi động Bootloader (`bcdboot`) và thứ tự ưu tiên thiết bị boot (Boot Order) trong BIOS/UEFI; thử triển khai ở chế độ Vanilla để loại trừ nguyên nhân do script tùy biến trong profile. |
 
 :::note
-Bên cạnh tệp nhật ký của engine triển khai, EASYDEPLOY còn hỗ trợ xuất 3 tệp tin chẩn đoán nâng cao tại ổ đĩa ảo RAM disk `X:\` (lưu ý các tệp tin này sẽ tự động xóa sạch khi thiết bị khởi động lại):
+Bên cạnh tệp nhật ký của engine triển khai, EASYDEPLOY còn hỗ trợ xuất 3 tệp tin chẩn đoán nâng cao tại ổ đĩa ảo RAM disk `X:\` (lưu ý các tệp tin này sẽ tự động xóa sạch khi thiết bị khởi động lại)
+:::
 
 | Tệp tin chẩn đoán | Nội dung thông tin ghi nhận |
 |------|----------|
