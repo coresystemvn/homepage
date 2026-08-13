@@ -14,9 +14,6 @@ Web Dashboard hoạt động tại địa chỉ **`https://msp.coresystem.vn`** 
 | [USB Devices](#4-phân-hệ-usb-devices-quản-lý-thiết-bị-usb) | Quản lý thiết bị USB: phê duyệt (confirm), thu hồi (retire) hoặc khôi phục (restore) |
 | [Alerts](#5-phân-hệ-alerts-quản-lý-cảnh-báo) | Quản lý các cảnh báo hệ thống: xác nhận (ack) hoặc phê duyệt thiết bị (confirm) |
 
-:::note
-Các phân hệ **Tenants** (Quản lý khách hàng) và **API Keys** thuộc quyền hạn của **CoreSystem Administrator** nên sẽ không hiển thị trên giao diện của bạn. Mọi nhu cầu điều chỉnh gói dịch vụ, số lượng slots hoặc khóa API Key, vui lòng liên hệ trực tiếp với CoreSystem.
-:::
 
 ## 1. Phân hệ Overview (Tổng quan)
 
@@ -25,13 +22,13 @@ Cung cấp các thẻ số liệu trực quan và biểu đồ thống kê **thu
 | Thẻ thông tin (Card) | Ý nghĩa |
 |------|---------|
 | Deployments | Tổng số lượng thiết bị đã triển khai thành công. |
-| Recent Activations | Bảng hiển thị danh sách 10 thiết bị được triển khai gần đây nhất. |
+| Recent Activations | Bảng hiển thị danh sách 20 thiết bị được triển khai gần đây nhất. |
 
 Tích hợp các biểu đồ trực quan (**Charts**): Tỷ lệ phân bố các phiên bản hệ điều hành (OS distribution) và xu hướng triển khai theo thời gian (deployment trend) — dữ liệu được tổng hợp tự động từ thông tin hệ điều hành (`os_*`) của thiết bị.
 
 ## 2. Phân hệ Activations (Thiết bị đã triển khai)
 
-Hiển thị bảng nhật ký chi tiết của từng thiết bị đã cài đặt, bao gồm các trường thông tin: **STT (#)**, Business ID, Machine ID, Model, CPU, RAM, Disk (Ổ đĩa), USB Brand (Thương hiệu USB), USB Serial (Số Serial USB) và Date (Thời gian thực hiện).
+Hiển thị bảng nhật ký chi tiết của từng thiết bị đã cài đặt, bao gồm các trường thông tin: STT (#), Business ID, Machine ID, Model, CPU, RAM, Disk (Ổ đĩa), USB Brand (Thương hiệu USB), USB Serial (Số Serial USB) và Date (Thời gian thực hiện).
 
 - **Cơ chế phân trang (Pagination):** Hỗ trợ hiển thị 50 bản ghi/trang, đi kèm các nút chuyển trang Previous/Next và thông tin hiển thị tổng số bản ghi.
 - **Phạm vi dữ liệu:** Chỉ hiển thị danh sách thiết bị thuộc tenant của bạn.

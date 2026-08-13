@@ -22,7 +22,6 @@ Trong môi trường mạng nội bộ, thay vì sử dụng tham số `api_key`
 }
 ```
 
-- **Định dạng khóa bản quyền:** Khóa license ngoại tuyến có định dạng chuỗi ký tự chuẩn `ED.<payload>.<signature>` (độ dài khoảng 200 ký tự), được ký số bảo mật bằng thuật toán **ECDSA P-256** (tiêu chuẩn IEEE P1363, chữ ký số độ dài 64 bytes).
 - **Thông tin chứa trong License:** Khóa mã hóa chứa thông tin về **định danh doanh nghiệp (company) và thời hạn sử dụng bản quyền (UTC)**; các thông tin này sẽ được giải mã và hiển thị chi tiết trên giao diện hộp thoại About.
 - **Điều kiện kích hoạt:** Bắt buộc phải cấu hình thiết lập `"auth": { "enabled": false }` trong tệp tin hệ thống `system-config.json` (phiên bản offline). Khi cờ này tắt, engine sẽ **bỏ qua bước xác thực trực tuyến (bypass online auth)** và chuyển sang kiểm tra tính hợp lệ của chữ ký số ngoại tuyến.
 

@@ -56,13 +56,13 @@ Tiến trình triển khai sẽ tự động thực hiện qua 11 bước tuần
 | # | Bước | Chi tiết tác vụ |
 |---|------|----------|
 | 1 | Khởi tạo | Kiểm tra tính hợp lệ của tệp tin cấu hình và thông tin xác thực bản quyền. |
-| 2 | Quét và lựa chọn ổ đĩa | Lọc danh sách các ổ đĩa đích hợp lệ có thể cài đặt (loại trừ USB boot, ổ đĩa ảo và các thiết bị không có phân vùng lưu trữ). |
+| 2 | Quét và lựa chọn ổ đĩa | Lọc danh sách các ổ đĩa phù hợp có thể cài đặt (loại trừ USB boot, ổ đĩa ảo và các thiết bị không có phân vùng lưu trữ). |
 | 3 | Cấu hình phân vùng USB boot | Tạm thời thu hồi ký tự ổ đĩa (Drive Letter) của USB boot để tránh việc phân chia phân vùng nhầm lẫn, sau đó khôi phục lại trạng thái ban đầu. |
 | 4 | Khởi tạo và phân chia phân vùng | Định dạng ổ đĩa chuẩn GPT và tạo các phân vùng hệ thống: EFI, MSR, Windows và Recovery. |
-| 5 | Xác định nguồn hệ điều hành (OS Source) | Ưu tiên quét tệp tin `.esd` offline trên USB (`EASYDEPLOY\OS\`) → Kiểm tra mã băm SHA-256 → Nếu không có file cục bộ, tự động tải về từ CDN. |
+| 5 | Xác định nguồn hệ điều hành (OS Source) | Ưu tiên quét tệp tin `.esd` offline trên USB (`EASYDEPLOY\OS\`) → Kiểm tra mã hash SHA-256 → Nếu không có file cục bộ, tự động tải về từ CDN. |
 | 6 | Lựa chọn phiên bản phân phối (Edition) | Áp dụng chính xác chỉ mục (index) của phiên bản hệ điều hành trong Windows Image. |
 | 7 | Giải nén Windows Image | Sử dụng lệnh `Expand-WindowsImage` để xả nén file cài đặt lên phân vùng `C:\`. |
-| 8 | Khởi tạo Bootloader | Sử dụng công cụ `bcdboot` để tạo các tệp tin khởi động trên ổ đĩa đích. |
+| 8 | Khởi tạo Bootloader | Sử dụng công cụ `bcdboot` để thiết lập các tệp tin khởi động trên ổ đĩa đích. |
 | 9 | Tích hợp Driver (Inject) | Quét các driver phần cứng đang hoạt động trên môi trường WinPE (AHCI, RAID, NVMe, WiFi,...) và tích hợp trực tiếp vào hệ điều hành mới cài đặt. |
 | 10 | Dọn dẹp tài nguyên tạm | Xóa bỏ các tệp tin và thư mục tạm thời phát sinh trong quá trình cài đặt. |
 | 11 | Tích hợp Profile tùy biến | Tích hợp tệp cấu hình profile (đối với Business/Express) và chuẩn bị thiết bị để tự động khởi động lại vào màn hình OOBE. |

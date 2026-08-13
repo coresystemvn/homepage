@@ -13,7 +13,7 @@ Tệp tin này nằm cùng thư mục với `easydeploy.exe` (được đóng g�
   "_comment": "EASYDEPLOY configuration — edit this file to custom labels, and tool paths without recompiling.",
   "labels": {
     "flow1Title": "SETUP WINDOWS [DEFAULT]",
-    "flow1Desc": "Clean install Windows operating system",
+    "flow1Desc": "Deploy Windows OS Default from cloud",
     "flow2Title": "SETUP WINDOWS [BUSINESS]",
     "flow2Desc": "Deploy Windows OS with business profile",
     "aboutInfo": "EASYDEPLOY | Business Windows Deployment …",
@@ -66,7 +66,7 @@ Ngoài tham số `enabled`, phân hệ `auth` trong `system-config.json` còn ch
 :::
 
 :::danger
-Giá trị cờ `auth.enabled` do **CoreSystem** cấu hình mặc định khi đóng gói bộ sản phẩm `EasyDeploy.zip` — đối tác IT/MSP **tuyệt đối không tự ý thay đổi** chế độ này. Tùy thuộc vào giá trị của cờ, tệp tin cấu hình người dùng `user-config.json` bắt buộc phải được khai báo các tham số tương ứng như bảng trên (xem chi tiết tại [Chế độ Offline](/easydeploy/reference/offline-mode/)).
+Giá trị cờ `auth.enabled` do **CoreSystem** cấu hình mặc định khi đóng gói bộ sản phẩm `EasyDeploy.zip` — đối tác IT/MSP **không nên thay đổi** chế độ này. Tùy thuộc vào giá trị của cờ, tệp tin cấu hình người dùng `user-config.json` bắt buộc phải được khai báo các tham số tương ứng như bảng trên (xem chi tiết tại [Chế độ Offline](/easydeploy/reference/offline-mode/)).
 :::
 
 :::note

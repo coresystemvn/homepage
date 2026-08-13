@@ -36,12 +36,12 @@ Do đó, **mỗi thiết bị USB triển khai cần được quản lý chặt 
 
 ## 3. Thời gian ân hạn (Grace Window) cho thiết bị mới
 
-Mỗi thiết bị USB ở trạng thái `new` được quyền triển khai cài đặt tự do trong vòng **đúng 7 ngày (168 giờ)** kể từ phiên hoạt động đầu tiên. Sau thời gian này, nếu USB chưa được quản trị viên Phê duyệt (Confirm), hệ thống sẽ **ngăn chặn** mọi phiên cài đặt tiếp theo và hiển thị thông báo lỗi trực quan:
+Mỗi thiết bị USB ở trạng thái `new` được quyền triển khai cài đặt tự do trong vòng **đúng 7 ngày** kể từ phiên hoạt động đầu tiên. Sau thời gian này, nếu USB chưa được quản trị viên Phê duyệt (Confirm), hệ thống sẽ **ngăn chặn** mọi phiên cài đặt tiếp theo và hiển thị thông báo lỗi trực quan:
 
 > **"USB not approved. Contact your MSP to confirm this USB drive."**
 
 :::note
-**Thời gian ân hạn 7 ngày là cấu hình mặc định** được thiết lập trực tiếp trên hệ thống backend của CoreSystem. Quản trị viên không thể tự thay đổi thông số này qua giao diện Dashboard. Trong trường hợp có nhu cầu tùy chỉnh thời hạn, vui lòng liên hệ trực tiếp với CoreSystem.
+**Thời gian ân hạn 7 ngày là cấu hình mặc định** được thiết lập trực tiếp trên hệ thống backend của CoreSystem. Quản trị viên không thể tự thay đổi thông số này qua giao diện Dashboard. 
 :::
 
 ```
@@ -61,7 +61,7 @@ Ngăn chặn triển khai (Block) → Yêu cầu Phê duyệt (Confirm) hoặc T
 | Tái sử dụng thiết bị đã thu hồi | Hệ thống tự động nhận diện khi thiết bị hoạt động trở lại | Thiết bị tự động chuyển về trạng thái `new` + khôi phục thời gian ân hạn + kích hoạt cảnh báo `usb_retired_reused`. |
 
 :::danger
-**Hệ thống không thiết kế tính năng Xóa (Delete) thiết bị USB.** Hai thao tác **Retire** (Thu hồi) và **Confirm** (Phê duyệt) đã bao quát toàn bộ các kịch bản vận hành thực tế. Thiết bị ở trạng thái `retired` sẽ không được tính toán trong các cơ chế phát hiện clone burst hoặc thời gian ân hạn nhằm loại bỏ hoàn toàn các cảnh báo giả lập.
+**Hệ thống không thiết kế tính năng Xóa (Delete) thiết bị USB.** Hai thao tác **Retire** (Thu hồi) và **Confirm** (Phê duyệt) đã bao quát toàn bộ các kịch bản vận hành thực tế. Thiết bị ở trạng thái `retired` sẽ không được tính toán trong các cơ chế phát hiện clone burst hoặc thời gian ân hạn nhằm loại bỏ hoàn toàn các cảnh báo giả.
 :::
 
 ## 5. Cơ chế phát hiện sao chép hàng loạt (Clone Burst Alert)
@@ -75,7 +75,7 @@ Hệ thống tự động theo dõi số lượng Serial Number mới phát sinh
 | Phát hiện từ 8 Serial mới trở lên | Kích hoạt cảnh báo `usb_burst` ở mức độ nguy hiểm **Critical** — Hiển thị băng rôn đỏ cảnh báo (Red Banner) trên Dashboard + Gửi email khẩn cấp cho quản trị viên. |
 
 :::note
-**Các ngưỡng thông số kỹ thuật trên** (chu kỳ giám sát 24 giờ, ngưỡng số lượng 3 hoặc 8 USB mới, và tần suất cài đặt tối thiểu 2 máy/USB) **là cấu hình mặc định** trên backend của CoreSystem. Quản trị viên không thể tự tùy chỉnh qua Dashboard. Trong trường hợp cần điều chỉnh các ngưỡng này để phù hợp với quy mô triển khai lớn, vui lòng liên hệ CoreSystem.
+**Các ngưỡng thông số kỹ thuật trên** (chu kỳ giám sát 24 giờ, ngưỡng số lượng 3 hoặc 8 USB mới, và tần suất cài đặt tối thiểu 2 máy/USB) **là cấu hình mặc định** trên backend của CoreSystem. Quản trị viên không thể tự tùy chỉnh qua Dashboard. 
 
 *Lưu ý về thiết kế:* Quy trình triển khai thực tế số lượng lớn (mass deployment lên tới 50 máy/ngày) thông thường cũng chỉ sử dụng từ 3 đến 5 thiết bị USB boot đã được phê duyệt (đã có baseline), do đó sẽ không phát sinh cảnh báo. Các Serial Number mới chỉ xuất hiện khi doanh nghiệp trang bị thêm USB mới (tần suất thấp 1-2 thiết bị → chỉ hiển thị badge) hoặc khi xảy ra sự cố sao chép trái phép (tần suất cao từ 3 thiết bị trở lên → kích hoạt cảnh báo).
 :::
@@ -98,7 +98,7 @@ Hệ thống tự động theo dõi số lượng Serial Number mới phát sinh
 
 ### Kịch bản 4: Nghi ngờ thiết bị USB bị sao chép trái phép hoặc thất thoát dữ liệu
 1. Truy cập phân hệ **USB Devices** hoặc **Alerts** → Phát hiện cảnh báo `usb_burst` đạt hoặc vượt ngưỡng cho phép.
-2. Tuyệt đối không thực hiện Phê duyệt (Confirm) đối với các mã Serial Number lạ không rõ nguồn gốc. Nếu xác định có hiện tượng thất thoát tài nguyên hoặc rò rỉ dữ liệu, lập tức **liên hệ trực tiếp với CoreSystem** để áp dụng các biện pháp bảo vệ khẩn cấp (như tạm khóa API Key hoặc cấp lại thông tin xác thực mới).
+2. Tuyệt đối không thực hiện Phê duyệt (Confirm) đối với các mã Serial Number lạ không rõ nguồn gốc. Nếu xác định có hiện tượng thất thoát tài nguyên hoặc rò rỉ dữ liệu, MSP nên reset API key trong dashboard để đảm bảo an toàn.
 
 ## 7. Một số lưu ý quan trọng
 

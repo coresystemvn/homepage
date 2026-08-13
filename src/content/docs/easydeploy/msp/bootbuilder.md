@@ -2,10 +2,10 @@
 title: 'BootBuilder (Whitebox) — Tự dựng USB/ISO tùy biến'
 ---
 
-**EasyDeploy.BootBuilder** là ứng dụng chạy trên hệ điều hành Windows dành cho máy trạm (Desktop), giúp quản trị viên tự xây dựng (build) bộ phương tiện khởi động **USB/ISO WinPE** tùy biến: chuẩn bị các tài nguyên cần thiết trong thư mục `.cache`, lựa chọn tích hợp driver phần cứng chuyên biệt, và xuất ra tệp tin ISO boot tiêu chuẩn để ghi lên USB.
+**EasyDeploy BootBuilder** là ứng dụng chạy trên hệ điều hành Windows dành cho máy trạm (Desktop), giúp quản trị viên tự xây dựng (build) bộ phương tiện khởi động **USB/ISO WinPE** tùy biến: chuẩn bị các tài nguyên cần thiết trong thư mục `.cache`, lựa chọn tích hợp driver phần cứng chuyên biệt, và xuất ra tệp tin ISO boot tiêu chuẩn để ghi lên USB.
 
 :::note
-**Quyền sử dụng:** Thay đổi giao diện thương hiệu (Whitebox) thông qua BootBuilder là **đặc quyền dành riêng cho các đối tác thuộc gói MSP Standard và MSP Advanced**. Người dùng gói Free (SMB/MBB) sẽ sử dụng trực tiếp các bản USB/ISO tiêu chuẩn được phân phối bởi CoreSystem. Chi tiết tham khảo [License Tiers](/easydeploy/msp/license-tiers/).
+**Quyền sử dụng:** Thay đổi thiết lập hệ thống, giao diện (Whitebox) thông qua BootBuilder là **đặc quyền dành riêng cho các đối tác thuộc gói MSP Standard và MSP Advanced**. Người dùng gói Free (SMB/MBB) sẽ sử dụng trực tiếp các bản USB/ISO tiêu chuẩn được phân phối bởi CoreSystem. Chi tiết tham khảo [License Tiers](/easydeploy/msp/license-tiers/).
 :::
 
 :::caution
@@ -14,9 +14,9 @@ title: 'BootBuilder (Whitebox) — Tự dựng USB/ISO tùy biến'
 
 ## 1. Các bước chuẩn bị trước khi vận hành
 
-1. Tải về gói công cụ bao gồm `EasyDeploy.BootBuilder.exe` và tệp tin hướng dẫn tải nguyên liệu `links.md` (do CoreSystem cấp phát). Khởi chạy tệp tin thực thi bằng quyền quản trị tối cao (**Run as administrator**).
-2. Trong lần khởi chạy đầu tiên, ứng dụng sẽ **tự động tạo lập** thư mục lưu trữ tạm thời `.cache` nằm cùng cấp thư mục với file thực thi, đồng thời khởi tạo mẫu cấu hình tiêu chuẩn (`user-config.json`) và 2 profile mặc định. Quản trị viên chỉ cần di chuyển các tệp tin nguyên liệu cần thiết vào các thư mục tương ứng trong `.cache` (tham khảo chi tiết ở bảng dưới) — **tuyệt đối không tự ý xóa thư mục `.cache`**.
-3. Đường dẫn lưu trữ `.cache` mặc định sẽ nằm cùng cấp với tệp tin `.exe`; quản trị viên có thể thay đổi đường dẫn này bằng cách cấu hình biến môi trường hệ thống `EASYDEPLOY_CACHE`.
+1. Tải về gói công cụ bao gồm `EasyDeploy.BootBuilder.exe` và tệp tin hướng dẫn tải bổ trợ `links.md` (do CoreSystem cấp phát). Khởi chạy tệp tin thực thi bằng quyền admin (**Run as administrator**).
+2. Trong lần khởi chạy đầu tiên, ứng dụng sẽ **tự động tạo** thư mục lưu trữ tạm thời `.cache` nằm cùng cấp thư mục với file thực thi, đồng thời khởi tạo mẫu cấu hình tiêu chuẩn (`user-config.json`) và 2 profile mặc định. Quản trị viên chỉ cần bổ sung các tập tin cần thiết vào các thư mục tương ứng trong `.cache` (tham khảo chi tiết ở bảng dưới) — **tuyệt đối không tự ý xóa thư mục `.cache`**.
+
 
 ### Danh mục tài nguyên trong thư mục `.cache`
 
@@ -41,7 +41,7 @@ Công cụ hoạt động hoàn toàn ngoại tuyến và **không tự động 
 
 ## 2. Tiến trình kiểm tra điều kiện (Pre-check)
 
-Khởi chạy công cụ → nhấn nút **Refresh Precheck** → Đảm bảo tất cả các hạng mục kiểm tra hiển thị tích xanh (✓) trước khi tiến hành xây dựng ISO:
+Khởi chạy công cụ → nhấn nút **Refresh Precheck** → Đảm bảo tất cả các hạng mục kiểm tra hiển thị tích xanh (✓) trước khi tiến hành tạo ISO:
 
 | Hạng mục kiểm tra | Yêu cầu bắt buộc | Ý nghĩa kỹ thuật |
 |----------|:--------:|---------|
@@ -52,7 +52,7 @@ Khởi chạy công cụ → nhấn nút **Refresh Precheck** → Đảm bảo t
 | Drivers (`.cache\downloads`) | ⭕ | Chỉ yêu cầu khi máy trạm triển khai cần các driver mạng (NIC) hoặc lưu trữ đặc thù. |
 | Wallpaper (`.cache\wallpaper`) | ⭕ | Cấu hình hình nền. Nếu thiếu, hệ thống sử dụng hình nền mặc định. |
 
-## 3. Quy trình xây dựng tệp tin ISO (Build ISO)
+## 3. Quy trình tạo đĩa ISO (Build ISO)
 
 1. Khi tất cả các điều kiện pre-check đều đạt yêu cầu (tích xanh), nhấn nút **⚙️ Build ISO** để bắt đầu.
 2. **Xác thực bản quyền (License Verification)** (bước này sẽ tự động bỏ qua nếu thông tin bản quyền hợp lệ đã được cấu hình trước đó):
@@ -74,7 +74,7 @@ Khởi chạy công cụ → nhấn nút **Refresh Precheck** → Đảm bảo t
 5. **Tệp tin đầu ra (Output):** Xuất file `bootmedia.iso` (và file `bootmedia_ca2023.iso` nếu tùy chọn CA2023 được kích hoạt). Quản trị viên có thể chọn nút **📁 Output Folder** để mở nhanh thư mục chứa file ISO hoàn thành, hoặc chọn **💾 Save Log** để xuất tệp nhật ký tiến trình.
 
 :::caution
-**Ghi file ISO lên thiết bị USB:** Sử dụng công cụ **Rufus** để ghi (burn) file ISO hoàn thành ra USB boot. Trong trường hợp cần **sao chép trực tiếp tệp tin cài đặt `.esd` (hoặc bất kỳ tệp tin nào có dung lượng lớn hơn 4GB) vào USB**, thiết bị USB **bắt buộc phải định dạng hệ thống file NTFS** (do định dạng mặc định FAT32 không hỗ trợ lưu trữ tệp tin đơn lẻ vượt quá 4GB). Quản trị viên nên lựa chọn định dạng NTFS trực tiếp trong cấu hình Rufus trước khi ghi, hoặc thực hiện format lại phân vùng USB sang NTFS trước khi chép tệp tin ESD.
+**Ghi file ISO lên thiết bị USB:** Sử dụng công cụ **Rufus** để ghi (burn) file ISO hoàn thành ra USB boot. Trong trường hợp cần **sao chép trực tiếp tệp tin cài đặt `.esd` (hoặc bất kỳ tệp tin nào có dung lượng lớn hơn 4GB) vào USB**, thiết bị USB **bắt buộc phải định dạng hệ thống file NTFS** (do định dạng mặc định FAT32 không hỗ trợ lưu trữ tệp tin đơn lẻ vượt quá 4GB). Quản trị viên nên lựa chọn định dạng NTFS trực tiếp trong cấu hình Rufus trước khi ghi.
 :::
 
 ## 4. Cấu trúc thư mục USB sau khi đóng gói hoàn chỉnh
@@ -116,9 +116,9 @@ BootBuilder hỗ trợ hai phương thức xác thực bản quyền trước kh
 
 ## 7. Khuyến nghị vận hành an toàn
 
-- **Cấu hình nguồn điện:** Vui lòng tạm thời **tắt chế độ ngủ tự động (Sleep Mode)** của máy trạm trong quá trình build (đặc biệt là lần chạy đầu kéo dài khoảng 22–25 phút) để tránh gián đoạn tiến trình.
+- **Thiết lập power:** Vui lòng tạm thời **tắt chế độ ngủ tự động (Sleep Mode)** của máy trạm trong quá trình build (đặc biệt là lần chạy đầu kéo dài khoảng 22–25 phút) để tránh gián đoạn tiến trình.
 - **Tránh xung đột tài nguyên:** Không thực hiện chạy **đồng thời 2 tiến trình build** trên cùng một thư mục lưu trữ `.cache`.
-- **Xử lý sự cố mất nguồn:** Tuyệt đối hạn chế việc tắt máy hoặc ngắt nguồn giữa chừng khi đang build. Trong trường hợp tiến trình bị ngắt đột ngột, khởi chạy lại công cụ, hệ thống sẽ tự động dọn dẹp các tệp tin tạm và tiếp tục xây dựng bình thường.
+- **Xử lý sự cố mất nguồn:** Tuyệt đối hạn chế việc tắt máy hoặc ngắt nguồn giữa chừng khi đang build. Trong trường hợp tiến trình bị ngắt đột ngột, khởi chạy lại công cụ, hệ thống sẽ tự động dọn dẹp các tệp tin tạm và tiếp tục hoạt động bình thường.
 
 ## 8. Các bước tiếp theo sau khi hoàn thành build
 

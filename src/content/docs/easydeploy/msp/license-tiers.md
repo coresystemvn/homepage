@@ -6,15 +6,24 @@ EASYDEPLOY cung cấp 3 gói dịch vụ (License Tiers) đáp ứng các nhu c�
 
 | Tier | Loại Tenant (Tenant Type) | Quyền truy cập Dashboard | Cơ chế kiểm soát (Enforce) | Quyền tùy biến Whitebox |
 |------|-------------|------------------|---------|----------|
-| **Free** | SMB (`mbb`) | ❌ Không | Số lượng thiết bị giới hạn, thời gian hiệu lực ngắn, chính sách kiểm soát nghiêm ngặt | ❌ Không |
+| **Free** | `smb/mbb` | ❌ Không | Số lượng thiết bị giới hạn, thời gian hiệu lực ngắn | ❌ Không |
 | **MSP Standard** | `msp` | ❌ Không | Số lượng thiết bị lớn (theo hợp đồng), thời hạn sử dụng linh hoạt | ✅ **Có** |
-| **MSP Advanced** | `msp` | ✅ **Có** | MSP Standard bổ sung các tính năng nâng cao (tự quản lý bản quyền, đặt lại API Key) | ✅ **Có** |
+| **MSP Advanced** | `msp` | ✅ **Có** | MSP Standard bổ sung các tính năng nâng cao (tự quản lý bản quyền, USB, đặt lại API Key) | ✅ **Có** |
+
+:::note
+| Loại hình doanh nghiệp | Mô tả |
+|--------| ---------|
+| SMB | doanh nghiệp nhỏ và vừa |
+| MBB| doanh nghiệp đa chi nhánh |
+| MSP | công ty cung cấp dịch vụ quản trị CNTT |
+
+:::
 
 ## 1. Gói Free (Dành cho SMB/MBB)
 
 - **Đối tượng áp dụng:** Doanh nghiệp quy mô nhỏ (SMB) tự triển khai và cấu hình thiết bị nội bộ.
-- **Hạn chế:** Không được cấp quyền truy cập Web Dashboard. Chính sách kiểm soát bản quyền áp dụng nghiêmngặt (giới hạn số lượng cài đặt thấp, thời hạn hiệu lực ngắn).
-- **Đặc quyền Whitebox:** Không hỗ trợ tùy biến thương hiệu — bắt buộc sử dụng USB/ISO tiêu chuẩn được phân phối bởi CoreSystem.
+- **Hạn chế:** Không được cấp quyền truy cập Web Dashboard. Chính sách kiểm soát bản quyền áp dụng nghiêm ngặt (giới hạn số lượng cài đặt thấp, thời hạn hiệu lực ngắn).
+- **Đặc quyền Whitebox:** Không hỗ trợ tùy biến thương hiệu — chỉ sử dụng USB/ISO tiêu chuẩn được phân phối bởi CoreSystem.
 
 ## 2. Gói MSP Standard
 
@@ -35,6 +44,7 @@ EASYDEPLOY cung cấp 3 gói dịch vụ (License Tiers) đáp ứng các nhu c�
 | **Thời gian ân hạn (Grace Window)** | Cho phép thiết bị USB mới sử dụng thử nghiệm tự do trong vòng 7 ngày trước khi hệ thống yêu cầu phê duyệt chính thức để tránh bị khóa (block). |
 | **Trang quản lý cảnh báo (Alerts)** | Theo dõi, xác nhận (ack) các cảnh báo hệ thống hoặc phê duyệt trực tiếp các mã Serial Number. |
 | **Báo cáo thống kê** | Biểu đồ phân tích trực quan về tỷ lệ các phiên bản hệ điều hành (OS distribution) và xu hướng triển khai theo thời gian (deployment trend). |
+| **Reset API** | Cho phép chủ động reset API nếu nghi ngờ bị rò rỉ hoặc đang bị clone USB số lượng lớn |
 
 ## Bảng so sánh quyền lợi giữa các gói dịch vụ
 

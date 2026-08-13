@@ -36,7 +36,7 @@ Lần đăng nhập đầu tiên vào Desktop: Tự động khởi chạy script
 
 EASYDEPLOY tự động quét thư mục `EASYDEPLOY\Profiles` theo thứ tự ưu tiên sau:
 
-1. **Tất cả các phân vùng ổ đĩa** (ưu tiên kiểm tra thiết bị USB boot trước tiên) — `[ký_tự_ổ]:\EASYDEPLOY\Profiles\*`
+1. **Tất cả các phân vùng ổ đĩa** (ưu tiên kiểm tra thiết bị USB boot trước tiên) — `[USB]:\EASYDEPLOY\Profiles\*`
 2. Thư mục nằm cùng cấp với tệp tin `easydeploy.exe` — `.\EASYDEPLOY\Profiles\*`
 3. Phân vùng tạm thời WinPE — `X:\SetupFiles\`
 

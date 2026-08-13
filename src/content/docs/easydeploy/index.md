@@ -5,15 +5,18 @@ description: 'Tài liệu triển khai Windows và công cụ cứu hộ trên m
 
 ![EasyDeploy](/easydeploy/hero.webp)
 
+**EASYDEPLOY** là giải pháp Windows Deployment hiện đại hoạt động trên môi trường **WinPE**, được phát triển bởi **CoreSystem**. Sau khi khởi động (boot) thiết bị từ USB vào WinPE, hệ thống sẽ tự động chạy ứng dụng `easydeploy.exe`. Người dùng chỉ cần lựa chọn luồng triển khai mong muốn, công cụ sẽ tự động thực hiện quy trình cài đặt Windows hoàn toàn tự động (gồm 11 bước), đồng thời tích hợp sẵn các công cụ cứu hộ cơ bản để xử lý nhanh các sự cố hệ điều hành.
+
 :::note
-Tài liệu này hướng dẫn chi tiết dành cho **đội ngũ IT Helpdesk, SysAdmin và các MSP** trong việc sử dụng bộ công cụ EASYDEPLOY chạy trên môi trường WinPE để triển khai (deploy) hệ điều hành Windows và thực hiện các tác vụ cứu hộ hệ thống.
-**Xác định phân khúc người dùng:** Doanh nghiệp SMB/FDI (gói Free) sử dụng USB được cấu hình sẵn; các đối tác MSP (Standard/Advanced) được quyền tự xây dựng USB tùy biến (Whitebox) và truy cập Dashboard quản lý — chi tiết tham khảo [License Tiers](/easydeploy/msp/license-tiers/).
+Tài liệu này hướng dẫn chi tiết dành cho **đội ngũ IT Helpdesk, SysAdmin và các MSP** trong việc sử dụng bộ công cụ **EASYDEPLOY** chạy trên môi trường WinPE để triển khai (deploy) hệ điều hành Windows và thực hiện các tác vụ cứu hộ hệ thống.
+
+**Khách hàng mục tiêu:** Doanh nghiệp SMB/FDI (gói Free) sử dụng USB/ISO được cấu hình sẵn; các đối tác MSP (Standard/Advanced) được quyền tự xây dựng USB/ISO tùy biến (Whitebox) và truy cập Dashboard quản lý — chi tiết tham khảo [License Tiers](/easydeploy/msp/license-tiers/).
 :::
 
-**EASYDEPLOY** là giải pháp Windows Deployment hiện đại hoạt động trên môi trường **WinPE**, được phát triển bởi CoreSystem. Sau khi khởi động (boot) thiết bị từ USB vào WinPE, hệ thống sẽ tự động khởi chạy `easydeploy.exe`. Người dùng chỉ cần lựa chọn luồng triển khai mong muốn, công cụ sẽ tự động thực hiện quy trình cài đặt Windows khép kín (gồm 11 bước), đồng thời tích hợp sẵn các công cụ cứu hộ cơ bản để xử lý nhanh các sự cố hệ điều hành.
-
 :::note
-**Không cần tự xây dựng (build) bộ công cụ:** CoreSystem cung cấp sẵn các gói cài đặt thông qua liên kết tải về trực tiếp từ Cloud, bao gồm **`EasyDeploy.zip`** (chứa `easydeploy.exe` và `system-config.json`) và **`BootBuilder`** (chứa `EasyDeploy.BootBuilder.exe` và `links.md`). Bạn chỉ cần sử dụng BootBuilder để tạo file ISO, sau đó ghi (burn) ra USB bằng công cụ Rufus (khuyến nghị định dạng file system NTFS nếu file ESD lớn hơn 4GB). Xem chi tiết tại [Quick Start](/easydeploy/getting-started/quick-start/).
+**Đóng gói:** 
+- Với doanh nghiệp SMB/FDI, CoreSystem cung cấp file ISO đã đóng gói dùng chung. Chỉ cần tải => dùng Rufus ghi ra USB, nhập thông tin license => Sẵn sàng sử dụng
+- Với đối tác MSP, CoreSystem cho phép tùy biến linh hoạt bằng công cụ **BootBuilder** . Xem chi tiết tại [Quick Start](/easydeploy/getting-started/quick-start/).
 :::
 
 ## Bắt đầu nhanh
@@ -42,7 +45,7 @@ Tài liệu này hướng dẫn chi tiết dành cho **đội ngũ IT Helpdesk, 
 | [Profiles Overview](/easydeploy/profiles/profiles/) | Khái niệm Profile, vị trí lưu trữ và cơ chế inject vào hệ điều hành Windows |
 | [unattend.xml](/easydeploy/profiles/unattend-xml/) | Cấu hình tự động hóa Windows Setup / OOBE (tạo tài khoản, autologon, script chạy đầu tiên) |
 | [Post-setup.ps1](/easydeploy/profiles/post-setup-ps1/) | Script chạy trong lần đăng nhập đầu tiên để tinh chỉnh hệ thống và cài đặt ứng dụng |
-| [Tạo Profile mới](/easydeploy/profiles/creating-new-profile/) | Quy trình thiết lập và kiểm thử một Profile chuẩn cho thiết bị mới |
+| [Tạo Profile mới](/easydeploy/profiles/creating-new-profile/) | Quy trình thiết lập và kiểm thử một bộ Profile chuẩn cho thiết bị mới |
 
 ## Tham khảo
 
@@ -57,7 +60,7 @@ Tài liệu này hướng dẫn chi tiết dành cho **đội ngũ IT Helpdesk, 
 ## Tổng quan kiến trúc (tóm tắt)
 
 ```
-Boot (BIOS/UEFI) → USB WinPE → easydeploy.exe (trong sources\boot.wim)
+Boot (UEFI) → USB WinPE → easydeploy.exe (trong sources\boot.wim)
                                     │
         ┌───────────────────────────┼──────────────────────────────┐
         ▼                           ▼                              ▼

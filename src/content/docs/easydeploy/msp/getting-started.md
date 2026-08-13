@@ -63,5 +63,5 @@ Sau khi hoàn tất cấu hình tệp tin JSON, thiết bị USB boot đã sẵn
 | Gia hạn thời gian sử dụng, bổ sung slots cài đặt hoặc nâng cấp gói dịch vụ | Liên hệ trực tiếp với bộ phận hỗ trợ của CoreSystem |
 
 :::note
-Quản trị viên của doanh nghiệp không cần thực hiện các tác vụ quản trị hệ thống cấp cao (như khởi tạo tenant mới, cấp lại key, thay đổi cấu hình license) — các tác vụ này được xử lý tập trung bởi CoreSystem. Mọi yêu cầu thay đổi thông số dịch vụ (bổ sung slots máy cài, gia hạn thời gian bản quyền, khôi phục API Key bị mất), vui lòng **liên hệ trực tiếp với CoreSystem**.
+Mọi yêu cầu thay đổi thông số dịch vụ (bổ sung slots máy cài, gia hạn thời gian bản quyền, khôi phục API Key bị mất), vui lòng **liên hệ trực tiếp với CoreSystem**.
 :::
