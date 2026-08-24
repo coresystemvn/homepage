@@ -1,145 +1,88 @@
 ---
-title: 'Bộ công cụ Rescue — Các tình huống sử dụng'
+title: 'Bộ công cụ Rescue'
 ---
 
-Môi trường WinPE của EASYDEPLOY được tích hợp sẵn bộ công cụ cứu hộ chuyên dụng, cho phép vận hành ngay cả khi hệ điều hành Windows trên máy trạm gặp sự cố nghiêm trọng không thể khởi động. Quản trị viên có thể truy cập nhanh các công cụ này bằng phím tắt (Hotkeys) trên màn hình chính hoặc qua các nút bấm tương ứng trên giao diện.
+Môi trường WinPE tích hợp sẵn các công cụ cứu hộ. Truy cập bằng phím tắt trên giao diện chính.
 
-## Danh mục công cụ
+## Danh mục phím tắt
 
-| Phím nóng | Công cụ | Chức năng chính |
+| Phím | Công cụ | Chức năng |
 |------|---------|-----------|
-| **F1** | BitLocker | Mở khóa và truy cập các phân vùng được mã hóa bằng BitLocker trong WinPE |
-| **F2** | WiFi | Thiết lập kết nối mạng không dây (WiFi) |
-| **F4** | Notepad | Xem và chỉnh sửa các tệp tin văn bản, file cấu hình hoặc file nhật ký (log) |
-| **F5** | Diskpart | Trình quản lý phân vùng ổ đĩa qua dòng lệnh (Diskpart) |
-| **F6** | PowerShell | Môi trường dòng lệnh PowerShell để thực thi script và lệnh quản trị |
-| **F7** | DISK BACKUP (MultiDrive) | Sao lưu và phục hồi dữ liệu ổ đĩa dưới dạng file image |
-| **F8** | FILE EXPLORER (Explorer++) | Trình quản lý tệp tin (File Explorer) phục vụ cứu hộ dữ liệu |
-| **F9** | HARDWARE INFO (HWInfo) | Kiểm tra chi tiết thông tin và chẩn đoán trạng thái phần cứng |
-| **F10** | WEB BROWSER (Palemoon) | Trình duyệt web phục vụ tra cứu thông tin trong môi trường WinPE |
-| **F11** | About | Hiển thị thông tin phiên bản phần mềm và trạng thái bản quyền (License) |
-| **F12** | Shutdown | Tắt thiết bị an toàn |
+| **F1** | BitLocker | Mở khóa phân vùng mã hóa |
+| **F2** | WiFi | Kết nối mạng không dây |
+| **F4** | Notepad | Xem/sửa file văn bản, log |
+| **F5** | Diskpart | Quản lý phân vùng (CLI) |
+| **F6** | PowerShell | Terminal quản trị |
+| **F7** | DISK BACKUP | Sao lưu/khôi phục ổ đĩa (MultiDrive) |
+| **F8** | FILE EXPLORER | Quản lý tệp tin (Explorer++) |
+| **F9** | HARDWARE INFO | Chẩn đoán phần cứng (HWInfo) |
+| **F10** | WEB BROWSER | Duyệt web (Palemoon) |
+| **F11** | About | Phiên bản + trạng thái license |
+| **F12** | Shutdown | Tắt máy |
 
 :::note
-Các ứng dụng dạng Portable (MultiDrive, Explorer++, HWInfo, Palemoon) được đóng gói sẵn vào thư mục `Softwares\` trên USB thông qua công cụ **EasyDeploy-BootBuilder**. Engine EASYDEPLOY xác định đường dẫn của các công cụ này dựa trên cấu hình tại phân hệ `toolPaths` trong tệp tin `system-config.json`, định tuyến trực tiếp vào thư mục `Softwares\` trên USB (tham khảo thêm [File cấu hình](/easydeploy/reference/configuration/)). Trong trường hợp USB bị thiếu tệp tin của công cụ, phím nóng tương ứng sẽ không thể kích hoạt. Khi đó, vui lòng sử dụng BootBuilder để xây dựng (build) lại bộ phương tiện cài đặt đầy đủ (tham khảo [BootBuilder (Whitebox)](/easydeploy/msp/bootbuilder/)).
+Các ứng dụng Portable nằm trong `Softwares\` trên USB, được đóng gói bởi BootBuilder. Nếu thiếu file, phím tương ứng sẽ không hoạt động — dùng BootBuilder build lại USB.
 :::
 
----
+## Các tình huống thường gặp
 
-## Tình huống 1: Thiết bị không thể khởi động vào Windows, cần sao lưu dữ liệu khẩn cấp
+### Cứu hộ dữ liệu khi Windows không khởi động được
 
-**Công cụ sử dụng:** **FILE EXPLORER (F8)**
+Nhấn **F8** (FILE EXPLORER) → truy cập phân vùng dữ liệu → sao chép file ra USB ngoài.
 
-1. Khởi động thiết bị vào môi trường WinPE → nhấn phím **F8** (hoặc chọn nút **FILE EXPLORER**).
-2. Truy cập vào các phân vùng lưu trữ dữ liệu (C:, D:,...).
-3. Tiến hành sao chép (copy) các dữ liệu quan trọng sang thiết bị lưu trữ ngoài hoặc phân vùng dự phòng.
+Nếu phân vùng không hiển thị, có thể bị ẩn ký tự ổ hoặc mã hóa BitLocker → dùng **F1** mở khóa trước.
 
-:::tip
-Nếu phân vùng ổ đĩa không hiển thị trong Explorer, nguyên nhân có thể do phân vùng chưa được gán ký tự ổ đĩa (Drive Letter) hoặc đang bị mã hóa bởi BitLocker — vui lòng xem hướng dẫn tại Tình huống 5 & 7.
-:::
+### Sao lưu/khôi phục toàn bộ ổ đĩa
 
----
+Nhấn **F7** (MultiDrive) → chọn **Backup Image** → chọn nguồn → chọn đích → sao lưu.
 
-## Tình huống 2: Sao lưu (Backup) toàn bộ ổ đĩa trước khi thay thế phần cứng hoặc định dạng (Format)
-
-**Công cụ sử dụng:** **DISK BACKUP (F7 / MultiDrive)**
-
-1. Kết nối ổ đĩa hoặc USB lưu trữ (đảm bảo đủ dung lượng trống) vào thiết bị, đặt tên nhãn (label) là `DISK BACKUP`.
-2. Nhấn phím **F7** để khởi chạy công cụ MultiDrive.
-3. Lựa chọn chế độ **Backup Image** → chọn ổ đĩa nguồn cần sao lưu → chọn ổ đĩa đích để lưu file image → tiến hành sao lưu.
-4. Khi cần khôi phục, khởi động lại thiết bị vào WinPE → mở MultiDrive → lựa chọn chế độ **Restore** và trỏ tới file image đã sao lưu.
+Khôi phục: mở MultiDrive → **Restore** → trỏ tới file image.
 
 :::danger
-Thao tác phục hồi (Restore) sẽ ghi đè và xóa toàn bộ dữ liệu hiện có trên ổ đĩa đích. Vui lòng kiểm tra và xác nhận chính xác ổ đĩa nguồn và ổ đĩa đích trước khi thực hiện.
+Restore sẽ xóa toàn bộ dữ liệu trên ổ đĩa đích. Kiểm tra kỹ trước khi thực hiện.
 :::
 
----
+### Mở khóa phân vùng BitLocker
 
-## Tình huống 3: Kiểm tra và chẩn đoán sự cố phần cứng
-
-**Công cụ sử dụng:** **HARDWARE INFO (F9 / HWInfo)**
-
-1. Nhấn phím **F9** để mở công cụ HWInfo.
-2. Kiểm tra các thông số vận hành: Nhiệt độ CPU/GPU, trạng thái sức khỏe ổ cứng (S.M.A.R.T), thông số bộ nhớ RAM, điện áp nguồn, và phiên bản BIOS hiện tại.
-3. Sử dụng các chỉ số chẩn đoán này để xác định lỗi thuộc về phần cứng hay cần đề xuất thay thế linh kiện.
-
----
-
-## Tình huống 4: Cần tra cứu thông tin, tải driver hoặc tài liệu hướng dẫn trong quá trình xử lý sự cố
-
-**Công cụ sử dụng:** **WEB BROWSER (F10 / Palemoon)**
-
-1. Thiết lập kết nối mạng: Nhấn phím **F2** để kết nối WiFi hoặc kết nối trực tiếp qua cáp mạng LAN.
-2. Nhấn phím **F10** để mở trình duyệt web.
-3. Tra cứu các thông tin kỹ thuật, tải driver phần cứng hoặc tài liệu cần thiết và lưu vào USB.
-
-:::caution
-Do môi trường WinPE có thể thiếu một số chứng chỉ CA hệ thống (Certificate Authority), một số trang web có thể báo lỗi bảo mật SSL/TLS. Trong trường hợp bị chặn kết nối, bạn có thể thử truy cập qua giao thức HTTP (nếu trang web an toàn), hoặc tải tệp tin trước trên một thiết bị khác rồi sao chép vào USB cứu hộ.
-:::
-
----
-
-## Tình huống 5: Truy cập và mở khóa phân vùng được mã hóa bằng BitLocker
-
-**Công cụ sử dụng:** **BitLocker (F1)**
-
-1. Nhấn phím **F1** → Hệ thống EASYDEPLOY sẽ tự động quét và liệt kê các phân vùng đang bị khóa mã hóa.
-2. Lựa chọn phân vùng cần truy cập → Nhập mật khẩu người dùng hoặc khóa khôi phục (BitLocker Recovery Key).
-3. Sau khi mở khóa thành công, phân vùng sẽ hiển thị đầy đủ cấu trúc dữ liệu trong File Explorer (**F8**).
+Nhấn **F1** → chọn phân vùng bị khóa → nhập 48-digit Recovery Key → **UNLOCK DRIVE**.
 
 :::note
-Lưu ý: Việc nhập sai mật khẩu BitLocker nhiều lần có thể kích hoạt cơ chế bảo vệ bổ sung và khóa hoàn toàn phân vùng. Hãy xác minh chính xác thông tin khóa trước khi nhập.
+Nhập sai nhiều lần có thể khóa vĩnh viễn phân vùng. Xác minh key trước khi nhập.
 :::
 
----
+### Kết nối WiFi trong WinPE
 
-## Tình huống 6: Thiết lập kết nối mạng trong môi trường WinPE
+Nhấn **F2** → **SCAN NETWORKS** → chọn SSID → nhập mật khẩu → **CONNECT**.
 
-**Công cụ sử dụng:** **WiFi (F2) + PowerShell (F6)**
-
-1. Nhấn phím **F2** → Lựa chọn mạng không dây (SSID) → Nhập mật khẩu để kết nối.
-2. Kiểm tra và xác thực trạng thái kết nối mạng qua PowerShell (**F6**) bằng các lệnh tiêu chuẩn như `ipconfig` hoặc `ping 8.8.8.8`.
+Kiểm tra kết nối: **F6** (PowerShell) → chạy `ipconfig` hoặc `ping 8.8.8.8`.
 
 :::tip
-Quản trị viên có thể khai báo trước thông tin SSID và mật khẩu WiFi mặc định tại các khóa `"defaultWifiSsid"` và `"defaultWifiPassword"` trong tệp tin `system-config.json` để WinPE tự động kết nối khi khởi động. Xem chi tiết tại [File cấu hình](/easydeploy/reference/configuration/).
+Có thể đặt WiFi mặc định trong `system-config.json` để WinPE tự kết nối khi khởi động.
 :::
 
----
+### Xem log khi deploy thất bại
 
-## Tình huống 7: Thao tác và quản lý phân vùng ổ đĩa thủ công
+Log lỗi tại `[USB]:\EASYDEPLOY\Log\deploy-error-*.log`. Dùng **F8** mở thư mục → **F4** xem nội dung. Tìm `[STEP x/11] ... FAIL` hoặc `[FATAL]`.
 
-**Công cụ sử dụng:** **Diskpart (F5)**
+Log runtime (trước khi reboot): **F6** (PowerShell) → `Get-Content X:\deploy-log.txt`.
 
-1. Nhấn phím **F5** để khởi chạy Diskpart trong cửa sổ dòng lệnh.
-2. Thực thi chuỗi lệnh quản trị: `list disk` để xem danh sách ổ đĩa → `select disk N` để chọn ổ đĩa đích → thực hiện các tác vụ `clean` (xóa phân vùng) hoặc `create partition` (tạo phân vùng mới) theo yêu cầu kỹ thuật.
-3. Nhập lệnh `exit` để đóng công cụ sau khi hoàn tất.
+### Quản lý phân vùng thủ công
+
+Nhấn **F5** (Diskpart) → `list disk` → `select disk N` → `clean` hoặc `create partition`.
 
 :::danger
-Lưu ý: Các lệnh `clean` hoặc `delete partition` sẽ xóa bỏ vĩnh viễn toàn bộ dữ liệu trên ổ đĩa được chọn. Hãy chắc chắn rằng bạn đã chọn chính xác ổ đĩa đích trước khi thực thi.
+Lệnh `clean` xóa vĩnh viễn toàn bộ dữ liệu trên ổ đĩa được chọn.
 :::
 
----
+## Tổng hợp nhanh
 
-## Tình huống 8: Phân tích tệp nhật ký (Log) và kịch bản triển khai khi xảy ra lỗi
-
-**Công cụ sử dụng:** **Notepad (F4) + PowerShell (F6) + FILE EXPLORER (F8)**
-
-1. Trong trường hợp quá trình triển khai thất bại, tệp nhật ký lỗi sẽ được lưu tự động tại `[USB]:\EASYDEPLOY\Log\deploy-error-*.log`.
-2. Nhấn **F8** để mở Explorer, di chuyển đến thư mục `EASYDEPLOY\Log\` → Nhấn **F4** để mở tệp log bằng Notepad.
-3. Tìm kiếm các từ khóa lỗi như `[STEP x/11] ... FAIL` hoặc `[FATAL]` để xác định bước phát sinh lỗi.
-4. Để phân tích chi tiết hơn: Nhấn **F6** để mở PowerShell và chạy lệnh `Get-Content X:\deploy-log.txt` (hoặc `type X:\deploy-log.txt`) để xem toàn bộ nhật ký runtime ghi nhận trong quá trình cài đặt.
-
----
-
-## Bảng tổng hợp Tình huống và Công cụ tương ứng
-
-| Tình huống | Công cụ chính |
-|------------|---------------|
-| Cứu hộ dữ liệu trên thiết bị không thể khởi động | FILE EXPLORER (**F8**) |
-| Sao lưu hoặc khôi phục phân vùng ổ đĩa | DISK BACKUP (**F7**) |
-| Chẩn đoán sức khỏe phần cứng | HARDWARE INFO (**F9**) |
-| Tra cứu tài liệu hoặc tải tệp tin hỗ trợ | WEB BROWSER (**F10**) + WiFi (**F2**) |
-| Phân vùng bị khóa mã hóa BitLocker | BitLocker (**F1**) |
-| Thiết lập kết nối mạng cho WinPE | WiFi (**F2**) + PowerShell (**F6**) |
-| Quản lý và phân chia phân vùng thủ công | Diskpart (**F5**) |
-| Đọc nhật ký lỗi hoặc thực thi lệnh quản trị | Notepad (**F4**) + PowerShell (**F6**) |
+| Tình huống | Công cụ |
+|------------|---------|
+| Cứu dữ liệu | FILE EXPLORER (**F8**) |
+| Sao lưu/khôi phục ổ đĩa | DISK BACKUP (**F7**) |
+| Chẩn đoán phần cứng | HARDWARE INFO (**F9**) |
+| Tra cứu thông tin | WEB BROWSER (**F10**) + WiFi (**F2**) |
+| Mở khóa BitLocker | BitLocker (**F1**) |
+| Kết nối mạng | WiFi (**F2**) + PowerShell (**F6**) |
+| Quản lý phân vùng | Diskpart (**F5**) |
+| Đọc log lỗi | Notepad (**F4**) + Explorer (**F8**) |

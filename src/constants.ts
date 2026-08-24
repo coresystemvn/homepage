@@ -9,7 +9,7 @@ export const SITE_DATA = {
     name: 'CORESYSTEM',
 
     // A brief tagline describing your role or expertise (3-5 words/phrases)
-    tagline: "Giải pháp CNTT và bảo vệ dữ liệu cho doanh nghiệp nhỏ",
+    tagline: "Công cụ triển khai Windows hiện đại cho đối tác MSP",
 
     // Your email address (use [at] and [dot] to avoid spam bots)
     email: "tructt@coresystem.vn",
@@ -32,10 +32,14 @@ export const SITE_DATA = {
 
     
     // One-line research tagline used for SEO and social sharing meta tags
-    description: "General infrastructure, network, system, security, storage and data protection solutions for SMBs in Vietnam.",
+    description: "Modern Windows deployment tool on WinPE for MSP partners in Vietnam.",
 
     // Base URL of your deployed site (no trailing slash), e.g. "https://your-username.github.io"
     // Used for Open Graph tags. Leave empty if you haven't deployed yet.
     //siteUrl: "https://blog.ngantrambh.workers.dev",
     siteUrl: "https://coresystem.vn",
+
+    // Trial download flow
+    trialSiteKey: "0x4AAAAAAEWRkqWhxj2eOu1a",
+    trialApiBase: "https://d.coresystem.vn",
 };

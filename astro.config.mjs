@@ -35,12 +35,9 @@ integrations: [
         ],
       },
       {
-        label: 'MSP & Quản lý',
+        label: 'MSP & Bản quyền',
         items: [
-          { slug: 'easydeploy/msp/overview' },
           { slug: 'easydeploy/msp/license-tiers' },
-          { slug: 'easydeploy/msp/dashboard' },
-          { slug: 'easydeploy/msp/usb-management' },
           { slug: 'easydeploy/msp/getting-started' },
           { slug: 'easydeploy/msp/bootbuilder' },
         ],
@@ -64,6 +61,8 @@ integrations: [
           { slug: 'easydeploy/reference/offline-mode' },
           { slug: 'easydeploy/reference/troubleshooting' },
           { slug: 'easydeploy/reference/telemetry' },
+          { slug: 'easydeploy/reference/faq' },
+          { slug: 'easydeploy/reference/glossary' },
         ],
       },
     ],

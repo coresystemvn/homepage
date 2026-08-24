@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TrialForm from '../components/TrialForm.astro';
+import { SITE_DATA } from '../constants';
+
+import '../styles/trial.css';
+---
+
+<Layout pageTitle="Dùng thử EASYDEPLOY">
+  <section class="trial-hero">
+    <h1>Trải nghiệm EASYDEPLOY - 30 ngày không giới hạn tính năng</h1>
+    <p class="trial-hero-sub">
+      Giải pháp Windows Deployment hiện đại trên nền WinPE được thiết kế cho đối tác MSP. Trải nghiệm thực tế trước khi quyết định.
+    </p>
+  </section>
+
+  <section class="trial-features">
+    <ul class="trial-feature-list">
+      <li>
+        <strong>Triển khai Windows tự động</strong>
+        <span>Quy trình cài đặt 11 bước hoàn toàn tự động từ USB WinPE.</span>
+      </li>
+      <li>
+        <strong>Chế độ Express Deploy (F3)</strong>
+        <span>Triển khai nhanh cho hạ tầng doanh nghiệp, chỉ với 2 lần bấm phím.</span>
+      </li>
+      <li>
+        <strong>Bộ công cụ Rescue</strong>
+        <span>BitLocker, WiFi, Diskpart, PowerShell, Backup và nhiều công cụ cứu hộ.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="trial-steps">
+    <h2>3 bước bắt đầu</h2>
+    <ol class="trial-steps-list">
+      <li><strong>Tải ISO</strong> — nhận link tải qua email</li>
+      <li><strong>Ghi ra USB</strong> — dùng Rufus (định dạng NTFS để lưu local ESD &gt; 4GB) tạo USB WinPE khởi động được</li>
+      <li><strong>Boot và sử dụng</strong> — request license trial, trải nghiệm đầy đủ tính năng</li>
+    </ol>
+  </section>
+
+  <TrialForm />
+
+  <section class="trial-faq">
+    <h2>Những câu hỏi thường gặp</h2>
+    <dl>
+      <dt>Link tải có hạn không?</dt>
+      <dd>Link có hiệu lực 24 giờ và tối đa 3 lượt tải. Nếu hết lượt mà chưa tải thành công, bạn có thể đăng ký lại để nhận link mới.</dd>
+      <dt>Trial có tính năng gì?</dt>
+      <dd>Đầy đủ mọi tính năng của EASYDEPLOY trong 30 ngày, bao gồm cả chế độ ExpressExpress deploy (F3).</dd>
+      <dt>ISO dùng cho mục đích gì?</dt>
+      <dd>File ISO chạy trên môi trường WinPE, chỉ dùng để đánh giá sản phẩm. Vui lòng không phát tán.</dd>
+      <dt>Kiểm tra toàn vẹn file iso thế nào?</dt>
+      <dd>Dùng Powershell, lệnh Get-FileHash để kiểm tra. </dd>
+        <dd>Mã SHA256 <b>637b66c0dc830cb2b52a42ce6344fbe361f67b41f10ae5b7953aa981d1fb0cab</b></dd>
+        <dt>Đĩa boot không nhận diện wifi, ổ đĩa</dt>
+      <dd>File ISO đã tích hợp tương đối nhiều driver phần cứng, nếu không nhận diện được có lẽ do phần cứng quá mới.</dd>
+      <dt>Cần hỗ trợ?</dt>
+      <dd>Liên hệ <a href="mailto:{SITE_DATA.email}">{SITE_DATA.email}</a></dd>
+    </dl>
+  </section>
+</Layout>

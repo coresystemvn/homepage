@@ -2,7 +2,7 @@
 title: 'Danh mục phím tắt trên WinPE (Keyboard Shortcuts)'
 ---
 
-Hầu hết các thao tác điều hướng và vận hành trên giao diện chính của EASYDEPLOY đều được gán phím tắt (Hotkeys). Kỹ thuật viên có thể sử dụng các **nút bấm** trên giao diện đồ họa hoặc nhấn **phím nóng** tương ứng trên bàn phím để kích hoạt nhanh tính năng.
+Các thao tác trên giao diện EASYDEPLOY đều có phím tắt. Bạn có thể dùng **nút bấm** trên giao diện hoặc nhấn **phím nóng** tương ứng.
 
 ## 1. Các luồng triển khai hệ điều hành
 
@@ -34,7 +34,7 @@ Hầu hết các thao tác điều hướng và vận hành trên giao diện ch
 | **F12** | Tắt thiết bị an toàn |
 
 :::note
-Các phần mềm cứu hộ được gán cho các phím tắt từ **F7 đến F10** là các ứng dụng dạng Portable được đóng gói sẵn trong thư mục `Softwares\` trên USB thông qua công cụ **EasyDeploy-BootBuilder**. Engine định tuyến đường dẫn của các công cụ này dựa trên cấu hình tại khóa `toolPaths` trong tệp tin `system-config.json`, ánh xạ vào thư mục `Softwares\`. Trong trường hợp thiết bị USB bị thiếu tệp tin chương trình của công cụ, phím tắt tương ứng sẽ không thể kích hoạt — kỹ thuật viên cần sao chép bổ sung file ứng dụng vào đúng thư mục chỉ định. Xem thêm chi tiết tại [File cấu hình](/easydeploy/reference/configuration/).
+Các công cụ từ **F7–F10** là ứng dụng Portable trong `Softwares\` trên USB (đóng gói bởi BootBuilder). Định tuyến qua `toolPaths` trong `system-config.json`. Nếu thiếu file, phím tương ứng không hoạt động — dùng BootBuilder build lại USB. Chi tiết tại [File cấu hình](/easydeploy/reference/configuration/).
 
-Phím tắt **F1** (BitLocker) và **F2** (WiFi) là các tính năng được tích hợp sâu trong nhân hệ thống nên **luôn sẵn sàng hoạt động**. Phím **F2** được thiết lập thời gian chờ (cooldown) qua thông số `wifiCooldownSeconds` nhằm hạn chế các thao tác nhấn nhầm, đồng thời hệ thống sẽ hiển thị cảnh báo nếu phát hiện thiết bị đang có kết nối mạng LAN có dây ổn định.
+**F1** (BitLocker) và **F2** (WiFi) tích hợp sẵn trong nhân nên **luôn hoạt động**. F2 có cooldown **3 giây** và cảnh báo nếu đang có LAN có dây.
 :::
