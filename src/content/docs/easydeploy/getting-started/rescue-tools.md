@@ -15,13 +15,19 @@ Môi trường WinPE tích hợp sẵn các công cụ cứu hộ. Truy cập b�
 | **F6** | PowerShell | Terminal quản trị |
 | **F7** | DISK BACKUP | Sao lưu/khôi phục ổ đĩa (MultiDrive) |
 | **F8** | FILE EXPLORER | Quản lý tệp tin (Explorer++) |
-| **F9** | HARDWARE INFO | Chẩn đoán phần cứng (HWInfo) |
-| **F10** | WEB BROWSER | Duyệt web (Palemoon) |
+| **F9** | HARDWARE INFO | Chẩn đoán phần cứng (HWiNFO64) |
+| **F10** | WEB BROWSER | Duyệt web (Pale Moon) |
 | **F11** | About | Phiên bản + trạng thái license |
 | **F12** | Shutdown | Tắt máy |
 
 :::note
-Các ứng dụng Portable nằm trong `Softwares\` trên USB, được đóng gói bởi BootBuilder. Nếu thiếu file, phím tương ứng sẽ không hoạt động — dùng BootBuilder build lại USB.
+Các ứng dụng Portable nằm trong `Softwares\` trên USB — **không đi kèm bộ phát hành**: bổ sung qua BootBuilder khi build, hoặc copy thủ công + khai báo `user-config.json` (xem [File cấu hình](/easydeploy/reference/configuration/)). Nếu thiếu file, phím tương ứng sẽ không hoạt động.
+:::
+
+:::note
+**Vì sao chỉ có 4 nút?** EasyDeploy được thiết kế là công cụ **deploy** — rescue chỉ là công cụ bổ trợ. Main window dành 4 nút quick-launch cho Portable Apps; nhãn và phím tắt ở footer **tự điều chỉnh theo công cụ bạn gắn** (qua `toolPaths`/`portableApps`).
+
+Trên thực tế, bạn có thể copy **không giới hạn** tool vào USB — các công cụ ngoài 4 slot vẫn gọi bình thường qua **F6 (PowerShell)**, **F8 (Explorer)** hoặc cmd ngay trong WinPE.
 :::
 
 ## Các tình huống thường gặp

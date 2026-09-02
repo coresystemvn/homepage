@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout pageTitle="Download — EasyDeploy Platform">
+  <section class="download-hero">
+    <h1>Tải EasyDeploy Platform</h1>
+    <p class="sub">Gói phân phối tiêu chuẩn — Free và MSP Advanced dùng chung binary.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="https://download.coresystem.vn/EasyDeploy-Platform.zip" rel="noopener">Tải xuống</a>
+      <a class="btn secondary" href="#package">Xem cấu trúc gói</a>
+      <a class="btn secondary" href="#security">Lưu ý bảo mật</a>
+    </div>
+    <p class="sha-line">SHA256: <code>39ffc04a89d0c7d9372c16d0611e1ba578f8d387a4c8fb6d949fcf4d32b8f771</code></p>
+    <p class="note">Sau khi tải xuống, vui lòng xác minh SHA256 (hướng dẫn ở mục <a href="#security">Lưu ý bảo mật</a>) trước khi sử dụng.</p>
+  </section>
+
+  <section class="download-section" id="package">
+    <h2>Cấu trúc gói phân phối</h2>
+    <p>Gói <code>EasyDeploy-Platform.zip</code> được phát hành qua R2, dùng chung cho mọi tier:</p>
+    <pre class="code-block"><code>[1] EasyDeploy-Platform.zip
+├── EasyDeploy.BootBuilder.exe
+├── EasyDeploy.BootBuilder.exe.sig   ← chữ ký YubiKey
+├── Links.md
+└── EasyDeploy\
+    ├── EasyDeploy.exe
+    ├── EasyDeploy.exe.sig           ← chữ ký YubiKey
+    └── system-config.json
+
+[2] SHA256 hash của file .zip (công bố kèm bản phát hành)</code></pre>
+    <p class="note">Giải nén để sử dụng. Gói <strong>không kèm ứng dụng Portable</strong> — các công cụ trong cấu hình mặc định (MultiDrive, HWiNFO64, Explorer++, Pale Moon) chỉ là thiết kế mẫu. Tải bổ sung hoặc chọn công cụ của bạn: thêm qua BootBuilder lúc build, hoặc copy thủ công vào <code>Softwares\</code> + khai báo <code>user-config.json</code>. Chi tiết tại <a href="/easydeploy/reference/configuration/">File cấu hình</a>.</p>
+  </section>
+
+  <section class="download-section" id="security">
+    <h2>Lưu ý bảo mật</h2>
+    <div class="sec-grid">
+      <div class="sec-card">
+        <h3>Chữ ký YubiKey (.sig) &amp; Trust Chain</h3>
+        <p>Mỗi file <code>.exe</code> đều đi kèm <code>.sig</code> được ký bằng YubiKey của CoreSystem. Cả hai ứng dụng đều <strong>nhúng sẵn public key</strong> để tự xác minh:</p>
+        <p>EasyDeploy <strong>tự validate chữ ký trước khi chạy</strong> → BootBuilder xác minh EasyDeploy qua cùng cơ chế → nếu EasyDeploy không qua được kiểm tra, BootBuilder <strong>chặn build ISO</strong>. File bị chỉnh sửa/repack vì vậy bị chặn ngay từ gốc — bạn không thể vô tình dựng USB từ binary không hợp lệ.</p>
+      </div>
+      <div class="sec-card">
+        <h3>SHA256 hash</h3>
+        <p>Mỗi bản phát hành đều công bố <strong>SHA256 hash</strong> của file <code>.zip</code>. Trước khi sử dụng, bạn nên tự kiểm tra:</p>
+        <pre class="code-block small"><code>Get-FileHash .\EasyDeploy-Platform.zip -Algorithm SHA256
+# so sánh kết quả với hash công bố trên website</code></pre>
+        <p class="note">Chỉ tải từ link chính thức do CoreSystem cung cấp. Thêm file vào exclusion của Antivirus nếu bị nhận diện nhầm (binary chưa ký số Authenticode).</p>
+      </div>
+    </div>
+    <div class="warning">
+      <strong>Khuyến nghị:</strong> luôn kiểm tra cả <code>SHA256</code> và <code>.sig</code> trước khi chạy, đặc biệt khi nhận file qua kênh trung gian.
+    </div>
+  </section>
+
+  <section class="download-section" id="next">
+    <h2>Tiếp theo</h2>
+    <ul>
+      <li><a href="/easydeploy/msp/getting-started/">Getting Started</a> — tải và chuẩn bị USB</li>
+      <li><a href="/easydeploy/msp/bootbuilder/">BootBuilder</a> — tự build ISO/USB</li>
+      <li><a href="/easydeploy/">Tài liệu EasyDeploy</a> — tổng quan hệ thống</li>
+    </ul>
+  </section>
+</Layout>
+
+<style>
+.download-hero { text-align:center; padding: 3rem 1rem 2rem; }
+.download-hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom:0.5rem; }
+.download-hero .sub { color: var(--color-text-muted); max-width:700px; margin:0 auto 1.5rem; }
+.cta-row { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.sha-line { text-align:center; margin-top:0.75rem; font-size:0.9rem; color: var(--color-text-muted); }
+.sha-line code { background: var(--color-bg-alt); padding:0.2rem 0.4rem; border-radius:0.25rem; }
+.btn { padding:0.7rem 1.2rem; border-radius:0.5rem; font-weight:600; text-decoration:none; display:inline-block; }
+.btn.primary { background: var(--color-accent, #0d9488); color:white; }
+.btn.secondary { border:1px solid var(--color-accent, #0d9488); color: var(--color-accent); }
+.download-section { max-width:900px; margin:0 auto; padding:2rem 1rem; }
+.download-section h2 { margin-bottom:1rem; }
+.code-block { background: var(--color-bg-alt); border:1px solid var(--color-border); border-radius:0.5rem; padding:1rem; overflow-x:auto; font-size:0.9rem; }
+.code-block.small { font-size:0.85rem; }
+.sec-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; margin:1rem 0; }
+.sec-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.2rem; background: var(--color-bg); }
+.sec-card h3 { margin:0 0 0.5rem 0; }
+.warning { margin-top:1rem; padding:1rem; border-left:4px solid var(--color-accent, #0d9488); background: var(--color-bg-alt); border-radius:0.25rem; }
+.note { color: var(--color-text-muted); font-size:0.9rem; }
+</style>

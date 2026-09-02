@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout pageTitle="Điều khoản Dịch vụ" description="Điều khoản dịch vụ EasyDeploy & BootBuilder — license, cam kết bảo mật, không telemetry, quan hệ với Microsoft, thanh toán.">
+	<section class="legal-hero">
+		<h1>Điều khoản Dịch vụ</h1>
+		<p class="sub">Cập nhật: 29/08/2026 · Bản khung generic — thông tin doanh nghiệp sẽ được bổ sung khi hoàn tất thủ tục pháp lý.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>1. Giới thiệu dịch vụ</h2>
+		<p><strong>EasyDeploy</strong> và <strong>BootBuilder</strong> là các công cụ triển khai Windows chạy trên nền WinPE, phát hành bởi CoreSystem ("chúng tôi"). Gói <strong>Free</strong> phát hành miễn phí vĩnh viễn, sử dụng nguyên trạng (as-is). Gói <strong>MSP Advanced</strong> cấp license hàng năm gắn theo lô USB-SN. Việc tải xuống, cài đặt hoặc sử dụng sản phẩm đồng nghĩa bạn đã chấp nhận các điều khoản này.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>2. License &amp; phạm vi sử dụng</h2>
+		<ul>
+			<li>License MSP Advanced được ký số (ECDSA P-256), gắn chặt với serial number (USB-SN) của các USB đã đăng ký — không thể chuyển nhượng sang thiết bị khác.</li>
+			<li>Bạn chịu trách nhiệm bảo quản thiết bị USB và preshared-key (nếu sử dụng mã hóa profile) — đây là tài sản tạo ra doanh thu của bạn.</li>
+			<li>Bạn không được phân phát lại, bán lại hoặc sửa đổi binary của CoreSystem.</li>
+		</ul>
+	</section>
+
+	<section class="legal-section">
+		<h2>3. Cam kết bảo mật &amp; không telemetry</h2>
+		<ul>
+			<li>CoreSystem <strong>không vận hành backend thu thập dữ liệu</strong>: chúng tôi không thu thập dữ liệu cá nhân, không lưu trữ license key, không ghi nhận telemetry từ quá trình triển khai của bạn.</li>
+			<li>Dữ liệu thống kê (nếu bạn chủ động bật) chỉ nằm trên USB (CSV) hoặc trên endpoint do MSP tự vận hành (BYOB — Advanced).</li>
+			<li>Các binary nhúng public key và tự kiểm chứng chữ ký <code>.sig</code> trước khi chạy để bảo đảm tính toàn vẹn.</li>
+		</ul>
+	</section>
+
+	<section class="legal-section">
+		<h2>4. Quan hệ với Microsoft</h2>
+		<p>EasyDeploy và CoreSystem không liên kết, không được chứng thực hay tài trợ bởi Microsoft Corporation. Microsoft, Windows, WinPE, BitLocker, PowerShell là nhãn hiệu hoặc nhãn hiệu đã đăng ký của Microsoft Corporation tại Hoa Kỳ và/hoặc các quốc gia khác.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>5. Thanh toán</h2>
+		<p>Việc thanh toán cho gói MSP Advanced có thể được xử lý thông qua một bên thứ ba độc lập (Merchant of Record — ví dụ Lemon Squeezy, Paddle). Khi đó, điều khoản của nền tảng tương ứng sẽ áp dụng cho khâu xử lý thanh toán. Chính sách hoàn tiền xem tại trang <a href="/refund/">Chính sách hoàn tiền</a>.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>6. Miễn trừ bảo hành</h2>
+		<p>Phần mềm được cung cấp "nguyên trạng" (as-is) mà không bảo hành dưới bất kỳ hình thức nào. Quá trình triển khai sẽ <strong>xóa toàn bộ dữ liệu trên ổ đích</strong> — bạn chịu trách nhiệm sao lưu trước khi deploy. Chúng tôi không bảo đảm kết quả cụ thể trên mọi cấu hình phần cứng/môi trường.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>7. Giới hạn trách nhiệm</h2>
+		<p>Trong phạm vi tối đa được pháp luật cho phép, CoreSystem không chịu trách nhiệm đối với bất kỳ thiệt hại gián tiếp, ngẫu nhiên, đặc biệt hoặc hệ quả nào phát sinh từ việc sử dụng hoặc không thể sử dụng sản phẩm.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>8. Thay đổi điều khoản</h2>
+		<p>Chúng tôi có thể cập nhật các điều khoản này theo thời gian. Phiên bản hiện hành luôn được đăng tại trang này và có hiệu lực từ thời điểm đăng.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>9. Liên hệ</h2>
+		<p>Email: <a href="mailto:support@coresystem.vn">support@coresystem.vn</a> · Website: <a href="https://www.coresystem.vn">www.coresystem.vn</a></p>
+	</section>
+</Layout>
+
+<style>
+	.legal-hero { text-align: center; padding: 3rem 1rem 1rem; }
+	.legal-hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 0.5rem; }
+	.legal-hero .sub { color: var(--color-text-muted); font-size: 0.9rem; }
+	.legal-section { max-width: 860px; margin: 0 auto; padding: 1.25rem 1rem; }
+	.legal-section h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+	.legal-section p, .legal-section li { color: var(--color-text); line-height: 1.65; }
+	.legal-section ul { padding-left: 1.2rem; }
+	.legal-section a { color: var(--color-accent); }
+</style>

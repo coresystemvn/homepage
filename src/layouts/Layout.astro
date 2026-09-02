@@ -1,26 +1,56 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SocialOverlay from '../components/SocialOverlay.astro';
 import { SITE_DATA } from '../constants';
 
 import '../styles/global.css';
 
 const { pageTitle, description = SITE_DATA.description } = Astro.props;
 const title = `${SITE_DATA.name}${pageTitle ? ` | ${pageTitle}` : ""}`;
+const lang = Astro.url.pathname.startsWith('/en') ? 'en' : 'vi';
+const isEn = lang === 'en';
+const viDesc = 'Nền tảng triển khai Windows 11 tự động trên WinPE cho MSP — một chiếc USB, tự động hoàn toàn, khoảng 15 phút một máy, không cần server.';
+const desc = Astro.props.description || (isEn ? SITE_DATA.description : viDesc);
+const siteUrl = SITE_DATA.siteUrl;
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const viPath = Astro.url.pathname.startsWith('/en')
+	? Astro.url.pathname.slice(3) || '/'
+	: Astro.url.pathname;
+const enPath = Astro.url.pathname.startsWith('/en')
+	? Astro.url.pathname
+	: `/en${Astro.url.pathname === '' ? '/' : Astro.url.pathname}`;
+const ogImage = new URL('/images/logo.png', siteUrl).href;
+// Trang 404 không được phát canonical/hreflang (URL 404 không tồn tại thật);
+// blog chỉ có tiếng Việt → không quảng bá bản EN cho blog
+const is404 = Astro.url.pathname.replace(/\/+$/, '') === '/404';
+const hasEn = !Astro.url.pathname.startsWith('/blog') && !is404;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<meta name="description" content={description} />
+		<meta name="description" content={desc} />
+		{!is404 && <link rel="canonical" href={canonical} />}
+		{!is404 && <link rel="alternate" hreflang="vi" href={new URL(viPath, siteUrl).href} />}
+		{hasEn && <link rel="alternate" hreflang="en" href={new URL(enPath, siteUrl).href} />}
+		{!is404 && <link rel="alternate" hreflang="x-default" href={new URL(viPath, siteUrl).href} />}
 		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
+		<meta property="og:description" content={desc} />
 		<meta property="og:type" content="website" />
+		{!is404 && <meta property="og:url" content={canonical} />}
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="408" />
+		<meta property="og:image:height" content="408" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={desc} />
+		<meta name="twitter:image" content={ogImage} />
 		<script is:inline>
 			// Đồng bộ theme với docs site (Starlight): dùng chung key 'starlight-theme'
 			// và luôn set data-theme='light'|'dark' (không xoá attribute).
@@ -35,10 +65,35 @@ const title = `${SITE_DATA.name}${pageTitle ? ` | ${pageTitle}` : ""}`;
 						? 'dark'
 						: 'light';
 			document.documentElement.setAttribute('data-theme', theme);
+			// Language session: keep /en prefix across pages (except blog) if user is in EN
+			try {
+				const curIsEn = location.pathname.startsWith('/en');
+				if (curIsEn) localStorage.setItem('preferred-lang', 'en');
+				// Rewrite internal links to keep session (except /blog and external)
+				document.addEventListener('click', (e) => {
+					if (!(e.target instanceof Element)) return;
+					const a = e.target.closest('a[href^="/"]');
+					if (!a) return;
+					// Nút chuyển ngôn ngữ tự quản phiên — không bị chặn/redirect
+					if (a.hasAttribute('data-lang-switch')) return;
+					const href = a.getAttribute('href');
+					if (!href || href.startsWith('/en') || href.startsWith('/blog') || href.startsWith('//')) return;
+					const pref = localStorage.getItem('preferred-lang');
+					const onEnPage = location.pathname.startsWith('/en');
+					if (pref === 'en' || onEnPage) {
+						// Keep EN for all except blog
+						if (href.startsWith('/easydeploy') || href.startsWith('/download') || href === '/') {
+							e.preventDefault();
+							location.href = '/en' + href;
+						}
+					}
+				});
+			} catch {}
 		</script>
 	</head>
 	<body>
 	    <Header />
+		<SocialOverlay />
 		<main>
 			<slot />
 		</main>

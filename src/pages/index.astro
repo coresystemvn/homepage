@@ -6,13 +6,164 @@ import { SITE_DATA } from '../constants';
 import '../styles/home.css';
 ---
 
-<Layout pageTitle="Công cụ triển khai Windows cho đối tác MSP">
-	<Hero 
-		name={SITE_DATA.name} 
-		tagline={SITE_DATA.tagline} 
-		twitter={SITE_DATA.twitter}
-		facebook={SITE_DATA.facebook}
-		scholar={SITE_DATA.scholar}
-		email={SITE_DATA.email}
-	/>
+<Layout pageTitle="Nền tảng triển khai Windows tự động cho đối tác MSP">
+	<Hero />
+
+	<section class="landing-cta">
+		<div class="landing-inner">
+			<div class="badge-row">
+				<span class="badge">Vui lòng tham khảo các lưu ý bảo mật trước khi sử dụng</span>
+				<span class="badge-note">Chi tiết hash & chữ ký .sig trong <a href="/download/">Download</a></span>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-why">
+		<div class="landing-inner">
+			<h2>Vì sao EasyDeploy?</h2>
+			<div class="why-grid">
+				<div class="why-card">
+					<h3>MDT đã khai tử — khoảng trống đang để hở</h3>
+					<p>Microsoft chính thức retire MDT từ 01/2026: không update, không hỗ trợ, gói cài bị gỡ khỏi kênh phân phối. EasyDeploy kế thừa đúng mảng deploy thuần (bare-metal imaging) mà MSP cần.</p>
+				</div>
+				<div class="why-card">
+					<h3>Giải pháp enterprise là quá mức cần thiết</h3>
+					<p>ConfigMgr/Autopilot đòi hạ tầng server, cloud và license chuyên dụng — không hợp khi MSP đi cài máy cho khách hàng. EasyDeploy gói hết trong một USB: không server, không hạ tầng.</p>
+				</div>
+				<div class="why-card">
+					<h3>Tự động hoàn toàn — ~15 phút một máy</h3>
+					<p>Chưa đầy 5 phút cho engine tự chạy trọn 11 bước bung cài, cộng khoảng 10 phút hậu kỳ tự động sau cài đặt — tổng ~15 phút một máy, hoàn toàn tự động với ZeroTouch (Advanced; Express chỉ thêm 2 phím: F3 + confirm). So với 90–180 phút cách thông thường. Thời gian thực tế tùy tốc độ mạng và ổ đĩa.</p>
+				</div>
+				<div class="why-card">
+					<h3>Đơn giản đến mức "biết boot USB là cài được"</h3>
+					<p>Nhân sự junior đi cài máy, kỹ thuật viên senior ở nhà tập trung vào giải pháp có margin tốt hơn. Đó là bài toán kinh tế mà EasyDeploy giải cho MSP.</p>
+				</div>
+				<div class="why-card">
+					<h3>Minh bạch &amp; hợp pháp</h3>
+					<p>Cài từ ESD theo kênh chính thức của Microsoft, xác minh SHA-256, trust chain tự kiểm chứng — không dùng bộ WinPE/ghost "thiếu minh bạch" trôi nổi trên thị trường, thứ đặt cả MSP lẫn khách hàng vào rủi ro pháp lý.</p>
+				</div>
+			</div>
+
+			<div class="why-compare">
+				<h3>Đổi cách cài truyền thống</h3>
+				<div class="compare-table-wrap">
+					<table class="compare-table">
+						<thead>
+							<tr><th></th><th>Cách truyền thống</th><th>Với EasyDeploy</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Nguồn cài</td><td>Tải ISO thủ công — thường đã cũ</td><td>Catalog tự lọc build mới nhất, nguồn ESD chính thức</td></tr>
+							<tr><td>Thao tác</td><td>Burn ISO → cài tay → vượt OOBE từng bước</td><td>Boot USB → F3 + xác nhận → engine tự chạy 11 bước</td></tr>
+							<tr><td>Hậu kỳ</td><td>Registry, gỡ bloat, dọn workspace tay từng máy</td><td>Profile chuẩn inject tự động — giống hệt nhau</td></tr>
+							<tr><td>Ngôn ngữ lạ</td><td>Phụ thuộc tay nghề kỹ thuật viên — càng lạ càng chậm</td><td>Engine chạy như nhau với mọi ngôn ngữ</td></tr>
+							<tr><td>Nhất quán</td><td>Tùy tay người cài</td><td>100% theo profile, mọi máy nhất quán</td></tr>
+							<tr><td>Thời gian/máy</td><td>90–180 phút</td><td>~15 phút, tự động</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-features">
+		<div class="landing-inner">
+			<h2>EasyDeploy có gì?</h2>
+			<div class="feature-grid">
+				<div class="feature-card"><h3>EasyDeploy engine</h3><p>Tự động 11 bước khép kín từ phân vùng, cài đặt đến inject profile — không chạm tay, chạy trên nền WinPE.</p></div>
+				<div class="feature-card"><h3>Vanilla | Business | Express | ZeroTouch (Advanced)</h3><p>Bốn phương pháp cài đặt do EasyDeploy điều phối. Express (F3): chỉ 2 lần bấm phím — hàng loạt cho lab, lớp học, chi nhánh.</p></div>
+				<div class="feature-card"><h3>Rescue Tools</h3><p>BitLocker, WiFi, Diskpart, PowerShell, Backup, Explorer… ngay trong WinPE.</p></div>
+				<div class="feature-card"><h3>Hybrid / Offline</h3><p>Ưu tiên file esd trên USB, fallback Cloud — chạy tốt cả khi không có mạng.</p></div>
+				<div class="feature-card"><h3>Privacy first</h3><p>CoreSystem không vận hành backend và cam kết không thu thập dữ liệu gì — telemetry mặc định tắt. Advanced tự bật endpoint riêng khi cần, tài liệu kỹ thuật đi kèm Reference-Backend.</p></div>
+				<div class="feature-card"><h3>BootBuilder</h3><p>WinPE là môi trường cực khó — BootBuilder dựng ISO/USB tùy biến (driver, SecureBoot, CA2023) chỉ với vài cú click, thay vì hàng tuần nghiên cứu.</p></div>
+				<div class="feature-card"><h3>Trust chain tự kiểm chứng</h3><p>Public key nhúng sẵn trong binary — EasyDeploy tự validate chữ ký .sig trước khi chạy; BootBuilder chặn build ISO nếu EasyDeploy không hợp lệ. File repack bị chặn từ gốc.</p></div>
+				<div class="feature-card"><h3>3 lớp bảo vệ USB</h3><p>Physical · License ECDSA P-256 bind USB-SN (chặn clone, tránh hao hụt license) · Profile encryption (chặn leak dữ liệu) — hai lớp sau thuộc gói Advanced.</p></div>
+				<div class="feature-card"><h3>Tự chủ dữ liệu với Reference-Backend</h3><p>Tự chủ catalog &amp; ESD (BYOC), tự chủ telemetry (BYOB) — CoreSystem cung cấp gói thiết kế Reference-Backend sẵn sàng kết nối; tính năng kích hoạt qua license enforce ngay trong EasyDeploy.</p></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-pricing">
+		<div class="landing-inner">
+			<h2>Gói sản phẩm</h2>
+			<p class="pricing-intro">Trong đa số trường hợp, gói Free là đủ cho nhu cầu của SMB, Solo-IT, Micro-MSP. Gói Advanced nâng cao dành cho doanh nghiệp MSP có đội ngũ vận hành & hạ tầng phù hợp.</p>
+			<div class="pricing-grid">
+				<div class="pricing-card">
+					<h3>Free</h3><p class="price">Miễn phí vĩnh viễn</p><p class="price-note">Early Access — không cần thẻ, không đăng ký</p>
+					<ul>
+						<li>3 luồng cài đặt Vanilla | Business | Express</li>
+						<li>Sử dụng cloud catalog mặc định</li>
+						<li>Tùy biến iso không giới hạn với BootBuilder</li>
+						<li>Cung cấp sẵn 2 bộ profiles (1.Tweaks, 2.TweaksApp)</li>
+						<li>Cài đặt hàng loạt với Express Deploy (F3)</li>
+						<li>Tùy biến ứng dụng portable</li>
+						<li>Thống kê cơ bản với tùy chọn csv</li>
+						<li>Hỗ trợ qua tài liệu tại trang chủ</li>
+					</ul>
+					<a class="btn primary" href="/download/">Bắt đầu ngay</a>
+				</div>
+				<div class="pricing-card featured">
+					<h3>MSP Advanced</h3><p class="price">Hàng năm — theo lô USB-SN</p><p class="price-note">Early Access — định giá đang hoàn thiện cùng nhóm người dùng đầu tiên</p>
+					<ul>
+						<li>Tất cả ở Free +</li>
+						<li>Tự chủ catalog — BYOC</li>
+						<li>Tự chủ telemetry — BYOB + bộ Reference-Backend</li>
+						<li>Không giới hạn số profile được sử dụng</li>
+						<li>Tính năng mã hóa profile</li>
+						<li>Zero Touch (Boot USB → done)</li>
+						<li>Gói thiết kế hạ tầng bổ trợ *</li>
+						<li>Hỗ trợ qua email (chỉ tính năng lõi) **</li>
+					</ul>
+					<a class="btn primary" href="mailto:inquiry@coresystem.vn?subject=T%C6%B0%20v%E1%BA%A5n%20g%C3%B3i%20EasyDeploy%20MSP%20Advanced">Nhận tư vấn gói Advanced</a>
+				</div>
+			</div>
+			<p class="pricing-footnote">(*) Gói thiết kế hạ tầng bổ trợ (Reference-Backend) sẽ được cung cấp kèm <code>.lic</code> Advanced.</p>
+			<p class="pricing-footnote">(**) Tính năng lõi gồm EasyDeploy và BootBuilder. BYOC/BYOB do MSP tự chủ vận hành — nằm ngoài phạm vi support; tính năng được kích hoạt qua license enforce ngay trong EasyDeploy.</p>
+		</div>
+	</section>
+
+	<!-- Video demo moved into hero gallery; bottom section reserved for testimonial -->
 </Layout>
+
+<style>
+.landing-cta, .landing-why, .landing-features, .landing-pricing, .landing-video { padding: 3rem 1rem; }
+.landing-inner { max-width: 1100px; margin: 0 auto; }
+.landing-why h2, .landing-features h2, .landing-pricing h2, .landing-video h2 { text-align:center; margin-bottom:2rem; }
+.why-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+.why-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.2rem; background: var(--color-bg-alt); color: var(--color-text); }
+.why-card h3 { margin:0 0 0.5rem 0; color: var(--color-text); font-size:1.05rem; }
+.why-card p { color: var(--color-text-muted); margin:0; font-size:0.95rem; }
+.why-compare { margin-top: 2.5rem; }
+.why-compare h3 { text-align:center; margin-bottom:1.25rem; }
+.compare-table-wrap { overflow-x:auto; border:1px solid var(--color-border); border-radius:0.75rem; }
+.compare-table { width:100%; border-collapse:collapse; font-size:0.95rem; background: var(--color-bg); color: var(--color-text); }
+.compare-table th, .compare-table td { padding:0.75rem 1rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--color-border); }
+.compare-table thead th { background: var(--color-bg-alt); font-size:0.9rem; }
+.compare-table tbody tr:last-child td { border-bottom:none; }
+.compare-table td:first-child { font-weight:600; white-space:nowrap; }
+.compare-table td:last-child { color: var(--color-accent); font-weight:500; }
+.btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight:600; text-decoration:none; display:inline-block; }
+.btn.primary { background: var(--sl-color-accent, #0d9488); color: white; }
+.btn.secondary { border: 1px solid var(--sl-color-accent, #0d9488); color: var(--sl-color-accent, #0d9488); }
+.badge-row { text-align:center; margin-top:0.5rem; }
+.badge { display:inline-block; background: var(--sl-color-accent-high, #0f766e); color: white; padding: 0.25rem 0.6rem; border-radius: 999px; font-size:0.85rem; }
+.badge-note { display:block; font-size:0.8rem; opacity:0.7; margin-top:0.3rem; }
+.badge-note a { color: var(--sl-color-accent, #0d9488); }
+.landing-features h2, .landing-pricing h2, .landing-video h2 { text-align:center; margin-bottom:2rem; }
+.feature-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+.feature-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.2rem; background: var(--color-bg); color: var(--color-text); }
+.feature-card h3 { margin:0 0 0.5rem 0; color: var(--color-text); }
+.feature-card p { color: var(--color-text-muted); }
+.pricing-intro { text-align:center; opacity:0.8; max-width:700px; margin:0 auto 2rem auto; }
+.pricing-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; }
+.pricing-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.5rem; background: var(--color-bg); color: var(--color-text); }
+.pricing-card.featured { border-color: var(--color-accent, #0d9488); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+[data-theme="dark"] .pricing-card.featured { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.pricing-card h3 { margin-top:0; }
+.price { font-size:1.25rem; font-weight:700; margin:0.2rem 0; }
+.price-note { font-size:0.85rem; opacity:0.7; margin-bottom:1rem; }
+.pricing-card ul { padding-left:1.2rem; margin:1rem 0; }
+.pricing-card li { margin:0.3rem 0; }
+.pricing-footnote { text-align:center; font-size:0.85rem; opacity:0.6; margin-top:1.5rem; }
+.landing-video video { width:100%; max-width:800px; display:block; margin:0 auto; border-radius:0.5rem; }
+.video-note { text-align:center; font-size:0.85rem; opacity:0.6; margin-top:0.5rem; }
+</style>

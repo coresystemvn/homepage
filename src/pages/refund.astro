@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout pageTitle="Chính sách hoàn tiền" description="Chính sách hoàn tiền EasyDeploy — mọi giao dịch không hoàn tiền: license bind USB-SN không thu hồi được; gói Free cho trải nghiệm không giới hạn trước khi mua.">
+	<section class="legal-hero">
+		<h1>Chính sách hoàn tiền</h1>
+		<p class="sub">Cập nhật: 29/08/2026 · Áp dụng cho mọi gói dịch vụ của CoreSystem.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Chính sách: mọi giao dịch không hoàn tiền</h2>
+		<p>Mọi giao dịch đã thanh toán cho gói <strong>MSP Advanced</strong> (bao gồm license và các gói thiết kế bổ trợ) <strong>không được hoàn tiền</strong>. Chính sách này xuất phát từ bản chất của sản phẩm:</p>
+		<ul>
+			<li><strong>License bind USB-SN không thu hồi được</strong> — license được ký gắn chặt theo serial number của các USB đã đăng ký. Sau khi cấp, nó không thể "thu hồi" hay chuyển nhượng an toàn cho khách hàng khác — đó chính là cơ chế bảo vệ chống clone.</li>
+			<li><strong>Gói thiết kế backend (Reference-Backend) tương tự</strong> — tài liệu và bộ thiết kế đã bàn giao là đã tiêu dùng.</li>
+			<li><strong>Không có rủi ro "mua hụt"</strong> — gói <strong>Free</strong> miễn phí vĩnh viễn, không giới hạn thời gian: bạn trải nghiệm toàn bộ nền tảng với đúng hiệu năng thực tế trước khi quyết định nâng cấp. Việc mua MSP Advanced là quyết định có đầy đủ thông tin.</li>
+		</ul>
+	</section>
+
+	<section class="legal-section">
+		<h2>Trước khi mua — trao đổi với chúng tôi</h2>
+		<p>Mọi câu hỏi về tính năng, phạm vi license hay vận hành: email <a href="mailto:inquiry@coresystem.vn?subject=C%C3%A2u%20h%E1%BB%8Fi%20tr%C6%B0%E1%BB%9Bc%20khi%20mua%20MSP%20Advanced">inquiry@coresystem.vn</a>. Trong giai đoạn Early Access, bạn trao đổi trực tiếp với tác giả sản phẩm — chúng tôi muốn bạn tự tin trước khi thanh toán, không sau đó.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Thanh toán qua nền tảng MoR</h2>
+		<p>Nếu thanh toán được xử lý qua một nền tảng Merchant of Record độc lập (ví dụ Lemon Squeezy, Paddle), quy trình thanh toán tuân theo điều khoản của nền tảng tương ứng. Chính sách hoàn tiền của CoreSystem vẫn áp dụng: <strong>không hoàn tiền</strong> sau khi license được cấp.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Liên hệ</h2>
+		<p>Email: <a href="mailto:support@coresystem.vn">support@coresystem.vn</a> · Xem thêm: <a href="/terms/">Điều khoản Dịch vụ</a></p>
+	</section>
+</Layout>
+
+<style>
+	.legal-hero { text-align: center; padding: 3rem 1rem 1rem; }
+	.legal-hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 0.5rem; }
+	.legal-hero .sub { color: var(--color-text-muted); font-size: 0.9rem; }
+	.legal-section { max-width: 860px; margin: 0 auto; padding: 1.25rem 1rem; }
+	.legal-section h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+	.legal-section p, .legal-section li { color: var(--color-text); line-height: 1.65; }
+	.legal-section ul { padding-left: 1.2rem; }
+	.legal-section a { color: var(--color-accent); }
+</style>

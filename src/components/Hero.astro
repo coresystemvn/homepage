@@ -1,28 +1,75 @@
 ---
-import { Image } from 'astro:assets';
-import SocialIcons from './SocialIcons.astro';
-//import portraitImage from '../assets/portrait.png';
-import portraitImage from '/public/images/logo.png';
-const { name, tagline, twitter, facebook, scholar, email, } = Astro.props;
+const slides = ["/easydeploy/easydeploy.mp4","/easydeploy/s1.webp","/easydeploy/s2.webp","/easydeploy/s3.webp","/easydeploy/s4.webp","/easydeploy/s5.webp"];
+const isEn = Astro.url.pathname.startsWith('/en');
+const loc = (p: string) => isEn ? `/en${p}` : p;
+// DRAFT copy — chờ headline cuối từ chủ site, thay text bên dưới là xong.
+const copy = isEn
+  ? {
+      eyebrow: "For MSPs & IT teams",
+      h1: "Deploy Windows for customers — with just one USB.",
+      tagline: "EasyDeploy drives the entire 11-step Windows 11 install on WinPE — about 15 minutes per machine, in any language, no senior IT required. And with ZeroTouch (Advanced) it just runs on boot. No servers needed: MDT is retired, and EasyDeploy fills the gap.",
+      cta1: "Get the Free Edition", cta2: "View Docs",
+    }
+  : {
+      eyebrow: "Dành cho MSP & IT",
+      h1: "Deploy Windows cho khách hàng — chỉ với một chiếc USB.",
+      tagline: "EasyDeploy tự điều phối trọn 11 bước cài Windows 11 trên WinPE: khoảng 15 phút một máy, bất kỳ ngôn ngữ nào, không cần IT tay nghề cao. Với ZeroTouch (Advanced), boot USB là tự chạy — MDT đã khai tử, không cần server.",
+      cta1: "Tải gói Free", cta2: "Xem tài liệu",
+    };
 ---
 
 <section class="hero">
   <div class="hero-content">
-    <div class="portrait-container">
-      <!--<Image src={portraitImage} alt={name} class="portrait" /> -->
-      <img src="/images/logo.png" alt="CORESYSTEM" class="portrait" />
-    </div>
     <div class="hero-text">
-      <h1>{name}</h1>
-      <p class="tagline">{tagline}</p>
-      <SocialIcons 
-        size={40}
-        gap=1.5
-        twitter={twitter} 
-        facebook={facebook} 
-        scholar={scholar} 
-        email={email} 
-      />
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1>{copy.h1}</h1>
+      <p class="tagline">{copy.tagline}</p>
+      <div class="hero-cta">
+        <a class="btn primary" href={loc('/download/')}>{copy.cta1}</a>
+        <a class="btn secondary" href={loc('/easydeploy/')}>{copy.cta2}</a>
+      </div>
+    </div>
+    <div class="hero-gallery" aria-label="EasyDeploy gallery">
+      <div class="gallery-track" id="hero-gallery-track">
+        {slides.map((src, i) => (
+          src.endsWith(".mp4") ? (
+            <video src={src} class="gallery-slide" controls data-index={i} />
+          ) : (
+            <img src={src} alt={isEn ? `EasyDeploy WinPE interface — screenshot ${i}` : `Giao diện EasyDeploy trên WinPE — ảnh ${i}`} class="gallery-slide" loading={i===0 ? "eager" : "lazy"} data-index={i} />
+          )
+        ))}
+      </div>
+      <button class="gallery-btn prev" aria-label="Previous slide" id="gallery-prev">‹</button>
+      <button class="gallery-btn next" aria-label="Next slide" id="gallery-next">›</button>
+      <div class="gallery-dots" id="gallery-dots">
+        {slides.map((_, i) => (
+          <button class="dot" data-dot={i} aria-label={`Go to slide ${i+1}`}></button>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script is:inline>
+  const track = document.getElementById('hero-gallery-track');
+  const dots = document.querySelectorAll('#gallery-dots .dot');
+  const slides = track ? track.querySelectorAll('.gallery-slide') : [];
+  let idx = 0;
+  function show(n){
+    if(!track || !slides.length) return;
+    idx = (n + slides.length) % slides.length;
+    slides.forEach((s,i)=>{
+      const active = i===idx;
+      s.style.display = active ? 'block' : 'none';
+      if(s.tagName === 'VIDEO' && !active) s.pause();
+    });
+    dots.forEach((d,i)=> d.classList.toggle('active', i===idx));
+  }
+  document.getElementById('gallery-prev')?.addEventListener('click', ()=> show(idx-1));
+  document.getElementById('gallery-next')?.addEventListener('click', ()=> show(idx+1));
+  dots.forEach(d=> d.addEventListener('click', ()=> show(parseInt(d.dataset.dot))));
+  let timer = setInterval(()=> show(idx+1), 4000);
+  track?.addEventListener('mouseenter', ()=> clearInterval(timer));
+  track?.addEventListener('mouseleave', ()=> timer = setInterval(()=> show(idx+1), 4000));
+  show(0);
+</script>

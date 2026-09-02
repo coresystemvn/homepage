@@ -1,10 +1,12 @@
 ---
-// Override Starlight SiteTitle: text "Quay lại trang chủ", trỏ về homepage
-const base = import.meta.env.BASE_URL;
+const locale = (Astro.locals as any)?.starlightRoute?.locale ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'root');
+const isEn = locale === 'en';
+const label = isEn ? 'Back to home' : 'Quay lại trang chủ';
+const href = isEn ? '/en/' : import.meta.env.BASE_URL;
 ---
 
-<a href={base} class="site-title sl-flex" aria-label="Quay lại trang chủ">
-	<span translate="no">Quay lại trang chủ</span>
+<a href={href} class="site-title sl-flex" aria-label={label}>
+	<span>{label}</span>
 </a>
 
 <style>

@@ -6,7 +6,7 @@ EASYDEPLOY hỗ trợ vận hành ngoại tuyến trên hai khía cạnh: **Xác
 Dành cho môi trường mạng cô lập hoặc hạn chế kết nối Internet.
 
 :::note
-Tệp `.esd` tải từ **<https://esd.coresystem.vn>** (CoreSystem cung cấp). Tệp khớp Catalog — sao chép vào USB là dùng ngay.
+Tra cứu link tải `.esd` tại **ESD Catalog (<https://esd.coresystem.vn>)** — danh mục tra cứu link tải từ kênh phân phối chính thức của Microsoft, kèm SHA-256 để xác minh. Tệp khớp Catalog — sao chép vào USB là dùng ngay.
 :::
 
 :::note
@@ -23,8 +23,8 @@ Catalog nhúng của EasyDeploy có bản build cho 25H2 là 26200.8873. Trườ
 
 - **Nội dung file `*.lic`:** do CoreSystem cấp, ký số (không thể tự tạo/sửa). Gắn kèm tên doanh nghiệp, thời hạn, USB-SN được phép và gói dịch vụ.
 - **Bind USB:** License gắn ≥1 USB-SN. Nếu USB không trong danh sách, hệ thống báo *"License is bound to a different USB drive."* — ngăn sao chép license.
-  Chi tiết tại [Nguyên tắc USB-SN](/easydeploy/msp/license-tiers/#nguyên-tắc-ghi-nhận-usb-sn--bảo-vệ-tài-sản-của-msp).
-- **License Tier:** Gói dịch vụ (trial/standard/advanced) ghi trong license, quyết định tính năng. Xem [License Tiers](/easydeploy/msp/license-tiers/).
+  Chi tiết tại [Ghi chú về USB-SN](/easydeploy/msp/license-tiers/#ghi-chú-về-usb-sn-áp-dụng-cho-advanced).
+- **License Tier:** Gói dịch vụ (`free`/`advanced`) ghi trong license (chỉ Advanced có `*.lic`; Free không cần). Xem [License Tiers](/easydeploy/msp/license-tiers/).
 - **Kích hoạt:** Không cần cấu hình thêm. Đặt `.lic` lên USB — hệ thống tự xác thực, không cần mạng.
 
 :::caution
@@ -58,7 +58,7 @@ EASYDEPLOY áp dụng nguyên tắc **Offline-first** — ưu tiên nguồn cụ
 - **Hybrid Mode:** Thư mục `OS` để trống vẫn hợp lệ — EASYDEPLOY tải file qua Internet tự động.
 
 :::tip
-Truy cập **<https://esd.coresystem.vn>** để tải tệp cài đặt — chọn Build, Edition và Language phù hợp.
+Truy cập **<https://esd.coresystem.vn>** để tra cứu link tải tệp cài đặt — chọn Build, Edition và Language phù hợp.
 Đặt vào `EASYDEPLOY\OS\` trên USB.
 :::
 
@@ -71,7 +71,7 @@ Tên file sẽ không khớp `fileName` trong Catalog — engine bỏ qua file c
 
 | Tệp tin cấu hình | Thiết lập |
 |------|----------|
-| `system-config.json` | Không cần thiết lập xác thực. Có thể cấu hình `catalog.cloudCatalog` cho catalog nhúng/offline. |
+| `system-config.json` | Không cần thiết lập xác thực. `catalog.cloudCatalog:false` → dùng catalog nhúng (100% offline, mọi gói); `url` tự host là BYOC (Advanced). |
 | USB `EASYDEPLOY\` | Đặt file `*.lic` do CoreSystem cấp (không cần khai báo flag trong JSON). |
 | USB `EASYDEPLOY\OS\` | Sao chép tệp `.esd` hợp lệ (tải từ esd.coresystem.vn, khớp `fileName` trong Catalog). |
 

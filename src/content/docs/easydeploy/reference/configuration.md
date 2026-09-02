@@ -2,15 +2,15 @@
 title: 'Tài liệu cấu hình chi tiết'
 ---
 
-EASYDEPLOY đọc và phân tích tham số từ **hai tệp tin JSON**.
+EASYDEPLOY đọc cấu hình từ **hai file JSON**.
 
 ## 1. Tệp tin system-config.json — Cấu hình hệ thống
 
-Tệp tin nằm cùng thư mục với `easydeploy.exe`.
-Đóng gói sẵn trong `EasyDeploy.zip` do CoreSystem phát hành.
+File nằm cùng thư mục với `easydeploy.exe` trong bộ phát hành, và được **BootBuilder đóng gói vào `boot.wim` khi build USB**.
 
-Tệp chứa thiết lập về nhãn nút bấm, đường dẫn công cụ cứu hộ.
-Cũng bao gồm hành vi hệ thống, telemetry và OS Catalog.
+Vai trò của file là quy định các chức năng chủ đạo của hệ thống: nhãn hiển thị, đường dẫn công cụ cứu hộ, OS Catalog (BYOC), telemetry (BYOB) và preshared-key giải mã profile. File này **không sửa được khi chạy** (nằm trong `boot.wim`) — muốn thay đổi, bạn chỉnh trước khi build rồi để BootBuilder đóng gói lại.
+
+Các khóa nâng cao (Self-catalog/BYOB/Mã hóa/ZeroTouch) chỉ dành cho **MSP Advanced** — với **Free**, các khóa này bị bỏ qua khi chạy. Catalog hoạt động đầy đủ ở mọi gói (xem bảng dưới).
 
 ```jsonc
 {
@@ -34,13 +34,21 @@ Cũng bao gồm hành vi hệ thống, telemetry và OS Catalog.
   },
   "behavior": {
     "defaultWifiSsid": "",
-    "defaultWifiPassword": ""
+    "defaultWifiPassword": "",
+    "deployLogCSV": true
   },
   "catalog": {
     "url": "https://esd.coresystem.vn/data.json",
     "timeoutSeconds": 30,
     "downloadMethod": "auto",
-    "cloudCatalog": true
+    "cloudCatalog": true,
+    "filterCatalog": true
+  },
+  "telemetry": {
+    "enabled": false,
+    "endpoint": "",
+    "apiKey": "",
+    "reportDeployment": true
   },
   "profileEncryption": {
     "enabled": false,
@@ -49,26 +57,30 @@ Cũng bao gồm hành vi hệ thống, telemetry và OS Catalog.
 }
 ```
 
-| Cấu trúc khóa | Ý nghĩa sử dụng |
-|------|---------|
-| `labels` | Nhãn cho 2 luồng cài đặt chính, nút chức năng cứu hộ và hộp thoại About. |
-| `toolPaths` | Đường dẫn tương đối trỏ tới các công cụ cứu hộ — tự động vào `Softwares\` trên USB. |
-| `behavior` | WiFi mặc định (`defaultWifiSsid`/`defaultWifiPassword`). Cooldown phím F2: 3 giây (mặc định, không cấu hình). |
-| `catalog` | Nguồn OS Catalog (`url`, `timeoutSeconds`, `downloadMethod`) + cờ `cloudCatalog`. Cache: `X:\EasyDeploy\catalog.json` (mặc định). |
-| `profileEncryption` | Mã hóa profile (`enabled` + `passphrase`). Chỉ **MSP Advanced**, `enabled: true` khi đã mã hóa profile bằng `encrypt-profile.ps1`. Mặc định `false`. |
+| Cấu trúc khóa | Ý nghĩa sử dụng | Với Free |
+|------|---------|----------|
+| `labels` | Nhãn cho 2 luồng cài đặt chính, nút chức năng cứu hộ và hộp thoại About. | ✅ Có tác dụng (chỉnh trước khi build — xem ghi chú bên dưới) |
+| `toolPaths` | Đường dẫn tương đối trỏ tới các công cụ cứu hộ — tự động vào `Softwares\` trên USB. Là **giá trị fallback**: chỉ dùng khi `user-config.json` không khai báo `portableApps`. | ✅ Có tác dụng (chỉnh trước khi build) |
+| `behavior` | WiFi mặc định (`defaultWifiSsid`/`defaultWifiPassword`) + `deployLogCSV`. | ✅ Có tác dụng (chỉnh trước khi build) |
+| `catalog` | Nguồn OS Catalog (`url`/`timeoutSeconds`/`downloadMethod`/`cloudCatalog`/`filterCatalog`). Thiết kế **luôn fallback**: `url` trỏ tới catalog do CoreSystem vận hành — nếu gặp sự cố (hiếm), tự chuyển sang **catalog nhúng**. `cloudCatalog:true` = ưu tiên cloud; `filterCatalog:true` = OS Configurator chỉ hiện `Home|Pro|Enterprise` (tắt lọc → hiển thị toàn bộ edition Windows 11). **Free dùng mặc định là đủ** — chỉ `url` tự host là BYOC (Advanced). | ✅ Có tác dụng (trừ `url` tự host — BYOC/Advanced) |
+| `telemetry` | BYOB telemetry (`enabled`/`endpoint`/`apiKey`). | ⚠️ Bị bỏ qua — chỉ ghi CSV trên USB |
+| `profileEncryption` | Mã hóa profile (`enabled`/`passphrase`). | ⚠️ Bị bỏ qua |
 
 :::note
-**BYOC (tự host catalog):** Bạn có thể trỏ `catalog.url` về catalog tự host.
-Xem gói OSCatalog cho MSP. Tự host hạ tầng nằm ngoài phạm vi hỗ trợ của EASYDEPLOY.
+Với **Free**, các khóa nâng cao (`telemetry`, `profileEncryption`, `url` tự host — Self-catalog/BYOC) sẽ **bỏ qua khi chạy**: hệ thống dùng cloud catalog của CoreSystem kèm fallback embedded và ghi CSV trên USB. Chi tiết về Self-catalog/BYOB/Mã hóa/ZeroTouch có trong **tài liệu kỹ thuật kèm `.lic` MSP Advanced**.
+:::
+
+:::note
+**"Chỉnh trước khi build" nghĩa là gì?** Vì `system-config.json` được bake vào `boot.wim` lúc build, các khóa có tác dụng (`labels`/`toolPaths`/`behavior`) phải được chỉnh **trước khi chạy BootBuilder** — BootBuilder sẽ đóng gói phiên bản mới vào USB. Sửa file trong `boot.wim` sau khi build sẽ không có tác dụng.
 :::
 
 ### 1.1. Xác thực bản quyền — Offline License (duy nhất)
 
-> EASYDEPLOY dùng **Offline License** — không có khối `auth` trong `system-config.json`. Chỉ cần đặt file `*.lic` (do CoreSystem cấp) vào `EASYDEPLOY\` trên USB — client tự xác thực chữ ký ECDSA + bind USB-SN + license tier ngay tại máy.
+> Chỉ cần đặt file `*.lic` (do CoreSystem cấp) vào `EASYDEPLOY\` trên USB — client tự xác thực chữ ký ECDSA + bind USB-SN + license tier ngay tại máy.
 
 :::note
-File này thường giống nhau trên mọi USB và do CoreSystem quản lý (trong `boot.wim`).
-Bạn chỉ tập trung tùy biến `user-config.json` trên USB.
+`system-config.json` được BootBuilder đóng gói vào `boot.wim` khi build — bản hiển thị ở đây thuộc bản phát hành CoreSystem.
+Bạn tập trung tùy biến `user-config.json` trên USB.
 Công cụ rescue định vị qua `[ký_tự_ổ]:\Softwares\<toolPaths>`.
 :::
 
@@ -83,7 +95,7 @@ Tệp chứa tham số cài đặt mặc định và tùy biến triển khai.
 ```jsonc
 {
   "enableF3Express": true,         // bật chế độ Express (F3)
-  "zeroTouch": false,              // Boot USB → auto F3Express → OOBE (chỉ MSP Advanced, MSP tự chịu trách nhiệm)
+  "zeroTouch": false,              // chỉ Advanced — Free sẽ bị bỏ qua
   "deploy": {
     "version": "25h2",
     "edition": "Pro",
@@ -100,18 +112,27 @@ Tệp chứa tham số cài đặt mặc định và tùy biến triển khai.
 }
 ```
 
-:::note
-License ngoại tuyến **không nằm trong JSON**.
-Chỉ cần đặt `*.lic` (do CoreSystem cấp) vào `[USB]:\EASYDEPLOY\`.
+| Cấu trúc khóa | Ý nghĩa sử dụng | Với Free |
+|-------|---------|----------|
+| `enableF3Express` | Bật/tắt chế độ Express (F3). | ✅ Có tác dụng |
+| `zeroTouch` | Boot USB → tự chạy Express (`zeroTouch:true`). Chỉ **MSP Advanced**. | ⚠️ Bị bỏ qua |
+| `deploy.version` | Phiên bản OS trong OSCatalog (VD `25h2`). Tự resolve build mới nhất nếu nhiều build cùng version. | ✅ Có tác dụng |
+| `deploy.activation` | Home → `Retail`; Enterprise → `Volume`; Pro → chọn `Retail` hoặc `Volume`. Chọn sai → cài đặt sai. | ✅ |
+| `portableApps` / `tool*Label` | Ghi đè đường dẫn công cụ cứu hộ hoặc nhãn nút bấm. Khi không khai báo, hệ thống **fallback về giá trị trong `system-config.json`**. | ✅ |
+| `deploy.profile` | Tên profile sẽ dùng cho Express (`1.Tweaks`/`2.TweaksApp`). **Free là hard code 2 profiles** — tạo thêm `3.Acme` sẽ bị bỏ qua. Muốn dùng profile riêng trên Free: ghi đè nội dung vào một trong hai folder gốc (giữ đúng tên `1.Tweaks`/`2.TweaksApp`) — folder khác tên sẽ bị bỏ qua. | ⚠️ Chỉ 1.Tweaks/2.TweaksApp có tác dụng |
+
+:::caution
+**Fallback design — `portableApps`/`toolPaths`:** hệ thống được thiết kế luôn có giá trị dự phòng ở mọi tình huống — thiếu `user-config.json` (hoặc thiếu khóa) sẽ fallback về `system-config.json`. Tuy nhiên trên thực tế, **không có `user-config.json` thì các tính năng Express Deploy và MSP-owned portable apps licenses gần như vô dụng** — luôn kiểm tra file này khi bàn giao USB cho khách hàng.
 :::
 
-| Cấu trúc khóa | Ý nghĩa sử dụng |
-|-------|---------|
-| `enableF3Express` | Bật/tắt chế độ Express (F3). |
-| `zeroTouch` | Boot USB → tự chạy Express không cần nhấn F3. Chỉ **MSP Advanced** (`Tier=advanced`), MSP tự chịu trách nhiệm. Chỉ dùng trong môi trường có kiểm soát, không khuyến khích bật đại trà. Mặc định `false`. |
-| `deploy.version` | Phiên bản OS trong OSCatalog (VD `25h2`). Tự resolve build mới nhất nếu nhiều build cùng version. |
-| `deploy.activation` | Home → `Retail`; Enterprise → `Volume`; Pro → chọn `Retail` hoặc `Volume`. Chọn sai → cài đặt sai. |
-| `portableApps` / `tool*Label` | Ghi đè đường dẫn công cụ cứu hộ hoặc nhãn nút bấm. |
+:::note
+**Ứng dụng Portable không đi kèm bộ phát hành.** 4 công cụ trong cấu hình mặc định (MultiDrive, HWiNFO64, Explorer++, Pale Moon) chỉ là thiết kế mẫu — file `.zip` tải từ trang Download **không chứa** các ứng dụng này. MSP/IT chủ động tải bổ sung hoặc chọn công cụ mình muốn, rồi thêm vào USB theo 1 trong 2 cách:
+
+1. **Kỳ build ISO — qua BootBuilder:** sao chép phần mềm vào `usb\Softwares\` trước khi build.
+2. **Copy thủ công sau khi build:** chép công cụ vào `Softwares\` trên USB và khai báo `portableApps` trong `user-config.json` — nếu giữ đúng cấu trúc thư mục như `toolPaths` mặc định thì không cần khai báo thêm.
+
+Main window chỉ dành **4 nút quick-launch** (vì EasyDeploy là công cụ deploy — rescue chỉ bổ trợ); nhãn và phím tắt ở footer tự điều chỉnh theo cấu hình. Số lượng tool không giới hạn — các công cụ ngoài 4 slot gọi bình thường qua F6 (PowerShell)/F8 (Explorer)/cmd.
+:::
 
 :::note
 Xác thực bản quyền là **Offline License duy nhất**.
@@ -120,7 +141,7 @@ Xác thực bản quyền là **Offline License duy nhất**.
 
 ## 3. Catalog data.json — Danh sách hệ điều hành hợp lệ
 
-Catalog là danh sách các Windows Image hợp lệ (do Microsoft phân phối chính thức).
+Catalog là danh sách các Windows Image hợp lệ (tải từ kênh phân phối chính thức của Microsoft).
 
 CoreSystem lưu trữ tại `https://esd.coresystem.vn/data.json`.
 Khai báo qua `catalog.url` trong `system-config.json`.
@@ -133,9 +154,9 @@ Khi `false`, không gọi mạng — dùng catalog **nhúng trong exe** (`data.j
 Hữu ích khi MSP muốn cố định danh sách OS.
 :::
 
-> MSP Standard/Advanced có thể **tự host `data.json`** trên server của mình.
-> Bật `cloudCatalog: true`, đổi `catalog.url` trỏ tới — hệ thống vẫn hoạt động nguyên vẹn.
-> Quy trình: tải → cache → fallback nhúng khi mất mạng. Chỉ cần `data.json` đúng cấu trúc bên dưới.
+> MSP Advanced có thể **tự host `data.json`** (chi tiết trong tài liệu kỹ thuật kèm `.lic`). Free dùng cloud catalog của CoreSystem — catalog nhúng luôn là fallback.
+
+> Quy trình chung: tải → cache → fallback nhúng khi mất mạng.
 
 Mỗi phần tử trong catalog:
 
@@ -182,7 +203,7 @@ File cài đặt không khớp `fileName` và bị bỏ qua.
 | Tệp tin | Đường dẫn | Vai trò |
 |------|--------|----------|
 | `easydeploy.exe` | Tích hợp trong `sources\boot.wim` | Chương trình thực thi chính (CoreSystem cung cấp). |
-| `system-config.json` | Trong boot.wim (cùng cấp `easydeploy.exe`) | Cấu hình chung (thuộc bản quyền CoreSystem). |
+| `system-config.json` | Trong boot.wim (cùng cấp `easydeploy.exe`) | Cấu hình hệ thống — BootBuilder bake vào `boot.wim` khi build (labels, toolPaths fallback, catalog, telemetry, preshared-key). |
 | `user-config.json` | `[USB]:\EASYDEPLOY\` | Cấu hình triển khai và xác thực bản quyền (tùy khách hàng). |
 | `data.json` | Cloud `esd.coresystem.vn` & cache `X:\EasyDeploy\catalog.json` | Danh mục Windows Image hợp lệ. |
 | `EASYDEPLOY\Profiles\*` | USB | Profile cấu hình sau cài đặt (BootBuilder khởi tạo). |

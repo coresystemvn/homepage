@@ -2,7 +2,7 @@
 title: 'Profiles — Tổng quan hệ thống'
 ---
 
-Profile là tập hợp tệp tin cấu hình sau cài đặt (post-installation). EASYDEPLOY inject chúng vào Windows trong quá trình triển khai. Mỗi Profile **bắt buộc có 2 tệp tin**:
+Profile là tập hợp tệp tin cấu hình sau cài đặt (post-installation). EASYDEPLOY inject chúng vào Windows trong quá trình triển khai. Mỗi Profile **gồm 2 tệp tin**:
 
 ```
 EASYDEPLOY\Profiles\<TênProfile>\
@@ -11,7 +11,13 @@ EASYDEPLOY\Profiles\<TênProfile>\
 ```
 
 :::caution
-Mỗi Profile cần đủ 2 file: 1 `*.xml` và 1 `*.ps1`. EASYDEPLOY tự đổi tên khi sao chép, nhưng bạn nên đặt đúng tên chuẩn — trình quét chỉ nhận diện khi thư mục có ít nhất một file đúng tên.
+Mỗi Profile cần đủ 2 file để hoạt động đầy đủ: 1 `*.xml` và 1 `*.ps1`. EASYDEPLOY tự đổi tên khi sao chép, nhưng bạn nên đặt đúng tên chuẩn — trình quét hiển thị profile khi thư mục có **ít nhất một** file đúng tên; thiếu một trong hai file, hiệu ứng profile sẽ không đầy đủ.
+:::
+
+:::note
+**Free & workflow kho profile:** ở chế độ Free, engine chỉ đọc `1.Tweaks` và `2.TweaksApp` — mọi folder khác trong `EASYDEPLOY\Profiles\` sẽ bị bỏ qua, không xuất hiện trong OSConfigurator. Cách dùng thực tế: giữ kho profile của bạn ở máy trạm, khi cần thì **ghi đè nội dung vào một trong hai folder gốc** (giữ đúng tên) rồi deploy. BootBuilder không license cũng chỉ đóng gói đúng 2 profile này vào ISO; Advanced thì không giới hạn số profile lúc build.
+
+Việc dừng Post-setup ở baseline Tweaks là có chủ đích — phần sau cài đặt là sân khấu để MSP chứng minh năng lực chuyên môn với khách hàng (AD-DS/GPO, EntraID/Intune, PSADT/Chocolatey/Winget, MDM...).
 :::
 
 ## 1. Vòng đời hoạt động của Profile
@@ -55,9 +61,6 @@ Khi xây dựng ISO/USB, **EasyDeploy-BootBuilder** tự động đóng gói hai
 
 Đây là cấu hình **production-ready**, dùng ngay được và làm khuôn mẫu để bạn tùy biến theo nhu cầu (xem [Tạo Profile mới](/easydeploy/profiles/creating-new-profile/)).
 
-:::note
-**Profile không giới hạn số lượng.** Bạn có tạo bao nhiêu profile tùy ý trong `EASYDEPLOY\Profiles\` — mỗi thư mục con là 1 profile riêng. Hai profile trên chỉ là mẫu nền để bạn tham khảo và tùy biến thêm.
-:::
 
 ## 4. Sự khác biệt sử dụng Profile giữa các chế độ cài đặt
 
@@ -79,27 +82,4 @@ Khi xây dựng ISO/USB, **EasyDeploy-BootBuilder** tự động đóng gói hai
 
 :::danger
 `unattend.xml` và `Post-setup.ps1` chạy dưới quyền System/Administrator. Chỉ nhúng script đáng tin cậy đã qua kiểm thử. Không lưu trữ mật khẩu, API Key dạng rõ.
-:::
-
-## 7. Mã hóa Profile (chỉ MSP Advanced)
-
-Khi profile chứa nhiều bí mật cài đặt (mật khẩu, tham số cấu hình, API key…), bạn có thể cân nhắc mã hóa để tăng cường bảo vệ — bên cạnh lớp bảo vệ sẵn có là `license bind USB-SN`.
-
-Luồng tham khảo, khá nhẹ nhàng:
-
-1. Tạo profile mới từ template của CoreSystem, hoàn tất thử nghiệm như thường lệ.
-2. Dùng công cụ `encrypt-profile.ps1` để mã hóa thư mục profile với preshared-key. Công cụ sẽ giữ lại bộ profile gốc để bạn tiếp tục tùy biến khi cần.
-   ```powershell
-   .\encrypt-profile.ps1 -ProfilePath ".\EASYDEPLOY\Profiles\1.Tweaks" -Passphrase "msp-secret-key"
-   .\encrypt-profile.ps1 -ProfilePath ".\EASYDEPLOY\Profiles\1.Tweaks" -Generate
-   ```
-   Với `-Generate`, công cụ tự sinh passphrase ngẫu nhiên 32 bytes (base64) nếu bạn chưa có sẵn key.
-3. Gán key vào `system-config.json` (mặc định `off`) để đưa vào WinPE khi build bằng BootBuilder:
-   ```jsonc
-   "profileEncryption": { "enabled": true, "passphrase": "••••••••" }
-   ```
-4. EasyDeploy sẽ tự điều phối, giải mã và inject vào OS mới như thường lệ (Bước 11/11).
-
-:::note
-Tính năng này dành cho **MSP Advanced** và hoạt động như một lớp bảo vệ bổ sung — việc bảo quản USB vật lý và quản lý passphrase vẫn là trách nhiệm của doanh nghiệp. Bạn có thể chủ động cân nhắc mức độ áp dụng phù hợp với môi trường của mình.
 :::

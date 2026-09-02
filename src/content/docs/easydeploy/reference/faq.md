@@ -47,8 +47,8 @@ Dùng lại file chính xác tải từ Catalog (xem [Troubleshooting](/easydepl
 
 ### Dữ liệu telemetry của tôi nằm ở đâu?
 
-- **MSP Standard:** CSV trên USB — `[USB]:\EASYDEPLOY\Log\deploy-results.csv`.
-- **MSP Advanced:** gửi về endpoint bạn tự host (BYOB).
+- **Free:** CSV trên USB — `[USB]:\EASYDEPLOY\Log\deploy-results.csv`.
+- **MSP Advanced:** gửi về endpoint bạn tự host (BYOB) — chi tiết trong tài liệu kỹ thuật kèm `.lic`.
 
 CoreSystem không nhận dữ liệu của bạn (xem [Telemetry](/easydeploy/reference/telemetry/)).
 

@@ -2,155 +2,81 @@
 title: 'Các gói dịch vụ và Phân quyền (License Tiers)'
 ---
 
-EASYDEPLOY cung cấp các gói dịch vụ (License Tiers) cho đối tác MSP. Bản quyền được
-đóng gói trong file **`*.lic`** (chữ ký ECDSA, bind USB-SN, kèm trường `Tier`) do CoreSystem
-cấp — client tự xác thực ngay tại máy.
+EASYDEPLOY có hai gói: **Free** dành cho IT/Micro-MSP và **MSP Advanced** dành cho đối tác MSP muốn làm chủ hạ tầng.
 
-| Tier | Đối tượng | Thời hạn | Express (F3) | Whitebox | Telemetry |
-|------|-----------|:--------:|:---:|:---:|------|
-| **Trial** | MSP dùng thử | **30 ngày** | ✅ | — | CSV trên USB |
-| **MSP Standard** | Nhà cung cấp dịch vụ | Theo hợp đồng | ✅ | ✅ | CSV trên USB |
-| **MSP Advanced** | MSP lớn, tự chủ dữ liệu | Theo hợp đồng | ✅ | ✅ | **BYOB** |
+## Tổng quan
+
+| Tier | Đối tượng | License | Profiles | Catalog | Bảo mật & Tự động |
+|------|-----------|---------|----------|---------|-------------------|
+| **Free** | Solo-IT, Micro-MSP, dùng cá nhân | **Không cần** — perpetual | **2** (`1.Tweaks`, `2.TweaksApp`) | **Cloud catalog** + embedded fallback (`esd.coresystem.vn`) | — |
+| **MSP Advanced** | MSP có đội ngũ & hạ tầng | **Annual**, bind theo lô **USB-SN** | **Unlimited** | **Self-catalog** | Mã hóa Profile, ZeroTouch, BYOB Telemetry |
 
 :::note
-Tính năng của từng gói được quyết định bởi thông tin gói trong license đã ký số — chỉ
-hoạt động với license gói đó, không thể đổi gói bằng cách sửa file hay cấu hình.
+Khi Advanced hết hạn, hệ thống **tự trở về Free (2 profiles)** — trước đó 14 ngày, sẽ có cảnh báo `NearExpiry` trước mỗi lần cài đặt, và còn **ân hạn 14 ngày** sau ngày hết hạn (xem [Offline Mode](/easydeploy/reference/offline-mode/)). Các tính năng Advanced (`profileEncryption`, `zeroTouch`, `self-catalog`, `telemetry`) chỉ có tác dụng khi có license phù hợp — nếu không, cấu hình trong `user-config.json` / `system-config.json` sẽ được bỏ qua. BootBuilder khi đó vẫn build được, chỉ giới hạn còn 2 profiles.
 :::
 
-## 0. Gói Trial — Dùng thử 30 ngày
+## Gói Free — Dùng ngay, không cần license
 
-Trial là cánh cửa để bạn trải nghiệm toàn bộ sức mạnh EASYDEPLOY trước khi quyết định đầu tư.
+- **Đối tượng:** bạn muốn triển khai Windows nhanh, gọn, không ràng buộc — phù hợp đa số nhu cầu Solo-IT, Micro-MSP.
+- **License:** không cần, không giới hạn thời gian.
+- **Tạo ISO:** unlimited — tải bộ đôi binary `EasyDeploy + BootBuilder` (kèm `links.md`), tự build ISO trên workstation (yêu cầu ADK, PE Addon + PowerShell 7.4).
+- **Driver:** industrial standard — đáp ứng đa số nhu cầu máy tính văn phòng.
+- **Express Deploy (F3):** có đầy đủ.
+- **Hỗ trợ:** Tài liệu tại trang chủ.
 
-- **Đối tượng:** Đối tác MSP muốn dùng thử trước khi quyết định mua.
-- **License:** `Tier=trial` — **30 ngày**, bind 1 USB-SN, **không gia hạn tự động**.
-- **Express (F3):** ✅ **Có đầy đủ** — trải nghiệm deploy hàng loạt bằng F3.
-- **Whitebox:** Không — dùng USB/ISO tiêu chuẩn do CoreSystem phát hành.
-- **OSCatalog:** Dùng ISO/Catalog chung do CoreSystem phát hành.
-- **Telemetry:** CSV trên USB.
+> Bộ đôi binary do CoreSystem phát hành, mỗi bản đều có **SHA256 hash** và **chữ ký hash (`.sig`)** — binary tự động validate trước khi chạy để đảm bảo toàn vẹn, tránh rủi ro từ các tập tin bị repack.
 
-### Quy trình kích hoạt Trial
+## Gói MSP Advanced — Dành cho vận hành quy mô
 
-```
-Truy cập coresystem.vn → click Trial → nhập email chính xác để nhận link tải file iso
-        │
-        ▼
-Ghi ra USB bằng Rufus (NTFS nếu ESD > 4GB)
-        │
-        ▼
-Boot USB vào WinPE
-        │
-        ▼
-Bấm luồng cài bất kỳ → Request License Trial
-        │
-        ▼
-Hệ thống tự động cung cấp license và lưu vào [USB:]\EASYDEPLOY
-        │
-        ▼
-SẴN SÀNG SỬ DỤNG — 30 ngày không giới hạn tính năng
-```
+Kế thừa toàn bộ quyền lợi Free, bổ sung:
+
+| Quyền lợi | Mô tả ngắn |
+|-----------|------------|
+| **Self-catalog** | Tự host catalog (`catalog.url` + `cloudCatalog`) — chủ động nguồn ESD, kể cả trong LAN |
+| **Unlimited Profiles** | Tạo không giới hạn profile riêng ngoài 2 mẫu mặc định |
+| **Mã hóa Profile** | Bảo vệ `unattend.xml` + `post-setup.ps1` với preshared-key (`profileEncryption`, `encrypt-profile.ps1`) |
+| **Zero Touch** | Boot USB → tự chạy Express không cần F3 (`zeroTouch`) — chỉ nên áp dụng với môi trường kiểm soát |
+| **BYOB Telemetry** | Gửi dữ liệu triển khai về endpoint do bạn tự vận hành (`telemetry` block) |
+| **Reference-Backend** | Gói thiết kế hạ tầng bổ trợ: Cloudflare Worker + D1 / Node + SQLite (kèm tài liệu production-ready). Vận hành do MSP tự chủ — tính năng kích hoạt qua license enforce ngay trong EasyDeploy |
 
 :::tip
-Trial cho phép trải nghiệm đầy đủ tính năng: Express (F3), Business (2), tất cả rescue tools, profiles. Sau 30 ngày, liên hệ CoreSystem để upgrade lên gói phù hợp.
+Chi tiết kỹ thuật của nhóm tính năng Advanced được đóng gói trong **tài liệu kỹ thuật kèm `.lic` Advanced** — docs công cộng chỉ giữ phần lõi EasyDeploy + BootBuilder.
 :::
 
-## 1. Gói MSP Standard
+## Bảng so sánh nhanh
 
-Gói Standard dành cho MSP muốn bắt đầu quản trị khách hàng với quyền tùy biến USB/ISO và tự chủ nguồn catalog.
+| Khả năng | Free | Advanced |
+|----------|:----:|:--------:|
+| Catalog | Cloud + embedded | Self-catalog |
+| Profiles | 2 only (1.Tweaks, 2.TweaksApp) | Unlimited |
+| Profile Encryption | — | ✅ |
+| Backend Telemetry (BYOB) | — | ✅ |
+| ISO Creation | ✅ unlimited | ✅ unlimited |
+| Driver Integration | ✅ industrial standard | ✅ industrial standard |
+| License | Không cần | Annual, USB-SN bound |
+| Express Deploy (F3) | ✅ | ✅ |
+| ZeroTouch | — | ✅ |
+| Support | Docs only | Email (core features, no add-on) |
 
-- **Đối tượng:** Nhà cung cấp dịch vụ quản trị (MSP).
-- **Whitebox:** ✅ Được phép tự dựng USB/ISO tùy biến thương hiệu bằng **BootBuilder**
-  (xem [BootBuilder](/easydeploy/msp/bootbuilder/)).
-- **OSCatalog:** Được quyền **tự chủ nguồn catalog** (bật `cloudCatalog:true` + trỏ
-  `catalog.url` về host của bạn). **Gói thiết kế kỹ thuật (technical design package)**
-  sẽ được CoreSystem bổ sung kèm hướng dẫn triển khai.
-- **Telemetry:** **CSV trên USB** — không gửi lên máy chủ (dữ liệu nằm tại USB của bạn).
+## Gia hạn & Fallback
 
-## 2. Gói MSP Advanced
+- Advanced là **annual subscription theo lô USB-SN**. Khi hết hạn, bạn vẫn dùng được ở **chế độ Free (2 profiles)**.
+- Cần gia hạn, cấp lại (re-key) khi USB hỏng/mất, hoặc nâng Free lên Advanced — liên hệ `support@coresystem.vn`. Mọi thao tác cấp phép do CoreSystem quản lý tập trung.
 
-MSP Advanced bổ sung khả năng tự chủ dữ liệu hoàn toàn, phù hợp MSP lớn muốn kiểm soát toàn bộ hạ tầng telemetry.
+## Ghi chú về USB-SN (áp dụng cho Advanced)
 
-- Thừa hưởng toàn bộ quyền lợi MSP Standard, đồng thời **bổ sung BYOB telemetry**, **Zero Touch** (Boot USB → done) và **Mã hóa Profile**:
+Với Advanced, mỗi USB là một “thẻ triển khai” bind theo SN — sao chép sang USB khác sẽ không hoạt động. Dữ liệu USB-SN chỉ nằm tại USB (CSV) hoặc endpoint BYOB do bạn tự host — CoreSystem không lưu trữ.
 
-| Quyền lợi | Mô tả |
-|-----------|-------|
-| **BYOB Telemetry** | Dữ liệu triển khai (hardware, OS, USB, machine_id, IP public) gửi về **endpoint do bạn tự cấu hình** trong `system-config.json` (block `telemetry`: `enabled` + `endpoint` + `apiKey`). |
-| **Reference-Backend + tài liệu production-ready** | Nhận gói `Reference-Backend` (Cloudflare Worker + D1 / Self-hosted Node + SQLite, install script + docker-compose + hardening) và tài liệu thiết kế production-ready để tự vận hành. |
-| **Tự chủ dữ liệu** | Dữ liệu nằm hoàn toàn trong hạ tầng của bạn; xuất/thống kê/dashboard tuỳ ý (tham khảo `Dashboard-ref-stack`). |
-| **OSCatalog tự chủ** | Như MSP Standard: được quyền tự host nguồn catalog, kèm **gói thiết kế kỹ thuật** do CoreSystem bổ sung. |
-| **Mã hóa Profile** | Bảo vệ toàn bộ profile (`unattend.xml` + `post-setup.ps1`) với preshared-key. Cấu hình `profileEncryption` trong `system-config.json` và mã hóa bằng `encrypt-profile.ps1` — xem [Profiles](/easydeploy/profiles/profiles/). |
+### 3 lớp bảo vệ USB
 
-:::note
-**Nguồn OS Catalog:** Gói Trial dùng Catalog chung, gói MSP Standard/Advanced được quyền
-tự chủ nguồn catalog (BYOC). Nếu chưa muốn tự host, mọi gói đều dùng `https://esd.coresystem.vn`.
+USB của MSP là tài sản tạo ra doanh thu — hệ thống bảo vệ theo 3 lớp:
+
+| Lớp | Cơ chế | Ngăn chặn |
+|-----|--------|-----------|
+| **1. Physical** | Tự bảo quản thiết bị vật lý | Mất trộm, thất lạc USB |
+| **2. License bind USB-SN** | License ký ECDSA P-256, gắn chặt serial number của USB | Clone USB — bản sao không chạy được, tránh hao hụt license |
+| **3. Profile encryption** | Mã hóa `unattend.xml` + `post-setup.ps1` bằng preshared-key | Leak dữ liệu cấu hình khi USB rơi vào tay người khác |
+
+:::caution
+**Trách nhiệm bảo vệ preshared-key thuộc về MSP.** Key nằm trong cấu hình để bạn **chủ động thay đổi profile mà không phải chờ CoreSystem build lại exe** — đổi lại, nếu người khác boot được vào WinPE trên USB, key có thể bị đọc. Kết hợp cả 3 lớp trên: khóa physical, bind USB-SN, và mã hóa profile.
 :::
-
-## Nguyên tắc ghi nhận USB-SN — bảo vệ tài sản của MSP
-
-USB boot là tài sản triển khai của đối tác MSP, mỗi USB mang bản quyền riêng và chính là "công cụ" tạo ra doanh thu. EASYDEPLOY ghi nhận USB-SN theo nguyên tắc sau:
-
-- **Mỗi USB = một thẻ triển khai.** License được bind vào USB-SN cụ thể, nên một USB
-  chỉ triển khai được khi chính nó được sử dụng — giúp bạn biết chính xác USB nào đang
-  hoạt động, triển khai cho thiết bị nào.
-- **Chống sao chép (clone).** Nếu USB bị copy sang thiết bị khác, license sẽ không hoạt
-  động (USB-SN không khớp) — hạn chế tình trạng bản quyền bị dùng trái phép làm ảnh
-  hưởng doanh thu của bạn.
-- **Theo dõi thất thoát.** Với dữ liệu USB-SN ghi lại trong từng phiên (CSV trên USB
-  hoặc endpoint BYOB), bạn dễ dàng đối soát: USB nào chưa hoạt động, USB nào có dấu
-  hiệu mất/thất lạc — từ đó kịp thời liên hệ CoreSystem để khóa/cấp lại, tránh ảnh
-  hưởng đến doanh thu và uy tín dịch vụ.
-- **Tôn trọng quyền riêng tư.** Dữ liệu USB-SN chỉ nằm tại USB của bạn (CSV) hoặc
-  endpoint do bạn cấu hình — **CoreSystem không nhận và không lưu trữ** dữ liệu này
-  (xem [Telemetry](/easydeploy/reference/telemetry/)).
-
-:::note
-**Chất lượng USB ảnh hưởng đến ghi nhận bản quyền:** bản quyền được gắn với số sê-ri
-(SN) của USB. Một số USB giá rẻ có thể không có SN chuẩn hoặc trùng SN giữa các ổ —
-khi đó license có thể không ghi nhận đúng. Với công việc triển khai, bạn nên dùng USB có
-thương hiệu, chip firmware ổn định, tốc độ cao — vừa nhận diện chính xác, vừa rút ngắn
-thời gian cài đặt.
-:::
-
-:::tip
-Lưu trữ an toàn USB boot và chỉ giao cho nhân viên được uỷ quyền.
-:::
-
-## Tính năng nâng cao — giới thiệu sơ qua
-
-Các tính năng tự chủ giúp MSP làm chủ hạ tầng khi doanh nghiệp phát triển.
-
-- **Chống sao chép USB (Clone Protection)** — có sẵn ở mọi gói, không cần cấu hình: bản
-  quyền được gắn với đúng USB (bind USB-SN), nên việc sao chép USB hay license sang thiết
-  bị khác sẽ không hoạt động. Đây là lớp bảo vệ tài sản của bạn (xem mục USB-SN ở trên).
-- **Tự chủ nguồn OS Catalog (BYOC) (*)** — bạn tự host danh mục OS và nguồn file cài đặt
-  theo ý mình (trên cloud hoặc trong LAN), giảm phụ thuộc internet khi triển khai hàng
-  loạt. Phù hợp với đội ngũ có khả năng vận hành web server. Xem gói công cụ OSCatalog
-  dành cho MSP + [Bảng thuật ngữ](/easydeploy/reference/glossary/).
-- **Tự chủ dữ liệu triển khai (BYOB) (*)** — dành cho **MSP Advanced**: dữ liệu telemetry
-  được gửi về **endpoint do bạn tự host** (gói `Reference-Backend`), thay vì nằm trên
-  USB. Bạn toàn quyền dữ liệu của mình. Yêu cầu khả năng triển khai + vận hành hạ tầng.
-
-> Nếu bạn chưa cần các tính năng tự chủ này, mọi thứ vẫn hoạt động đầy đủ với nguồn
-> mặc định của CoreSystem — đây là các lựa chọn mở rộng khi doanh nghiệp phát triển.
-
-## Bảng so sánh quyền lợi
-
-| Quyền hạn / Tính năng | Trial | MSP Standard | MSP Advanced |
-|-------|:---:|:------------:|:------------:|
-| Thời hạn | 30 ngày | Theo hợp đồng | Theo hợp đồng |
-| Sử dụng USB/ISO tiêu chuẩn | ✅ | ✅ | ✅ |
-| Tùy biến Profiles (không giới hạn) | ✅ | ✅ | ✅ |
-| **Express Deploy (F3)** | ✅ | ✅ | ✅ |
-| Xây dựng USB/ISO tùy biến (Whitebox) | — | ✅ | ✅ |
-| **Telemetry CSV trên USB** | ✅ | ✅ | ✅ |
-| **Telemetry BYOB** (endpoint tự host) | — | — | ✅ |
-| **OSCatalog tự host** | — | ✅ | ✅ |
-| **Zero Touch** (Boot USB → done) | — | — | ✅ |
-| **Mã hóa Profile** | — | — | ✅ |
-| Reference-Backend + tài liệu | — | — | ✅ |
-
-
-## Quy trình thay đổi gói dịch vụ hoặc gia hạn bản quyền
-
-Để nâng cấp gói, gia hạn thời gian sử dụng hoặc cấp lại license (re-key khi USB hỏng/mất),
-liên hệ trực tiếp với CoreSystem. Các thao tác cấp phép được quản lý tập trung phía
-CoreSystem để đảm bảo mọi bản quyền đều hợp lệ và an toàn.

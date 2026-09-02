@@ -10,7 +10,7 @@ Triển khai Windows là bước quan trọng nhất, các lỗi ở giai đoạ
 
 | Triệu chứng | Nguyên nhân / Cách xử lý |
 |-------------|---------------------------|
-| Không hiển thị ổ đĩa đích cần cài đặt | Hệ thống chỉ hiển thị các ổ đĩa vật lý đủ điều kiện triển khai (tự động loại bỏ ổ USB boot, ổ đĩa ảo và các thiết bị không có phân vùng). Chọn đúng ổ đĩa; kiểm tra thiết lập controller trong BIOS (AHCI/RAID) — nếu thiếu driver điều khiển, cần tích hợp driver tương ứng vào WinPE. |
+| Không hiển thị ổ đĩa đích cần cài đặt | Hệ thống chỉ hiển thị các **ổ đủ điều kiện cài OS (deployable disk)** — USB boot tự động loại khỏi danh sách để tránh format nhầm. Chọn đúng ổ đĩa; kiểm tra thiết lập controller trong BIOS (AHCI/RAID) — nếu thiếu driver điều khiển, cần tích hợp driver tương ứng vào WinPE. |
 | Lỗi bản quyền ngoại tuyến (License không hợp lệ / hết hạn / sai USB) | File `*.lic` sai, hết hạn, hoặc USB đang cắm không nằm trong danh sách `Usb` bind của license → **liên hệ CoreSystem cấp file `.lic` mới** (hoặc re-key khi USB hỏng/mất). |
 | WinPE không có kết nối Internet | Nhấn phím **F2** để thiết lập kết nối mạng không dây, hoặc kiểm tra kết nối cáp mạng LAN; hoặc chuyển sang phương án sử dụng nguồn cài đặt OS offline (`EASYDEPLOY\OS\`). |
 | Lỗi bảo mật SSL/TLS khi tải file cài đặt | Đồng hồ hệ thống trên môi trường WinPE (thời gian UTC) bị sai lệch quá nhiều so với thực tế, gây lỗi xác thực chứng chỉ TLS/SSL → Chuyển sang sử dụng nguồn cài đặt offline ESD hoặc đồng bộ lại thời gian thực trong BIOS. |
@@ -37,7 +37,7 @@ Profiles quyết định cách Windows được cấu hình sau khi cài đặt 
 
 | Triệu chứng | Nguyên nhân / Cách xử lý |
 |-------------|---------------------------|
-| Thư mục profile không hiển thị trong danh sách lựa chọn | Kiểm tra rằng thư mục profile nằm đúng đường dẫn `EASYDEPLOY\Profiles\` trên USB và chứa đầy đủ bộ đôi tệp tin (`*.xml` và `*.ps1`). Trình quét tự động chỉ nhận diện profile khi thư mục chứa **ít nhất một** trong hai tệp tin được đặt tên chính xác: `unattend.xml` hoặc `post-setup.ps1`. |
+| Thư mục profile không hiển thị trong danh sách lựa chọn | Kiểm tra rằng thư mục profile nằm đúng đường dẫn `EASYDEPLOY\Profiles\` trên USB và chứa đủ bộ đôi tệp tin (`unattend.xml` + `post-setup.ps1`). Trình quét hiển thị profile khi thư mục chứa **ít nhất một** tệp tin đúng tên — nhưng thiếu file sẽ khiến profile hoạt động không đầy đủ. |
 | Triển khai không kèm theo profile tùy biến | Khi thư mục Profiles trên USB trống, luồng cài đặt Business (2) và Express (F3) sẽ tự động chuyển sang cơ chế dự phòng áp dụng **Profile mặc định của hệ thống** (tương đương kịch bản `1.Tweaks` tiêu chuẩn doanh nghiệp) — xem thêm [Profiles Overview](/easydeploy/profiles/profiles/). |
 | Script `Post-setup.ps1` không khởi chạy | Kiểm tra cấu hình `FirstLogonCommands` trong tệp `unattend.xml` xem đã trỏ chính xác đến đường dẫn mục tiêu `C:\CoreSystem\Post-setup.ps1` hay chưa; đồng thời kiểm tra rằng tệp tin script được đặt tên chính xác là `Post-setup.ps1`. |
 | Script PowerShell thực thi bình thường nhưng không tải được dữ liệu | Thiết bị không có kết nối internet hoặc proxy cấu hình bị chặn → Các tác vụ yêu cầu tải dữ liệu từ mạng sẽ tự động bị bỏ qua (áp dụng đối với kịch bản tích hợp sẵn hàm `Wait-ForInternet`). Kiểm tra lại cấu hình cổng mạng hoặc proxy. |
@@ -67,7 +67,7 @@ Profiles quyết định cách Windows được cấu hình sau khi cài đặt 
 
 | Triệu chứng | Nguyên nhân / Cách xử lý |
 |-------------|---------------------------|
-| Không thấy dữ liệu trong DB endpoint của mình (BYOB) | Telemetry **chỉ có hiệu lực với gói MSP Advanced** (gate theo tier) và phải cấu hình block `telemetry` trong `system-config.json` (`enabled=true` + `endpoint` + `apiKey`). MSP Standard không gửi — dữ liệu nằm **CSV trên USB** (`[USB]:\EASYDEPLOY\Log\deploy-results.csv`). |
+| Không thấy dữ liệu trong DB endpoint của mình (BYOB) | Telemetry BYOB **chỉ có hiệu lực với gói MSP Advanced** — chi tiết trong tài liệu kỹ thuật kèm `.lic`. **Free** không gửi — dữ liệu nằm **CSV trên USB** (`[USB]:\EASYDEPLOY\Log\deploy-results.csv`). |
 | Thông số `usb_brand` hoặc `usb_serial` hiển thị giá trị trống (NULL) | Phiên triển khai này được thực hiện trên môi trường máy ảo (Virtual Machine - VM), do đó không có thông tin định danh phần cứng của USB vật lý — đây là hiện tượng bình thường. |
 | Khó theo dõi dữ liệu qua mã build hệ điều hành (os_build) | Ưu tiên theo dõi qua `os_version` (VD `25h2`), hoặc truy vấn SQL trên DB của bạn: `SELECT os_version, os_build ... FROM deploy_results`. |
 

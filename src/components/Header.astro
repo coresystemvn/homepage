@@ -2,15 +2,23 @@
 import Menu from '../components/Menu.astro';
 import Navigation from '../components/Navigation.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import LanguageToggle from '../components/LanguageToggle.astro';
+const isEn = Astro.url.pathname.startsWith('/en');
+const homeHref = isEn ? '/en/' : '/';
 ---
 
 <header>
   <nav>
     <div class="nav-left">
+      <a href={homeHref} class="site-brand" aria-label="CORESYSTEM home">
+        <img src="/logo-b.svg" alt="CORESYSTEM" class="logo-light" width="140" height="30" />
+        <img src="/logo-w.svg" alt="CORESYSTEM" class="logo-dark" width="140" height="30" />
+      </a>
       <Menu />
       <Navigation />
     </div>
     <div class="nav-right">
+      <LanguageToggle />
       <ThemeToggle />
     </div>
   </nav>

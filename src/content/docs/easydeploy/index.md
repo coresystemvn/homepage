@@ -3,20 +3,19 @@ title: 'EASYDEPLOY — Hướng dẫn sử dụng'
 description: 'Tài liệu triển khai Windows và công cụ cứu hộ trên môi trường WinPE cho đối tác MSP.'
 ---
 
-**EASYDEPLOY** là giải pháp Windows Deployment hiện đại trên nền WinPE, phát triển bởi **CoreSystem**. Sau khi boot từ USB vào WinPE, hệ thống chạy tự động `easydeploy.exe`. Bạn chỉ cần chọn luồng triển khai, công cụ sẽ cài đặt Windows tự động khép kín (11 bước) và công cụ cũng tích hợp sẵn các tiện ích cứu hộ cho nhu cầu thực tiễn sử dụng.
+**EASYDEPLOY** là giải pháp triển khai Windows hiện đại trên nền WinPE, phát triển bởi **CoreSystem**. Boot USB vào WinPE, `easydeploy.exe` sẽ tự chạy. Bạn chỉ cần chọn luồng triển khai, hệ thống sẽ tự hoàn tất cài đặt Windows (11 bước khép kín, hoàn toàn tự động) cũng như trang bị sẵn sàng các tiện ích cứu hộ khi cần.
 
 ## Video demo
 
 <video src="/easydeploy/easydeploy.mp4" controls></video>
 
 :::note
-Video tua nhanh 10 lần quy trình triển khai Windows hoàn chỉnh qua USB (14'45" -> 1'28").
+Video tua nhanh 10 lần quy trình triển khai Windows hoàn chỉnh qua USB (14'45" → 1'28").
 Thời gian thực tế có thể khác biệt tùy tốc độ mạng và ổ đĩa.
 :::
 
 :::note
 Tài liệu dành cho **IT Helpdesk, SysAdmin và MSP** sử dụng EASYDEPLOY trên WinPE để triển khai Windows và cứu hộ hệ thống.
-**Đối tượng:** Đối tác **MSP (Standard/Advanced)** tự xây dựng USB tùy biến (Whitebox) và chủ động dữ liệu triển khai — tham khảo [License Tiers](/easydeploy/msp/license-tiers/).
 :::
 
 
@@ -26,19 +25,19 @@ Tài liệu dành cho **IT Helpdesk, SysAdmin và MSP** sử dụng EASYDEPLOY t
 
 | Mục | Mô tả |
 |-----|-------|
-| [Quick Start](/easydeploy/getting-started/quick-start/) | Boot USB WinPE và cài Windows trong 5 phút |
+| [Quick Start](/easydeploy/getting-started/quick-start/) | Boot USB WinPE — Windows tự cài hết trong ~15 phút |
 | [Các chế độ triển khai](/easydeploy/getting-started/deploy-modes/) | Vanilla / Business / Express (F3) — chọn chế độ phù hợp |
 | [Bộ công cụ Rescue](/easydeploy/getting-started/rescue-tools/) | Cứu hộ dữ liệu, sao lưu và chẩn đoán phần cứng |
 
 ## MSP & Bản quyền
 
-Quản lý gói dịch vụ, license và tùy biến USB cho MSP.
+Quản lý gói dịch vụ và tùy biến USB cho MSP.
 
 | Mục | Mô tả |
 |-----|-------|
-| [License Tiers](/easydeploy/msp/license-tiers/) | Gói Trial / MSP Standard / MSP Advanced, đặc quyền Whitebox và gate telemetry |
-| [Bắt đầu cho khách hàng](/easydeploy/msp/getting-started/) | Đặt license `.lic` + cấu hình `user-config.json` để triển khai thiết bị đầu tiên |
-| [BootBuilder (Whitebox)](/easydeploy/msp/bootbuilder/) | Tự dựng USB/ISO tùy biến thương hiệu cho MSP Standard/Advanced |
+| [License Tiers](/easydeploy/msp/license-tiers/) | **Free** (perpetual, 2 profiles) / **MSP Advanced** (annual, unlimited) |
+| [Bắt đầu cho khách hàng](/easydeploy/msp/getting-started/) | Chuẩn bị USB + cấu hình `user-config.json` để triển khai thiết bị đầu tiên |
+| [BootBuilder (Whitebox)](/easydeploy/msp/bootbuilder/) | Tự dựng USB/ISO tùy biến — Free (2 profiles) và Advanced (unlimited) |
 
 ## Chuyên sâu — Tùy biến Profiles
 
@@ -66,32 +65,52 @@ Tài liệu tham khảo chi tiết về cấu hình, phím tắt, chế độ of
 
 ## Tổng quan kiến trúc
 
+**EasyDeploy là trái tim của giải pháp** — engine `easydeploy.exe` nằm trong `sources\boot.wim` đảm nhận phần triển khai. **BootBuilder** giúp bạn tạo USB WinPE chỉ với vài cú click chuột thay vì mất hàng tuần xử lý lỗi liên quan driver và môi trường WinPE.
+
+![Kiến trúc EasyDeploy — 2 pha Build & Deploy](/easydeploy/architecture.svg)
+
 ```
-Boot (BIOS/UEFI) → USB WinPE → easydeploy.exe (trong sources\boot.wim)
-                                    │
-        ┌───────────────────────────┼──────────────────────────────┐
-        ▼                           ▼                              ▼
-  Cài Windows                 Công cụ rescue                (optional) Cloud
-  11 bước engine              F1 BitLocker · F2 WiFi ·        License .lic (offline,
-  (100% tự động)              F4 Notepad · F5 Diskpart ·      ECDSA, bind USB-SN)
-                              F6 PowerShell · F7 Backup ·     Catalog data.json
-                              F8 Explorer · F9 HWInfo ·
-                              F10 Browser
+[Pha Build — Workstation]                [Pha Deploy — WinPE]
+EasyDeploy.zip + ESD + Drivers/Wallpaper → USB boot → easydeploy.exe (trong boot.wim)
+        ↓ BootBuilder (.cache → ISO → Rufus)           │
+                                 ┌─────────────────────┼──────────────────────┐
+                                 ▼                     ▼                      ▼
+                            Cài Windows           Công cụ rescue         Cloud (tùy chọn)
+                            11 bước engine        F1 BitLocker · F2 WiFi  License .lic (offline, Advanced)
+                            (100% tự động)        F4 Notepad · F5 Diskpart  Catalog data.json
+                                                  F6 PowerShell · F7 Backup
+                                                  F8 Explorer · F9 HWiNFO
+                                                  F10 Browser · F11 About · F12 Shutdown
 ```
 
-- **Engine `EASYDEPLOY CLI`**: Xử lý trung tâm, tự động hóa quy trình cài Windows chuẩn doanh nghiệp từ Cloud Microsoft. Hỗ trợ linh hoạt chế độ Hybrid và Offline.
-- **Bản quyền**: **Offline License** là cơ chế duy nhất — file `*.lic` (ECDSA P-256, bind USB-SN, có license tier) do CoreSystem cấp, đặt trên USB.
-- **Nguồn OS**: Hệ thống ưu tiên quét `.esd` trên USB (`EASYDEPLOY\OS\` — phục vụ Offline/Hybrid). Nếu không tìm thấy, engine tải từ Catalog qua internet (xác minh SHA-256). Danh sách ESD tại <https://esd.coresystem.vn>.
-- **Profile (tùy biến sau cài đặt)**: Bộ đôi `unattend.xml` và `Post-setup.ps1` trong `EASYDEPLOY\Profiles\<Tên_Profile>\`. Nếu không cấu hình, hệ thống áp dụng **Profile mặc định** (tương đương profile `1.Tweaks`). Chi tiết xem [Profiles Overview](/easydeploy/profiles/profiles/).
-- **Công cụ cứu hộ**: Phần mềm Portable trong thư mục `Softwares\` trên USB, đóng gói sẵn qua EasyDeploy-BootBuilder.
+- **Engine `EASYDEPLOY CLI`**: tự động hóa quy trình cài Windows chuẩn doanh nghiệp — chưa đầy 5 phút cho trọn 11 bước bung cài, cộng khoảng 10 phút hậu kỳ tự động; hỗ trợ cả Hybrid và Offline.
+- **Bản quyền**: với **Advanced** dùng **Offline License** — file `*.lic` (ECDSA P-256, bind USB-SN) đặt trên USB. **Bản Free thì không cần license**.
+- **Nguồn OS**: ưu tiên `.esd` có sẵn trên USB (`EASYDEPLOY\OS\`); nếu không có, tải từ Catalog qua internet (có xác minh SHA-256). Tra cứu link tải ESD tại <https://esd.coresystem.vn>.
+- **Profile**: cặp file `unattend.xml` và `Post-setup.ps1` trong `EASYDEPLOY\Profiles\<Tên_Profile>\`. **Free có sẵn 2 profiles** (`1.Tweaks`/`2.TweaksApp`) — bạn sửa thẳng vào đó là đủ; tạo thêm sẽ không có tác dụng (mẹo: giữ kho profile ở máy trạm, ghi đè nội dung vào 2 folder gốc khi cần). **Advanced thì không giới hạn** — xem [Profiles Overview](/easydeploy/profiles/profiles/).
+- **Cứu hộ**: các công cụ Portable trong `Softwares\` trên USB — không đi kèm bộ phát hành, bạn tự chọn công cụ và bổ sung qua BootBuilder (kỳ build) hoặc copy thủ công + `user-config.json`.
+
+### Hệ sinh thái mở rộng (dành cho MSP Advanced)
+
+Khi cần chủ động hơn, Advanced có thêm:
+
+- **BYOC** — tự host catalog & ESD (kể cả trong LAN).
+- **BYOB** — tự host endpoint ghi nhận telemetry để hỗ trợ thống kê.
+- **Bảo mật Profile & ZeroTouch** — mã hóa profile bằng preshared-key, tự động Boot USB → tự động cài đặt (dùng trong môi trường kiểm soát).
+- **Reference-Backend** — gói thiết kế hạ tầng tham khảo cho BYOB (telemetry) để triển khai nhanh.
+
+> Với **Free**, một số khóa liên quan trong `system-config.json`/`user-config.json` dù bạn chủ động thiết lập cũng **không có tác dụng khi chạy** — hệ thống sẽ dùng mặc định. Chi tiết xem [File cấu hình](/easydeploy/reference/configuration/). Phần nâng cao có tài liệu riêng kèm `.lic` Advanced.
+
+## Bảo mật tải xuống
+
+Bộ đôi binary `EasyDeploy + BootBuilder` được phát hành bởi CoreSystem. Mỗi bản đều có **SHA256 hash** và **chữ ký hash YubiKey (`.sig`)** — binary tự validate trước khi chạy để đảm bảo tính toàn vẹn, tránh repack. Chi tiết xem [Bắt đầu cho khách hàng](/easydeploy/msp/getting-started/).
 
 ## Liên hệ hỗ trợ
 
 - Website: <https://www.coresystem.vn>
-- Kho tải file ESD (offline/hybrid): <https://esd.coresystem.vn>
-- Bản quyền: Liên hệ CoreSystem để đăng ký và nhận file `*.lic` phù hợp gói dịch vụ.
-- MSP Advanced (BYOB): Nhận gói `Reference-Backend` + tài liệu triển khai production-ready để tự host telemetry endpoint.
+- Kho tra cứu link tải ESD (offline/hybrid): <https://esd.coresystem.vn>
+- **Free:** Docs only — đủ cho Solo-IT, Micro-MSP.
+- **MSP Advanced:** Email hỗ trợ core features (không bao gồm add-on) — liên hệ `support@coresystem.vn`; tư vấn gói Advanced: `inquiry@coresystem.vn`.
 
 :::note
-**Phạm vi hỗ trợ:** Kênh hỗ trợ trực tiếp dành cho gói **Trial / MSP Standard / MSP Advanced**.
+**Phạm vi hỗ trợ:** **Free** — Docs only; **MSP Advanced** — Email (core features, không hỗ trợ add-on).
 :::

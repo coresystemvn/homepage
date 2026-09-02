@@ -2,7 +2,7 @@
 title: 'Các chế độ triển khai'
 ---
 
-EASYDEPLOY có 3 chế độ cài đặt. Bạn chọn 1 trong 3 tùy theo nhu cầu.
+EASYDEPLOY điều phối 4 phương pháp cài đặt: **Vanilla**, **Business**, **Express** (F3) và **ZeroTouch** (Advanced — tự động hoàn toàn khi boot USB, xem [License Tiers](/easydeploy/msp/license-tiers/)). Ba phương pháp đầu được chọn trực tiếp trên giao diện.
 
 ## So sánh nhanh
 
@@ -41,28 +41,21 @@ Hệ thống tự đọc cấu hình từ `user-config.json`. Nếu thiếu thô
 Express yêu cầu `"enableF3Express": true` trong `user-config.json`.
 :::
 
-### Zero Touch — Boot USB → hoàn tất (chỉ MSP Advanced)
+## Yêu cầu hệ thống
 
-Zero Touch là **Express tự động**: Boot USB vào WinPE → tự chạy Express không cần nhấn F3 → `OOBE`.
+**Máy đích (nơi cài Windows):** WinPE triển khai Windows 11 — máy đích cần đáp ứng tối thiểu theo [yêu cầu hệ thống của Microsoft cho Windows 11](https://www.microsoft.com/windows/windows-11-specifications).
 
-- Bật bằng `"zeroTouch": true` trong `user-config.json` (yêu cầu `enableF3Express: true` và gói bản quyền **MSP-Advanced**).
-- **Đây là tính năng rủi ro cao, MSP cân nhắc trước khi sử dụng** — hệ thống xóa đĩa đích theo `deploy.diskNumber` mà không hỏi lại.
-- Chỉ nên dùng trong **môi trường có kiểm soát** (lab, loạt máy đồng nhất), không khuyến khích bật đại trà.
-
-:::caution
-Kiểm tra kỹ `deploy.diskNumber`, `deploy.version/edition/languageCode` và `deploy.profile` trước khi bật Zero Touch. Nên thử 1 máy trước khi triển khai loạt.
-:::
+**Máy trạm (chạy BootBuilder):** engine thực thi qua **PowerShell 7.4+** — các thành phần đi kèm đã đầy đủ; RAM/CPU càng mạnh, build càng nhanh.
 
 ## Bản Windows được hỗ trợ
 
-EASYDEPLOY theo sát nguồn Windows do Microsoft phát hành, và lọc bớt để giữ catalog gọn và
-ổn định. Ma trận thực tế dành cho triển khai doanh nghiệp:
+Engine triển khai chạy được với **bất kỳ ngôn ngữ nào** của Windows — đã kiểm chứng thực tế trên Anh/Nhật/Hàn/Trung. Catalog tại esd.coresystem.vn hiện liệt kê **9 ngôn ngữ phổ biến** và sẽ mở rộng theo nhu cầu:
 
 | Tiêu chí | Giá trị |
 |---|---|
-| **Version** | Windows 11 `21H2` → `25H2` |
-| **Edition** | `Home` / `Pro` / `Enterprise` (các edition khác được lọc bỏ) |
-| **Language** | `en-us` / `ja-jp` / `ko-kr` / `zh-cn` / `zh-tw` |
+| **Version** | Windows 11 `23H2` → `24H2` → `25H2` (26H2 có thể bổ sung trong tương lai gần) |
+| **Edition** | `Home` / `Pro` / `Enterprise` (các edition khác mặc định ẩn, bật trong system-config.json =>  "filterCatalog": false) |
+| **Language** | `en-us` / `ja-jp` / `ko-kr` / `zh-cn` / `zh-tw` / `de-de` / `fr-fr` / `pt-br` / `es-es` / … (mở rộng theo nhu cầu) |
 | **Activation** | `Retail` / `Volume` |
 
 :::note
@@ -74,7 +67,7 @@ xác định rõ mô hình kích hoạt của khách khi chuẩn bị cấu hìn
 
 ## Engine triển khai 11 bước
 
-Cả 3 chế độ dùng chung engine gồm 11 bước tự động:
+Cả 3 chế độ dùng chung engine gồm 11 bước tự động — chưa đầy 5 phút cho phần bung cài, cộng khoảng 10 phút hậu kỳ sau cài đặt: tổng ~15 phút một máy, hoàn toàn tự động với ZeroTouch (thời gian thực tế tùy tốc độ mạng và ổ đĩa):
 
 | # | Bước | Tóm tắt |
 |---|------|---------|

@@ -13,6 +13,7 @@
 html {
     height: 100%;
     font-family: 'Inter', sans-serif;
+    color-scheme: light dark;
 }
 
 body {
@@ -156,7 +157,14 @@ nav {
 .nav-left {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
+
+.site-brand { display:flex; align-items:center; flex-shrink:0; line-height:0; margin-right:0.25rem; }
+.site-brand img { height:26px; width:auto; display:block; }
+.site-brand .logo-dark { display:none; }
+[data-theme="dark"] .site-brand .logo-light { display:none; }
+[data-theme="dark"] .site-brand .logo-dark { display:block; }
 
 .nav-right {
     display: flex;
@@ -179,32 +187,48 @@ main {
 }
 
 .footer-container {
-    height: var(--footer-height);
     background-color: var(--color-bg-alt);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     font-size: 0.9rem;
     color: var(--color-text-muted);
     border-top: 1px solid var(--color-border);
+    padding: 2rem 1rem 1.25rem;
 }
 
 .footer-content {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 2rem;
     width: 100%;
     max-width: var(--max-width);
+    margin: 0 auto;
     padding: 0 2rem;
 }
+
+.footer-col { display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-brand { font-weight: 700; color: var(--color-text); margin: 0; letter-spacing: 0.04em; }
+.footer-heading { font-weight: 600; color: var(--color-text); margin: 0 0 0.2rem 0; }
+.footer-col a { color: var(--color-text-muted); text-decoration: none; }
+.footer-col a:hover { color: var(--color-accent); }
+
+.footer-legal {
+    max-width: var(--max-width);
+    margin: 1.5rem auto 0;
+    padding: 1rem 2rem 0;
+    border-top: 1px solid var(--color-border);
+}
+.footer-links { font-size: 0.82rem; margin: 0 0 0.6rem 0; }
+.footer-links a { color: var(--color-text-muted); text-decoration: none; }
+.footer-links a:hover { color: var(--color-accent); }
+.footer-trademark { font-size: 0.78rem; opacity: 0.75; margin: 0 0 0.5rem 0; line-height: 1.5; }
+.footer-copyright { font-size: 0.82rem; margin: 0; }
 
 @media (max-width: 636px) {
     .footer-content {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1.25rem;
     }
 }
 
@@ -323,6 +347,9 @@ body:has(.menu-toggle[aria-expanded="true"])::before {
     -webkit-backdrop-filter: blur(8px);
     z-index: 998;
 }
+[data-theme="dark"] body:has(.menu-toggle[aria-expanded="true"])::before {
+    background-color: rgba(24, 24, 24, 0.5);
+}
 
 /* ==========================================================================
    Navigation Links
@@ -342,6 +369,9 @@ body:has(.menu-toggle[aria-expanded="true"])::before {
     transition: all var(--transition-fast);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+[data-theme="dark"] .nav-links a {
+    border-bottom-color: rgba(255,255,255,0.08);
+}
 
 @media (hover: hover) {
     .nav-links a:hover {
@@ -349,12 +379,18 @@ body:has(.menu-toggle[aria-expanded="true"])::before {
         padding-left: 2.5rem;
         color: var(--color-accent);
     }
+    [data-theme="dark"] .nav-links a:hover {
+        background-color: rgba(255,255,255,0.05);
+    }
 }
 
 .nav-links a:active {
     background-color: rgba(0, 0, 0, 0.03);
     padding-left: 2.5rem;
     color: var(--color-accent);
+}
+[data-theme="dark"] .nav-links a:active {
+    background-color: rgba(255,255,255,0.05);
 }
 
 /* ==========================================================================
@@ -392,7 +428,7 @@ body:has(.menu-toggle[aria-expanded="true"])::before {
 
     .nav-links a {
         color: var(--color-primary);
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.75rem;
         border-bottom: none;
         font-size: 1rem;
     }
@@ -544,7 +580,7 @@ a.list-item-title:active::after {
 }
 
 /* ==========================================================================
-   Info Cards (Scholar, CV, etc.)
+   Info Cards
    ========================================================================== */
 
 .info-card {
@@ -625,10 +661,10 @@ a.list-item-title:active::after {
     display: block;
 }
 
-:global([data-theme="dark"]) .sun {
+[data-theme="dark"] .sun {
     display: block;
 }
 
-:global([data-theme="dark"]) .moon {
+[data-theme="dark"] .moon {
     display: none;
 }

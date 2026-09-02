@@ -23,8 +23,8 @@ Các thao tác trên giao diện EASYDEPLOY đều có phím tắt. Bạn có th
 | **F6** | — | Mở môi trường dòng lệnh PowerShell (CLI) |
 | **F7** | DISK BACKUP | Khởi chạy công cụ sao lưu và phục hồi phân vùng MultiDrive |
 | **F8** | FILE EXPLORER | Khởi chạy trình quản lý tệp tin cứu dữ liệu Explorer++ |
-| **F9** | HARDWARE INFO | Khởi chạy công cụ chẩn đoán phần cứng HWiNFO |
-| **F10** | WEB BROWSER | Khởi chạy trình duyệt web cứu hộ PaleMoon |
+| **F9** | HARDWARE INFO | Khởi chạy công cụ chẩn đoán phần cứng HWiNFO64 |
+| **F10** | WEB BROWSER | Khởi chạy trình duyệt web cứu hộ Pale Moon |
 
 ## 3. Các chức năng hệ thống khác
 
@@ -34,7 +34,7 @@ Các thao tác trên giao diện EASYDEPLOY đều có phím tắt. Bạn có th
 | **F12** | Tắt thiết bị an toàn |
 
 :::note
-Các công cụ từ **F7–F10** là ứng dụng Portable trong `Softwares\` trên USB (đóng gói bởi BootBuilder). Định tuyến qua `toolPaths` trong `system-config.json`. Nếu thiếu file, phím tương ứng không hoạt động — dùng BootBuilder build lại USB. Chi tiết tại [File cấu hình](/easydeploy/reference/configuration/).
+Các công cụ từ **F7–F10** là ứng dụng Portable trong `Softwares\` trên USB (không đi kèm bộ phát hành — bổ sung qua BootBuilder hoặc copy thủ công + `user-config.json`). Định tuyến qua `toolPaths` trong `system-config.json`. Nếu thiếu file, phím tương ứng không hoạt động. 4 nút chỉ là quick-launch — footer tự điều chỉnh nhãn/phím theo cấu hình; số tool không giới hạn, gọi thêm qua F6 (PowerShell)/F8 (Explorer)/cmd. Chi tiết tại [File cấu hình](/easydeploy/reference/configuration/).
 
 **F1** (BitLocker) và **F2** (WiFi) tích hợp sẵn trong nhân nên **luôn hoạt động**. F2 có cooldown **3 giây** và cảnh báo nếu đang có LAN có dây.
 :::

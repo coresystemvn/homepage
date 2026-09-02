@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout pageTitle="Refund Policy" description="EasyDeploy refund policy — all sales final: USB-SN-bound licenses are non-revocable; the Free edition lets you experience the full platform before buying.">
+	<section class="legal-hero">
+		<h1>Refund Policy</h1>
+		<p class="sub">Updated: Aug 29, 2026 · Applies to all CoreSystem plans.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Policy: all sales final</h2>
+		<p>All payments made for the <strong>MSP Advanced</strong> plan (including the license and add-on design packages) are <strong>non-refundable</strong>. This policy follows from the nature of the product:</p>
+		<ul>
+			<li><strong>USB-SN-bound licenses are non-revocable</strong> — a license is cryptographically bound to the serial numbers of the registered USB drives. Once issued, it cannot be "revoked" or safely reassigned to another customer — that is precisely the anti-cloning mechanism.</li>
+			<li><strong>The backend design package (Reference-Backend) is the same</strong> — once the documentation and blueprint are delivered, they are consumed.</li>
+			<li><strong>No risk of "buying blind"</strong> — the <strong>Free</strong> edition is free forever with no time limit: experience the entire platform at real-world performance before deciding to upgrade. Purchasing MSP Advanced is a fully informed decision.</li>
+		</ul>
+	</section>
+
+	<section class="legal-section">
+		<h2>Before buying — talk to us</h2>
+		<p>Any questions about features, license scope, or operations: email <a href="mailto:inquiry@coresystem.vn?subject=Pre-purchase%20question%20-%20MSP%20Advanced">inquiry@coresystem.vn</a>. During Early Access you talk directly to the product's developer — we want you confident before you pay, not after.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Payments through a MoR platform</h2>
+		<p>If payment is processed through an independent Merchant of Record (e.g., Lemon Squeezy, Paddle), the checkout flow follows that platform's terms. CoreSystem's policy still applies: <strong>no refunds</strong> once a license has been issued.</p>
+	</section>
+
+	<section class="legal-section">
+		<h2>Contact</h2>
+		<p>Email: <a href="mailto:support@coresystem.vn">support@coresystem.vn</a> · See also: <a href="/en/terms/">Terms of Service</a></p>
+	</section>
+</Layout>
+
+<style>
+	.legal-hero { text-align: center; padding: 3rem 1rem 1rem; }
+	.legal-hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 0.5rem; }
+	.legal-hero .sub { color: var(--color-text-muted); font-size: 0.9rem; }
+	.legal-section { max-width: 860px; margin: 0 auto; padding: 1.25rem 1rem; }
+	.legal-section h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+	.legal-section p, .legal-section li { color: var(--color-text); line-height: 1.65; }
+	.legal-section ul { padding-left: 1.2rem; }
+	.legal-section a { color: var(--color-accent); }
+</style>

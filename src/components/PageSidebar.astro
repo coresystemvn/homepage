@@ -3,6 +3,12 @@
 // khi ẩn: set data-toc-hidden trên <html>, CSS trong starlight.css dời right sidebar + mở rộng content.
 import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
 import TableOfContents from 'virtual:starlight/components/TableOfContents';
+const locale = (Astro.locals as any)?.starlightRoute?.locale ?? (Astro.url.pathname.startsWith('/en') ? 'en' : 'root');
+const isEn = locale === 'en';
+const tHide = isEn ? 'Hide table of contents' : 'Ẩn mục lục';
+const tShow = isEn ? 'Show table of contents' : 'Hiện mục lục';
+const ariaHide = isEn ? 'Hide table of contents (On this page)' : 'Ẩn chỉ mục (On this page)';
+const ariaShow = isEn ? 'Show table of contents (On this page)' : 'Hiện chỉ mục (On this page)';
 ---
 
 {
@@ -13,11 +19,11 @@ import TableOfContents from 'virtual:starlight/components/TableOfContents';
 			</div>
 			<div class="right-sidebar-panel sl-hidden lg:sl-block">
 				<div class="right-sidebar-topbar">
-					<button id="toc-toggle" class="toc-toggle" aria-label="Ẩn hoặc hiện chỉ mục On this page" aria-pressed="false" title="Ẩn chỉ mục (On this page)">
+					<button id="toc-toggle" class="toc-toggle" aria-label={ariaHide} aria-pressed="false" title={ariaHide} data-hide={tHide} data-show={tShow} data-aria-hide={ariaHide} data-aria-show={ariaShow}>
 						<svg class="toc-toggle-check" viewBox="0 0 20 20" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M4 10h12M14 6l4 4-4 4"></path>
 						</svg>
-						<span class="toc-toggle-label">Ẩn mục lục</span>
+						<span class="toc-toggle-label">{tHide}</span>
 					</button>
 				</div>
 				<div class="sl-container">
@@ -37,15 +43,19 @@ import TableOfContents from 'virtual:starlight/components/TableOfContents';
 	};
 
 	const setState = (hidden) => {
+		const hide = btn?.dataset.hide || 'Ẩn mục lục';
+		const show = btn?.dataset.show || 'Hiện mục lục';
+		const ariaHide = btn?.dataset.ariaHide || 'Ẩn chỉ mục (On this page)';
+		const ariaShow = btn?.dataset.ariaShow || 'Hiện chỉ mục (On this page)';
 		btn?.setAttribute('aria-pressed', String(hidden));
 		if (hidden) {
-			btn?.setAttribute('title', 'Hiện chỉ mục (On this page)');
-			btn?.setAttribute('aria-label', 'Hiện chỉ mục On this page');
-			document.querySelector('.toc-toggle-label') && (document.querySelector('.toc-toggle-label').textContent = 'Hiện mục lục');
+			btn?.setAttribute('title', ariaShow);
+			btn?.setAttribute('aria-label', ariaShow);
+			document.querySelector('.toc-toggle-label') && (document.querySelector('.toc-toggle-label').textContent = show);
 		} else {
-			btn?.setAttribute('title', 'Ẩn chỉ mục (On this page)');
-			btn?.setAttribute('aria-label', 'Ẩn chỉ mục On this page');
-			document.querySelector('.toc-toggle-label') && (document.querySelector('.toc-toggle-label').textContent = 'Ẩn mục lục');
+			btn?.setAttribute('title', ariaHide);
+			btn?.setAttribute('aria-label', ariaHide);
+			document.querySelector('.toc-toggle-label') && (document.querySelector('.toc-toggle-label').textContent = hide);
 		}
 	};
 

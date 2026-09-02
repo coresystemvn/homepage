@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import { SITE_DATA } from '../../constants';
+
+import '../../styles/home.css';
+---
+
+<Layout pageTitle="Automated Enterprise Windows Deployment Platform for MSPs">
+	<Hero />
+
+	<section class="landing-cta">
+		<div class="landing-inner">
+			<div class="badge-row">
+				<span class="badge">Please review security advisories before use</span>
+				<span class="badge-note">Hash & .sig details on the <a href="/en/download/">Download page</a></span>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-why">
+		<div class="landing-inner">
+			<h2>Why EasyDeploy?</h2>
+			<div class="why-grid">
+				<div class="why-card">
+					<h3>MDT is retired — the gap is wide open</h3>
+					<p>Microsoft officially retired MDT in January 2026: no updates, no support, installers removed from official channels. EasyDeploy inherits the pure bare-metal imaging workload MSPs actually need.</p>
+				</div>
+				<div class="why-card">
+					<h3>Enterprise tooling is overkill here</h3>
+					<p>ConfigMgr/Autopilot demand server infrastructure, cloud services, and dedicated licensing — a poor fit when an MSP installs machines at customer sites. EasyDeploy packs everything into one USB: no server, no infrastructure.</p>
+				</div>
+				<div class="why-card">
+					<h3>Fully automated — ~15 minutes per machine</h3>
+					<p>Under 5 minutes for the engine to run all 11 deployment steps, plus about 10 minutes of automated post-install — ~15 minutes per machine, fully hands-off with ZeroTouch (Advanced; Express adds just 2 key presses: F3 + confirm). Versus 90–180 minutes the conventional way. Actual time depends on network and disk speed.</p>
+				</div>
+				<div class="why-card">
+					<h3>So simple: "if you can boot a USB, you can deploy"</h3>
+					<p>Junior staff run the deployments while senior engineers stay home working on higher-margin solutions. That's the economics EasyDeploy solves for MSPs.</p>
+				</div>
+				<div class="why-card">
+					<h3>Transparent &amp; legitimate</h3>
+					<p>Installs from ESD files sourced through Microsoft's official channel, SHA-256 verified, with a self-verifying trust chain — no shady WinPE/ghost images floating around the market that expose both the MSP and their customers to legal risk.</p>
+				</div>
+			</div>
+
+			<div class="why-compare">
+				<h3>Ditch the old-school install process</h3>
+				<div class="compare-table-wrap">
+					<table class="compare-table">
+						<thead>
+							<tr><th></th><th>Conventional way</th><th>With EasyDeploy</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Install source</td><td>Manually downloaded ISO — usually outdated</td><td>Catalog auto-filters the latest builds, official ESD source</td></tr>
+							<tr><td>Effort</td><td>Burn ISO → manual install → click through OOBE</td><td>Boot USB → F3 + confirm → engine runs 11 steps automatically</td></tr>
+							<tr><td>Post-install</td><td>Registry edits, bloatware removal, workspace tweaks — per machine</td><td>Standard profile injected automatically — identical every time</td></tr>
+							<tr><td>Unfamiliar languages</td><td>Depends on the technician's skill — the rarer, the slower</td><td>Engine runs the same way in every language</td></tr>
+							<tr><td>Consistency</td><td>Varies by who installs</td><td>100% per profile, consistent across all machines</td></tr>
+							<tr><td>Time per machine</td><td>90–180 minutes</td><td>~15 minutes, automated</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-features">
+		<div class="landing-inner">
+			<h2>What's inside EasyDeploy?</h2>
+			<div class="feature-grid">
+				<div class="feature-card"><h3>EasyDeploy Engine</h3><p>Automated 11-step closed loop from partitioning to profile injection — fully hands-off, running on WinPE.</p></div>
+				<div class="feature-card"><h3>Vanilla | Business | Express | ZeroTouch (Advanced)</h3><p>Four deployment methods orchestrated by EasyDeploy. Express (F3): just 2 key presses — mass rollout for labs, classrooms, and branches.</p></div>
+				<div class="feature-card"><h3>Rescue Tools</h3><p>BitLocker, WiFi, Diskpart, PowerShell, Backup, Explorer… right inside WinPE.</p></div>
+				<div class="feature-card"><h3>Hybrid / Offline</h3><p>Prioritizes ESD on USB with Cloud fallback — works even without internet.</p></div>
+				<div class="feature-card"><h3>Privacy First</h3><p>No CoreSystem backend, nothing collected — telemetry ships off by default. Advanced teams enable their own endpoint when they need it, with technical docs bundled in the Reference-Backend.</p></div>
+				<div class="feature-card"><h3>BootBuilder</h3><p>WinPE is a brutal environment — BootBuilder builds custom ISO/USB (drivers, SecureBoot, CA2023) in a few clicks instead of weeks of research.</p></div>
+				<div class="feature-card"><h3>Self-verifying Trust Chain</h3><p>Public keys are embedded in the binaries — EasyDeploy self-validates its .sig signature before running; BootBuilder refuses to build an ISO if EasyDeploy fails validation. Repacked files are blocked at the source.</p></div>
+				<div class="feature-card"><h3>3-Layer USB Protection</h3><p>Physical · License signed with ECDSA P-256 bound to USB-SN (blocks cloning, prevents license waste) · Profile encryption (prevents data leaks) — the latter two are Advanced-plan features.</p></div>
+				<div class="feature-card"><h3>Data Sovereignty with Reference-Backend</h3><p>Self-host your catalog & ESD (BYOC) and telemetry (BYOB) — CoreSystem ships a ready-to-connect Reference-Backend blueprint; features unlock via license enforcement inside EasyDeploy.</p></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="landing-pricing">
+		<div class="landing-inner">
+			<h2>Pricing</h2>
+			<p class="pricing-intro">Free is enough for most solo IT consultants and micro-MSPs. Advanced is for MSP businesses with an operations team and proper infrastructure.</p>
+			<div class="pricing-grid">
+				<div class="pricing-card">
+					<h3>Free</h3><p class="price">Free forever</p><p class="price-note">Early Access — no credit card, no sign-up</p>
+					<ul>
+						<li>3 deployment flows: Vanilla | Business | Express</li>
+						<li>Default cloud catalog</li>
+						<li>Unlimited ISO customization with BootBuilder</li>
+						<li>2 profiles included (1.Tweaks, 2.TweaksApp)</li>
+						<li>Mass deployment with Express Deploy (F3)</li>
+						<li>Portable app customization</li>
+						<li>Basic stats via CSV export</li>
+						<li>Docs-only support — right here on this site</li>
+					</ul>
+					<a class="btn primary" href="/en/download/">Get Started</a>
+				</div>
+				<div class="pricing-card featured">
+					<h3>MSP Advanced</h3><p class="price">Annual — per USB-SN batch</p><p class="price-note">Early Access — pricing is being finalized with our first user group</p>
+					<ul>
+						<li>Everything in Free +</li>
+						<li>Self-hosted catalog — BYOC</li>
+						<li>Self-hosted telemetry — BYOB + Reference-Backend</li>
+						<li>Unlimited profiles</li>
+						<li>Profile encryption</li>
+						<li>Zero Touch (Boot USB → done)</li>
+						<li>Complementary infrastructure blueprint *</li>
+						<li>Email support (core features only) **</li>
+					</ul>
+					<a class="btn primary" href="mailto:inquiry@coresystem.vn?subject=EasyDeploy%20MSP%20Advanced%20inquiry">Request Advanced consultation</a>
+				</div>
+			</div>
+			<p class="pricing-footnote">(*) The complementary infrastructure blueprint (Reference-Backend) ships with the Advanced <code>.lic</code>.</p>
+			<p class="pricing-footnote">(**) Core features are EasyDeploy and BootBuilder. BYOC/BYOB are self-operated by the MSP and out of support scope; features unlock via license enforcement inside EasyDeploy.</p>
+		</div>
+	</section>
+
+	<!-- Video demo moved into hero gallery; bottom section reserved for testimonial -->
+</Layout>
+
+<style>
+.landing-cta, .landing-why, .landing-features, .landing-pricing, .landing-video { padding: 3rem 1rem; }
+.landing-inner { max-width: 1100px; margin: 0 auto; }
+.landing-why h2, .landing-features h2, .landing-pricing h2, .landing-video h2 { text-align:center; margin-bottom:2rem; }
+.why-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+.why-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.2rem; background: var(--color-bg-alt); color: var(--color-text); }
+.why-card h3 { margin:0 0 0.5rem 0; color: var(--color-text); font-size:1.05rem; }
+.why-card p { color: var(--color-text-muted); margin:0; font-size:0.95rem; }
+.why-compare { margin-top: 2.5rem; }
+.why-compare h3 { text-align:center; margin-bottom:1.25rem; }
+.compare-table-wrap { overflow-x:auto; border:1px solid var(--color-border); border-radius:0.75rem; }
+.compare-table { width:100%; border-collapse:collapse; font-size:0.95rem; background: var(--color-bg); color: var(--color-text); }
+.compare-table th, .compare-table td { padding:0.75rem 1rem; text-align:left; vertical-align:top; border-bottom:1px solid var(--color-border); }
+.compare-table thead th { background: var(--color-bg-alt); font-size:0.9rem; }
+.compare-table tbody tr:last-child td { border-bottom:none; }
+.compare-table td:first-child { font-weight:600; white-space:nowrap; }
+.compare-table td:last-child { color: var(--color-accent); font-weight:500; }
+.btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight:600; text-decoration:none; display:inline-block; }
+.btn.primary { background: var(--sl-color-accent, #0d9488); color: white; }
+.btn.secondary { border: 1px solid var(--sl-color-accent, #0d9488); color: var(--sl-color-accent, #0d9488); }
+.badge-row { text-align:center; margin-top:0.5rem; }
+.badge { display:inline-block; background: var(--sl-color-accent-high, #0f766e); color: white; padding: 0.25rem 0.6rem; border-radius: 999px; font-size:0.85rem; }
+.badge-note { display:block; font-size:0.8rem; opacity:0.7; margin-top:0.3rem; }
+.badge-note a { color: var(--sl-color-accent, #0d9488); }
+.landing-features h2, .landing-pricing h2, .landing-video h2 { text-align:center; margin-bottom:2rem; }
+.feature-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1rem; }
+.feature-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.2rem; background: var(--color-bg); color: var(--color-text); }
+.feature-card h3 { margin:0 0 0.5rem 0; color: var(--color-text); }
+.feature-card p { color: var(--color-text-muted); }
+.pricing-intro { text-align:center; opacity:0.8; max-width:700px; margin:0 auto 2rem auto; }
+.pricing-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; }
+.pricing-card { border:1px solid var(--color-border); border-radius:0.75rem; padding:1.5rem; background: var(--color-bg); color: var(--color-text); }
+.pricing-card.featured { border-color: var(--color-accent, #0d9488); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+[data-theme="dark"] .pricing-card.featured { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.pricing-card h3 { margin-top:0; }
+.price { font-size:1.25rem; font-weight:700; margin:0.2rem 0; }
+.price-note { font-size:0.85rem; opacity:0.7; margin-bottom:1rem; }
+.pricing-card ul { padding-left:1.2rem; margin:1rem 0; }
+.pricing-card li { margin:0.3rem 0; }
+.pricing-footnote { text-align:center; font-size:0.85rem; opacity:0.6; margin-top:1.5rem; }
+</style>

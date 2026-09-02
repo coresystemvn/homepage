@@ -1,0 +1,43 @@
+---
+const pathname = Astro.url.pathname;
+const isEn = pathname.startsWith('/en');
+// Blog chỉ có bản tiếng Việt — ẩn nút chuyển ngôn ngữ thay vì trỏ tới trang không tồn tại
+const isBlog = pathname.startsWith('/blog');
+// Trang 404 không có bản EN tương ứng — chuyển về trang chủ EN
+const cleanPath = pathname.replace(/\/+$/, '') === '/404' ? '/' : pathname;
+const switchHref = isEn ? cleanPath.replace(/^\/en/, '') || '/' : `/en${cleanPath}`;
+const label = isEn ? 'Tiếng Việt' : 'English';
+---
+
+{!isBlog && (
+  <a href={switchHref} class="lang-toggle" aria-label={`Switch to ${label}`} data-lang-switch>{isEn ? 'VI' : 'EN'}</a>
+)}
+
+<script is:inline>
+  document.querySelectorAll('[data-lang-switch]').forEach(a => {
+    a.addEventListener('click', () => {
+      const toEn = a.getAttribute('href')?.startsWith('/en');
+      try { localStorage.setItem('preferred-lang', toEn ? 'en' : 'vi'); } catch {}
+    });
+  });
+</script>
+
+<style>
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.lang-toggle:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-accent);
+}
+</style>

@@ -1,9 +1,67 @@
 ---
-import { SITE_DATA } from '../constants';
+const isEn = Astro.url.pathname.startsWith('/en');
+const loc = (p: string) => isEn ? `/en${p}` : p;
+
+const t = isEn
+  ? {
+      product: 'Product',
+      docs: 'Docs',
+      download: 'Download',
+      blog: 'Blog',
+      contact: 'Contact',
+      email: 'Email',
+      feedback: 'Product Feedback',
+      socials: 'Social',
+      legal: 'Legal',
+      terms: 'Terms of Service',
+      refund: 'Refund Policy',
+      tagline: 'EASYDEPLOY — Automated Windows deployment platform for MSPs.',
+      trademark:
+        'Microsoft, Windows, WinPE, BitLocker, PowerShell are trademarks or registered trademarks of Microsoft Corporation in the United States and/or other countries. EasyDeploy and CoreSystem are not affiliated with, endorsed by, or sponsored by Microsoft Corporation.',
+    }
+  : {
+      product: 'Sản phẩm',
+      docs: 'Tài liệu',
+      download: 'Tải xuống',
+      blog: 'Blog',
+      contact: 'Liên hệ',
+      email: 'Email',
+      feedback: 'Góp ý sản phẩm',
+      socials: 'Mạng xã hội',
+      legal: 'Pháp lý',
+      terms: 'Điều khoản Dịch vụ',
+      refund: 'Chính sách hoàn tiền',
+      tagline: 'EASYDEPLOY — Nền tảng triển khai Windows tự động cho MSP.',
+      trademark:
+        'Microsoft, Windows, WinPE, BitLocker, PowerShell là nhãn hiệu hoặc nhãn hiệu đã đăng ký của Microsoft Corporation tại Hoa Kỳ và/hoặc các quốc gia khác. EasyDeploy và CoreSystem không liên kết, không được chứng thực hay tài trợ bởi Microsoft Corporation.',
+    };
 ---
 
 <div class="footer-container">
-	<div class="footer-content">
-		<div class="copyright">&copy; 2026 CoreSystem</div>
+	<div class="footer-content footer-grid">
+		<div class="footer-col">
+			<p class="footer-brand">CORESYSTEM</p>
+			<p class="footer-muted">{t.tagline}</p>
+		</div>
+		<div class="footer-col">
+			<p class="footer-heading">{t.product}</p>
+			<a href={loc('/easydeploy/')}>{t.docs}</a>
+			<a href={loc('/download/')}>{t.download}</a>
+			<a href="/blog/">{t.blog}</a>
+		</div>
+		<div class="footer-col">
+			<p class="footer-heading">{t.contact}</p>
+			<a href="mailto:feedback@coresystem.vn?subject=EasyDeploy%20Feedback">{t.feedback}</a>
+			<a href="https://x.com/withcoresystem" rel="noopener noreferrer" target="_blank">X / Twitter</a>
+			<a href="https://facebook.com/withcoresystem" rel="noopener noreferrer" target="_blank">Facebook</a>
+			<a href="https://github.com/withcoresystem" rel="noopener noreferrer" target="_blank">GitHub</a>
+		</div>
+	</div>
+	<div class="footer-legal">
+		<p class="footer-links">
+			<a href={loc('/terms/')}>{t.terms}</a> · <a href={loc('/refund/')}>{t.refund}</a>
+		</p>
+		<p class="footer-trademark">{t.trademark}</p>
+		<p class="footer-copyright">&copy; 2026 CoreSystem. {isEn ? 'All rights reserved.' : 'Mọi quyền được bảo lưu.'}</p>
 	</div>
 </div>

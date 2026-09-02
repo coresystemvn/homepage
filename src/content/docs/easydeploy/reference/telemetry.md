@@ -30,11 +30,11 @@ Sau mỗi phiên deploy, hệ thống ghi 1 nhóm thông số kỹ thuật:
 
 | Gói | Lưu trữ |
 |-----|---------|
-| **MSP Standard** | CSV trên USB (`EASYDEPLOY\Log\deploy-results.csv`) — không gửi đi đâu |
-| **MSP Advanced** | Gửi về **endpoint do bạn cấu hình** trong `system-config.json` (block `telemetry`) |
+| **Free** | CSV trên USB (`EASYDEPLOY\Log\deploy-results.csv`) — không gửi đi đâu |
+| **MSP Advanced** | Gửi về **endpoint do bạn cấu hình** trong `system-config.json` (block `telemetry`) — chi tiết trong tài liệu kỹ thuật kèm `.lic` |
 
 :::note
-Để tắt telemetry (MSP Advanced): đặt `"enabled": false` trong block `telemetry`. MSP Standard luôn tắt — dữ liệu chỉ nằm CSV trên USB.
+Để tắt telemetry (MSP Advanced): đặt `"enabled": false` trong block `telemetry`. Free luôn tắt — dữ liệu chỉ nằm CSV trên USB.
 :::
 
 ## Câu hỏi thường gặp
@@ -43,7 +43,7 @@ Sau mỗi phiên deploy, hệ thống ghi 1 nhóm thông số kỹ thuật:
 Không. Dữ liệu chỉ nằm tại USB hoặc endpoint của bạn.
 
 **Có thể tắt telemetry không?**
-MSP Advanced: `"enabled": false` trong `system-config.json`. MSP Standard: luôn tắt.
+MSP Advanced: `"enabled": false` trong `system-config.json`. Free: luôn tắt.
 
 **CoreSystem có đọc Profile của tôi không?**
 Không. Profile chỉ lưu trên USB và chạy cục bộ trên máy trạm.

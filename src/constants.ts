@@ -1,45 +1,30 @@
 // ============================================================================
-// Site Configuration
+// Site Configuration — CoreSystem / EasyDeploy
 // ============================================================================
-// This file contains the main configuration for your academic website.
-// Replace the example data with your own information to customize your site.
 
 export const SITE_DATA = {
-    // Your full name as you'd like it displayed
+    // Tên hiển thị thương hiệu (header, title tag, footer)
     name: 'CORESYSTEM',
 
-    // A brief tagline describing your role or expertise (3-5 words/phrases)
-    tagline: "Công cụ triển khai Windows hiện đại cho đối tác MSP",
+    // Tagline định vị (nền tảng — nhất quán với pageTitle trang chủ)
+    tagline: "Nền tảng triển khai Windows tự động cho đối tác MSP",
 
-    // Your email address (use [at] and [dot] to avoid spam bots)
-    email: "tructt@coresystem.vn",
+    // Email liên hệ chung (alias pre-sales) — tructt@ chỉ dùng cho Early Access/kênh trực tiếp tác giả
+    email: "inquiry@coresystem.vn",
 
 
-    // Social media handles (username only, not full URL)
-    // Set to empty string "" to hide an icon
-    twitter: "",  // bird logo → twitter.com
-    x: "withcoresystem",             // X logo → x.com
+    // Social handles (username only — để chuỗi rỗng "" để ẩn icon)
+    twitter: "",
+    x: "withcoresystem",
 
-    // Bluesky handle (without the @)
     bluesky: "",
     facebook: "withcoresystem",
     github: "withcoresystem",
-    
 
-    // Google Scholar ID (found in your Scholar profile URL)
-    // Example: https://scholar.google.com/citations?user=YOUR_ID_HERE
-    scholar: "",
 
-    
-    // One-line research tagline used for SEO and social sharing meta tags
-    description: "Modern Windows deployment tool on WinPE for MSP partners in Vietnam.",
+    // Meta description (EN — dùng cho SEO/social sharing của trang EN)
+    description: "Automated Windows 11 deployment on WinPE for MSPs — one USB, fully unattended, ~15 minutes per machine. No server required.",
 
-    // Base URL of your deployed site (no trailing slash), e.g. "https://your-username.github.io"
-    // Used for Open Graph tags. Leave empty if you haven't deployed yet.
-    //siteUrl: "https://blog.ngantrambh.workers.dev",
+    // Base URL deployed (không có trailing slash) — dùng cho Open Graph/canonical
     siteUrl: "https://coresystem.vn",
-
-    // Trial download flow
-    trialSiteKey: "0x4AAAAAAEWRkqWhxj2eOu1a",
-    trialApiBase: "https://d.coresystem.vn",
 };

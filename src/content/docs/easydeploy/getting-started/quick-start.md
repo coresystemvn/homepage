@@ -1,8 +1,10 @@
 ---
-title: 'Quick Start — Cài đặt Windows trong chưa đầy 5 phút'
+title: 'Quick Start — Windows tự cài hết trong ~15 phút'
 ---
 
-Mục tiêu: Boot USB → chọn luồng cài đặt → hoàn thành. Không cần cài đặt thêm phần mềm nào.
+Mục tiêu: Boot USB → chọn luồng cài đặt → hoàn thành, hoàn toàn tự động. Không cần cài đặt thêm phần mềm nào.
+
+> **Nhịp thời gian tham khảo:** chưa đầy 5 phút cho engine tự chạy trọn 11 bước bung cài, cộng khoảng 10 phút hậu kỳ tự động sau cài đặt (OOBE + post-setup) — tổng ~15 phút một máy với ZeroTouch; Express chỉ thêm 2 thao tác bấm phím (F3 + confirm). Thời gian thực tế tùy tốc độ mạng và ổ đĩa.
 
 ## 1. Chuẩn bị
 

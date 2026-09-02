@@ -12,13 +12,17 @@ Tạo thư mục mới trong `EASYDEPLOY\Profiles\` trên USB. Khuyến nghị �
 [USB]:\EASYDEPLOY\Profiles\
 ├── 1.Tweaks          ← Profile có sẵn (chỉ tinh chỉnh hệ thống)
 ├── 2.TweaksApp       ← Profile có sẵn (tinh chỉnh + tự động cài ứng dụng)
-└── 3.AcmeBank        ← Profile tùy biến mới của bạn
+└── 3.AcmeBank        ← Profile tùy biến mới (chỉ MSP Advanced)
     ├── unattend.xml
     └── post-setup.ps1
 ```
 
+:::note
+**Free sử dụng 2 bộ profile mặc định:** `1.Tweaks`/`2.TweaksApp` — bạn hãy **sửa thẳng vào profile có sẵn** thay vì tạo mới `3.*`. Tạo thêm ở Free sẽ **bị bỏ qua khi thực thi** (dù vẫn lưu trên USB). **MSP Advanced** được phép tạo không giới hạn, chi tiết trong tài liệu kỹ thuật kèm `.lic`.
+:::
+
 :::caution
-Profile bắt buộc chứa đủ 2 file `unattend.xml` và `post-setup.ps1`. EASYDEPLOY chỉ nhận diện profile khi thư mục có ít nhất một trong hai file đặt đúng tên tiêu chuẩn.
+Profile gồm đủ 2 file `unattend.xml` và `post-setup.ps1`. EASYDEPLOY hiển thị profile khi thư mục có ít nhất một trong hai file đặt đúng tên tiêu chuẩn — nhưng thiếu một trong hai sẽ khiến profile hoạt động không đầy đủ.
 :::
 
 ## 2. Xây dựng tệp cấu hình `unattend.xml`
@@ -26,7 +30,7 @@ Profile bắt buộc chứa đủ 2 file `unattend.xml` và `post-setup.ps1`. EA
 Cách nhanh nhất: Dùng [schneegans.de/windows/unattend-generator](https://schneegans.de/windows/unattend-generator/) để cấu hình tham số, tải về rồi:
 
 1. Khởi chạy tệp tin bằng một trình soạn thảo mã nguồn.
-2. Kiểm tra `FirstLogonCommands` gọi chính xác `C:\CoreSystem\Post-setup.ps1` (chi tiết tại [unattend.xml](/easydeploy/profiles/unattend-xml/#23-cấu-hình-lệnh-thực-thi-trong-lần-đăng-nhập-đầu-tiên-firstlogoncommands)).
+2. Kiểm tra `FirstLogonCommands` gọi chính xác `C:\CoreSystem\Post-setup.ps1` (chi tiết tại [unattend.xml](/easydeploy/profiles/unattend-xml/#23-lệnh-thực-thi-trong-lần-đăng-nhập-đầu-tiên)).
 3. Mã hóa mật khẩu trong trường `PlainText` nếu file được chia sẻ giữa nhiều kỹ thuật viên.
 
 :::tip
@@ -53,18 +57,8 @@ Restart-Computer   # Tự động reboot thiết bị sau khi hoàn tất thiế
 
 ## 4. Triển khai tệp tin lên thiết bị USB
 
-Chỉ cần **sao chép thư mục profile mới vào USB** tại `EASYDEPLOY\Profiles\` — không cần build lại file thực thi.
-
-:::tip
-Với **MSP Advanced** có nhu cầu bảo vệ profile (chứa nhiều tham số nhạy cảm), bạn có thể cân nhắc mã hóa trước khi bàn giao. Công cụ sẽ giữ lại bộ profile gốc để bạn tiếp tục tùy biến khi cần:
-
-```powershell
-.\encrypt-profile.ps1 -ProfilePath ".\EASYDEPLOY\Profiles\3.AcmeBank" -Passphrase "msp-secret-key"
-.\encrypt-profile.ps1 -ProfilePath ".\EASYDEPLOY\Profiles\3.AcmeBank" -Generate
-```
-
-Sau đó gán key vào `system-config.json` (`profileEncryption.enabled` + `passphrase`) và build lại bằng BootBuilder — xem [Profiles — Tổng quan](/easydeploy/profiles/profiles/#7-mã-hóa-profile-chỉ-msp-advanced).
-:::
+- **Free:** sửa trực tiếp `1.Tweaks`/`2.TweaksApp` có sẵn rồi **ghi đè** lên USB tại `EASYDEPLOY\Profiles\` — không cần build lại.
+- **Advanced:** sao chép thêm không giới hạn profile mới vào `EASYDEPLOY\Profiles\` — không cần build lại (chi tiết kèm `.lic`).
 
 ## 5. Quy trình kiểm thử và Xác thực an toàn
 
@@ -80,7 +74,7 @@ Khuyến nghị quy trình kiểm thử sau trước khi áp dụng production:
 4. **Thử nghiệm trên thiết bị vật lý thực tế:** Triển khai thử nghiệm 1 chu kỳ hoàn chỉnh trên một máy trạm vật lý trước khi áp dụng đại trà.
 
 :::danger
-Khi triển khai trên máy ảo, hệ thống tự lọc loại trừ ổ ảo và USB boot khỏi danh sách đích để bảo vệ dữ liệu. Bạn cần chọn chính xác ổ ảo làm mục tiêu. Dữ liệu trên ổ đích **sẽ bị xóa sạch** trong quá trình partitioning.
+Engine chỉ liệt kê các **ổ phù hợp để cài OS (deployable disk)** — USB boot được loại khỏi danh sách để tránh format nhầm. Xác nhận đúng ổ đích trước khi Deploy: dữ liệu trên ổ đích **sẽ bị xóa sạch** trong quá trình partitioning.
 :::
 
 ## 6. Bàn giao cấu hình triển khai
@@ -96,7 +90,7 @@ Sau khi Profile kiểm thử đạt yêu cầu, bàn giao các tài nguyên sau:
 - [ ] Thư mục profile được đặt đúng vị trí dưới đường dẫn `EASYDEPLOY\Profiles\` trên USB (tên thư mục được đánh số thứ tự khoa học).
 - [ ] Tệp tin `unattend.xml` chứa khai báo phân hệ FirstLogonCommands trỏ chính xác đến đường dẫn `C:\CoreSystem\Post-setup.ps1`.
 - [ ] Kịch bản `post-setup.ps1` được tích hợp sẵn hàm kiểm tra và chờ kết nối Internet trước khi gọi các tác vụ tải file từ mạng.
-- [ ] Không lưu trữ trực tiếp các thông tin nhạy cảm (như mật khẩu, API key,...) dưới dạng rõ trong tệp tin — với MSP Advanced có thể cân nhắc mã hóa profile bằng `encrypt-profile.ps1`.
+- [ ] Không lưu trữ trực tiếp các thông tin nhạy cảm (như mật khẩu, API key,...) dưới dạng rõ trong tệp tin.
 - [ ] Kiểm chứng script có tính idempotent (chạy lại nhiều lần không phát sinh xung đột hoặc lỗi hệ thống).
 - [ ] Đã hoàn thành kiểm thử thành công: tối thiểu 2 chu kỳ trên máy ảo (VM) và 1 chu kỳ trên thiết bị vật lý thực tế.
 - [ ] Tệp cấu hình `user-config.json` (phục vụ luồng Express) đã được khai báo chính xác tên thư mục profile mới.

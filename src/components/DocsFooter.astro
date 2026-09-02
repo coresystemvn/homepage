@@ -1,0 +1,32 @@
+---
+// Starlight Footer override — hiển thị dòng trademark disclaimer ở khu vực docs.
+const isEn = Astro.currentLocale === 'en';
+const trademark = isEn
+  ? 'Microsoft, Windows, WinPE, BitLocker, PowerShell are trademarks or registered trademarks of Microsoft Corporation in the United States and/or other countries. EasyDeploy and CoreSystem are not affiliated with, endorsed by, or sponsored by Microsoft Corporation.'
+  : 'Microsoft, Windows, WinPE, BitLocker, PowerShell là nhãn hiệu hoặc nhãn hiệu đã đăng ký của Microsoft Corporation tại Hoa Kỳ và/hoặc các quốc gia khác. EasyDeploy và CoreSystem không liên kết, không được chứng thực hay tài trợ bởi Microsoft Corporation.';
+const copyright = isEn ? '© 2026 CoreSystem. All rights reserved.' : '© 2026 CoreSystem. Mọi quyền được bảo lưu.';
+---
+
+<footer class="cs-docs-footer">
+  <p class="cs-docs-footer__trademark">{trademark}</p>
+  <p class="cs-docs-footer__copyright">{copyright}</p>
+</footer>
+
+<style>
+  .cs-docs-footer {
+    border-top: 1px solid var(--sl-color-hairline);
+    padding: 1rem 1.5rem 1.5rem;
+  }
+  .cs-docs-footer__trademark {
+    font-size: 0.78rem;
+    opacity: 0.75;
+    line-height: 1.5;
+    max-width: 80ch;
+    margin: 0 0 0.4rem;
+  }
+  .cs-docs-footer__copyright {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    margin: 0;
+  }
+</style>

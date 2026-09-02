@@ -1,3 +1,5 @@
 # Allow all bots to scan and index the site
 User-agent: *
 Allow: /
+
+Sitemap: https://coresystem.vn/sitemap-index.xml
